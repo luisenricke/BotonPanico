@@ -4,14 +4,11 @@ buildscript {
     repositories {
         google()
         jcenter()
-
     }
-    dependencies {
-        classpath (Config.gradleClasspath) //'com.android.tools.build:gradle:4.0.0'
-        classpath (Config.kotlinClasspath) //"org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+    dependencies {
+        classpath DefaultConfig.gradle
+        classpath DefaultConfig.kotlinGradle
     }
 }
 
@@ -22,6 +19,6 @@ allprojects {
     }
 }
 
-tasks.register("clean").configure {
-    delete("build")
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }

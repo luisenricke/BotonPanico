@@ -1,2 +1,4 @@
 rootProject.name='BotonPanico'
 include ':app'
+include ':androidext'
+include ':kotlinext'
