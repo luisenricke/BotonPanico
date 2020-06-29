@@ -5,6 +5,7 @@ object AndroidLib {
         const val appCompat = "1.1.0"
         const val ktx = "1.3.0"
         const val lifecycleExt = "2.2.0"
+        const val fragment = "1.2.5"
         const val annotation = "1.1.0"
         const val preference = "1.1.0"
         const val legacy = "1.0.0"
@@ -13,6 +14,7 @@ object AndroidLib {
 
     const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
     const val coreKtx = "androidx.core:core-ktx:${Version.ktx}"
+    const val fragmentKtx = "androidx.fragment:fragment-ktx:${Version.fragment}"
     const val annotationX = "androidx.annotation:annotation:${Version.annotation}"
     const val preference = "androidx.preference:preference:${Version.preference}"
     const val legacy = "androidx.legacy:legacy-support-v4:${Version.legacy}"
