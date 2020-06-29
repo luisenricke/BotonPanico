@@ -32,6 +32,10 @@ android {
     kotlinOptions {
         jvmTarget = DefaultConfig.jvm.toString()
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -43,12 +47,11 @@ dependencies {
 
     implementation AndroidLib.appCompat
     implementation AndroidLib.coreKtx
+    implementation AndroidLib.fragmentKtx
     implementation AndroidLib.lifecycleExt
     implementation AndroidLib.preference
     implementation AndroidLib.legacy
 
-    implementation AndroidLib.navigationFragment
-    implementation AndroidLib.navigationUI
     implementation AndroidLib.navigationFragmentKtx
     implementation AndroidLib.navigationUIKtx
 
