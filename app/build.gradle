@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     compileSdkVersion DefaultConfig.compileSdk
@@ -57,6 +59,12 @@ dependencies {
 
     implementation ViewLib.materialDesign
     implementation ViewLib.constraintLayout
+    implementation ViewLib.recyclerview
+
+    implementation DatabaseLib.runtimeRoom
+    kapt DatabaseLib.compilerRoom
+    implementation DatabaseLib.rxJavaRoom
+    testImplementation DatabaseLib.testingRoom
 
     testImplementation TestLib.junit
     androidTestImplementation TestLib.junitExt
