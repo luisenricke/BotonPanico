@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion DefaultConfig.compileSdk
@@ -41,4 +42,6 @@ dependencies {
 
     implementation AndroidLib.appCompat
     implementation AndroidLib.coreKtx
+
+    implementation DatabaseLib.runtimeRoom
 }
