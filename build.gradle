@@ -9,6 +9,7 @@ buildscript {
     dependencies {
         classpath DefaultConfig.gradle
         classpath DefaultConfig.kotlinGradle
+        classpath DefaultConfig.navigationArgs
     }
 }
 
