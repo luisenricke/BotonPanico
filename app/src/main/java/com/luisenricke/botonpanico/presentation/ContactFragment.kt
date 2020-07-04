@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.luisenricke.androidext.Toast
+import com.luisenricke.androidext.toastShort
 import com.luisenricke.botonpanico.adapter.ContactAdapter
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.FragmentContactBinding
-
 
 class ContactFragment : Fragment() {
 
@@ -34,7 +33,7 @@ class ContactFragment : Fragment() {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(this.context)
                 adapter = ContactAdapter(list) { item ->
-                    Toast.short(root.context, "clicked ${item.name}")
+                    toastShort("clicked ${item.name}")
                 }
             }
         }

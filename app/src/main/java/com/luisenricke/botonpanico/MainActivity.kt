@@ -10,7 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.luisenricke.botonpanico.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity()/*,BottomNavigationView.OnNavigationItemSelectedListener*/ {
+class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -24,8 +24,7 @@ class MainActivity : AppCompatActivity()/*,BottomNavigationView.OnNavigationItem
     }
 
     private val navController: NavController by lazy {
-        (supportFragmentManager
-            .findFragmentById(binding.fragmentHost.id) as NavHostFragment)
+        (supportFragmentManager.findFragmentById(binding.fragmentHost.id) as NavHostFragment)
             .navController
     }
 
