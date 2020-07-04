@@ -17,8 +17,8 @@ class ContactFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val list = arrayListOf(
-        Contact("123456789", "test", 1),
-        Contact("987456321", "luis", 2)
+        Contact(phone = "123456789", name = "test", relationship = "test1", id = 1),
+        Contact(phone = "987456321", name = "luis", relationship = "test2", id = 2)
     )
 
     override fun onCreateView(
