@@ -3,6 +3,7 @@ object AndroidLib {
 
     object Version {
         const val appCompat = "1.1.0"
+        const val activity = "1.2.0-alpha06"
         const val ktx = "1.3.0"
         const val lifecycleExt = "2.2.0"
         const val fragment = "1.2.5"
@@ -13,6 +14,7 @@ object AndroidLib {
     }
 
     const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
+    const val activity = "androidx.activity:activity:${Version.activity}"
     const val coreKtx = "androidx.core:core-ktx:${Version.ktx}"
     const val fragmentKtx = "androidx.fragment:fragment-ktx:${Version.fragment}"
     const val annotationX = "androidx.annotation:annotation:${Version.annotation}"
