@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Boton Panico</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Principal</string>
+    <string name="notification">Notificaciones</string>
+    <string name="profile">Perfil</string>
+
+    <string name="safety_contact">Contacto de seguridad</string>
+
+    <string name="permission_read_contacts_granted">El permiso para leer los contactos se concendio</string>
+    <string name="permission_read_contacts_denied">El permiso para leer los contactos se nego</string>
+    <string name="permission_read_contacts_apply_message">Este permiso sirve para seleccionar un contacto de tu lista y exportarlo a la applicación</string>
+    <string name="permission_read_contacts_apply_denied">Sin el permiso se tendrá que escribir los datos manualmente</string>
+
+    <string name="on_request_permissions_result_grant_results">Las confirmaciones de los permisos están vacíos</string>
+    <string name="on_request_permissions_result_doesnt_find_permission">El permiso solicitado no se encuentra</string>
+</resources>

@@ -1,10 +1,19 @@
 <resources>
     <string name="app_name">Boton Panico</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="home">Home</string>
     <string name="notification">Notification</string>
     <string name="profile">Profile</string>
 
-    <string name="safety_contact">Contacto de seguridad</string>
+    <string name="safety_contact">Safety contact</string>
+
+    <string name="permission_read_contacts_granted">Permission to read contacts is granted</string>
+    <string name="permission_read_contacts_denied">Permission to read contacts is denied</string>
+    <string name="permission_read_contacts_apply_message">This permission is used to select a contact from your list and export it to the app</string>
+    <string name="permission_read_contacts_apply_denied">Without the permission you will have to write the information manually</string>
+
+    <string name="on_request_permissions_result_grant_results">The permission confirmations are empty</string>
+    <string name="on_request_permissions_result_doesnt_find_permission">The permission confirmations doesn\'t find</string>
 </resources>
