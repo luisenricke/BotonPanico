@@ -2,5 +2,5 @@
 object Modules {
     const val app = ":app"
     const val androidExt = ":androidext"
-    const val kotlinext = ":kotlinext"
+    const val kotlinExt = ":kotlinext"
 }
