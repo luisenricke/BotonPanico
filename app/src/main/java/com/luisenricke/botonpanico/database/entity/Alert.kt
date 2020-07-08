@@ -1,0 +1,46 @@
+package com.luisenricke.botonpanico.database.entity
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.luisenricke.botonpanico.database.entity.Alert.SCHEMA.ID
+import com.luisenricke.botonpanico.database.entity.Alert.SCHEMA.LATITUDE
+import com.luisenricke.botonpanico.database.entity.Alert.SCHEMA.LONGITUDE
+import com.luisenricke.botonpanico.database.entity.Alert.SCHEMA.TABLE
+import com.luisenricke.botonpanico.database.entity.Alert.SCHEMA.TIMESTAMP
+import com.luisenricke.botonpanico.database.entity.Alert.SCHEMA.TYPE
+import java.util.Date
+
+@Entity(tableName = TABLE)
+data class Alert(
+    @ColumnInfo(name = LATITUDE)
+    var latitude: Double = 0.0,
+    @ColumnInfo(name = LONGITUDE)
+    var longitude: Double = 0.0,
+    @ColumnInfo(name = TYPE)
+    var type: String = "",
+    @ColumnInfo(name = TIMESTAMP)
+    var timestamp: Date = Date(System.currentTimeMillis()),
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = ID)
+    val id: Long = 0
+) {
+    object SCHEMA {
+        const val TABLE = "Alert"
+        const val ID = "id"
+        const val LATITUDE = "latitude"
+        const val LONGITUDE = "longitude"
+        const val TYPE = "type"
+        const val TIMESTAMP = "timestamp"
+    }
+
+    override fun toString(): String {
+        return """
+            id:         ${id}
+            latitude:   ${latitude}
+            longitude:  ${longitude}
+            type:       ${type}
+            timestamp:  ${timestamp}
+        """.trimIndent()
+    }
+}

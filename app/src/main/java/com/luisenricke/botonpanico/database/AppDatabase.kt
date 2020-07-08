@@ -8,12 +8,15 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.luisenricke.androidext.room.converter.Date
 import com.luisenricke.androidext.room.ioThread
+import com.luisenricke.botonpanico.database.dao.AlertDAO
 import com.luisenricke.botonpanico.database.dao.ContactDAO
+import com.luisenricke.botonpanico.database.entity.Alert
 import com.luisenricke.botonpanico.database.entity.Contact
 
 @Database(
     entities = [
-        Contact::class
+        Contact::class,
+        Alert::class
     ],
     version = 1, exportSchema = false
 )
@@ -21,6 +24,8 @@ import com.luisenricke.botonpanico.database.entity.Contact
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun contactDAO(): ContactDAO
+
+    abstract fun alertDAO(): AlertDAO
 
     companion object {
         private const val NAME = "Database.db"
@@ -53,7 +58,5 @@ abstract class AppDatabase : RoomDatabase() {
                 .allowMainThreadQueries()
                 .build()
         }
-
-
     }
 }
