@@ -8,11 +8,19 @@
 
     <string name="safety_contact">Contacto de seguridad</string>
 
+    <string name="on_request_permissions_result_grant_results">Las confirmaciones de los permisos están vacíos</string>
+    <string name="on_request_permissions_result_doesnt_find_permission">El permiso solicitado no se encuentra</string>
+
     <string name="permission_read_contacts_granted">El permiso para leer los contactos se concendio</string>
     <string name="permission_read_contacts_denied">El permiso para leer los contactos se nego</string>
     <string name="permission_read_contacts_apply_message">Este permiso sirve para seleccionar un contacto de tu lista y exportarlo a la applicación</string>
     <string name="permission_read_contacts_apply_denied">Sin el permiso se tendrá que escribir los datos manualmente</string>
 
-    <string name="on_request_permissions_result_grant_results">Las confirmaciones de los permisos están vacíos</string>
-    <string name="on_request_permissions_result_doesnt_find_permission">El permiso solicitado no se encuentra</string>
+    <string name="permission_access_fine_location_granted">El permiso para obtener la ubicación se concendio</string>
+    <string name="permission_access_fine_location_denied">El permiso para obtener la ubicación se nego</string>
+    <string name="permission_access_fine_location_apply_message">Este permiso sirve para obtener la ubicación de tu dispositivo</string>
+    <string name="permission_access_fine_location_apply_denied">Sin el permiso no se puedrá obtener la ubicación cuando se activan las alertas</string>
+
+    <string name="gps_provider_disable">El proveedor de GPS no está disponible.</string>
+    <string name="network_provider_disable">El proveedor de red no está disponible.</string>
 </resources>

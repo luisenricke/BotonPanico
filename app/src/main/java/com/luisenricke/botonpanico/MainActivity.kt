@@ -8,9 +8,14 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.luisenricke.androidext.toastShort
 import com.luisenricke.botonpanico.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+//    private val inputMethodManager: InputMethodManager by lazy {
+//        getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+//    }
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -38,6 +43,14 @@ class MainActivity : AppCompatActivity() {
             setupActionBarWithNavController(navController, appBarConfiguration)
             bottom.setupWithNavController(navController)
         }
+
+        val locationTrack = LocationTrack(this)
+        if (locationTrack.isProvidersAvailable) {
+            locationTrack.process()
+            val longitude = locationTrack.longitude
+            val latitude = locationTrack.latitude
+            toastShort("$latitude, $longitude")
+        }
     }
 
     override fun onStop() {
@@ -48,4 +61,18 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp()
     }
+
+//    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+//        if (ev?.action == MotionEvent.ACTION_DOWN) {
+//            val actual = currentFocus
+//            if (actual is TextInputEditText) {
+//                val borderView = Rect()
+//                actual.getGlobalVisibleRect(borderView)
+//                if (!borderView.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+//                    inputMethodManager.hideSoftInputFromWindow(actual.windowToken, 0)
+//                }
+//            }
+//        }
+//        return super.dispatchTouchEvent(ev)
+//    }
 }

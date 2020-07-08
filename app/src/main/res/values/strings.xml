@@ -9,11 +9,19 @@
 
     <string name="safety_contact">Safety contact</string>
 
+    <string name="on_request_permissions_result_grant_results">The permission confirmations are empty</string>
+    <string name="on_request_permissions_result_doesnt_find_permission">The permission confirmations doesn\'t find</string>
+
     <string name="permission_read_contacts_granted">Permission to read contacts is granted</string>
     <string name="permission_read_contacts_denied">Permission to read contacts is denied</string>
     <string name="permission_read_contacts_apply_message">This permission is used to select a contact from your list and export it to the app</string>
     <string name="permission_read_contacts_apply_denied">Without the permission you will have to write the information manually</string>
 
-    <string name="on_request_permissions_result_grant_results">The permission confirmations are empty</string>
-    <string name="on_request_permissions_result_doesnt_find_permission">The permission confirmations doesn\'t find</string>
+    <string name="permission_access_fine_location_granted">Permission to get location is granted</string>
+    <string name="permission_access_fine_location_denied">Permission to get location is denied</string>
+    <string name="permission_access_fine_location_apply_message">This permission is used to get locations from your device</string>
+    <string name="permission_access_fine_location_apply_denied">Without permission, the location cannot be obtained when the alerts are triggered.</string>
+
+    <string name="gps_provider_disable">GPS provider don\'t available</string>
+    <string name="network_provider_disable">Network provider don\'t available</string>
 </resources>
