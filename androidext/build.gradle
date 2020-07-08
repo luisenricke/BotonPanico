@@ -42,6 +42,7 @@ dependencies {
 
     implementation AndroidLib.appCompat
     implementation AndroidLib.coreKtx
+    implementation AndroidLib.preference
 
     implementation DatabaseLib.runtimeRoom
 }
