@@ -11,13 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.database.getStringOrNull
-import com.luisenricke.androidext.applyPermission
-import com.luisenricke.androidext.checkPermission
+import com.luisenricke.androidext.permissionApply
+import com.luisenricke.androidext.permissionCheck
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.FragmentProfileBinding
+import com.luisenricke.botonpanico.intentSelectContact
 import timber.log.Timber
 
 class ProfileFragment : BaseFragment() {
@@ -35,15 +36,15 @@ class ProfileFragment : BaseFragment() {
         binding.apply {
             contact.setOnClickListener {
 
-                if (!checkPermission(Manifest.permission.READ_CONTACTS)) {
-                    applyPermission(
+                if (!permissionCheck(Manifest.permission.READ_CONTACTS)) {
+                    permissionApply(
                         Manifest.permission.READ_CONTACTS,
                         Constraint.PERMISSION_READ_CONTACTS_CODE,
                         getString(R.string.permission_read_contacts_apply_message),
                         getString(R.string.permission_read_contacts_apply_denied)
                     )
                 } else {
-                    requestContacts()
+                    intentSelectContact()
                 }
 
             }

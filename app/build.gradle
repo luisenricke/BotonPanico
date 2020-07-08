@@ -52,7 +52,6 @@ dependencies {
     implementation AndroidLib.coreKtx
     implementation AndroidLib.fragmentKtx
     implementation AndroidLib.lifecycleExt
-    implementation AndroidLib.preference
     implementation AndroidLib.legacy
 
     implementation AndroidLib.navigationFragmentKtx

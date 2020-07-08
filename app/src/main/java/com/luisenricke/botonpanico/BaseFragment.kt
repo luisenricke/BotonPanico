@@ -1,19 +1,13 @@
 package com.luisenricke.botonpanico
 
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 import timber.log.Timber
 
 @Suppress("unused")
 abstract class BaseFragment : Fragment() {
-    fun getActivityContext(): MainActivity = (activity as MainActivity)
 
-    protected fun requestContacts() {
-        val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
-        this.startActivityForResult(intent, Constraint.INTENT_READ_CONTACTS_CODE)
-    }
+    fun getActivityContext(): MainActivity = (activity as MainActivity)
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -31,7 +25,7 @@ abstract class BaseFragment : Fragment() {
             Constraint.PERMISSION_READ_CONTACTS_CODE -> {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Timber.i(getString(R.string.permission_read_contacts_granted))
-                    requestContacts()
+                    intentSelectContact()
                 } else {
                     Timber.e(getString(R.string.permission_read_contacts_denied))
                 }
