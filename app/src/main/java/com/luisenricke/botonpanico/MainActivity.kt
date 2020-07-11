@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.luisenricke.androidext.toastShort
 import com.luisenricke.botonpanico.databinding.ActivityMainBinding
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,12 +46,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         val locationTrack = LocationTrack(this)
-        if (locationTrack.isProvidersAvailable) {
+//        if (locationTrack.isProvidersAvailable) {
             locationTrack.process()
             val longitude = locationTrack.longitude
             val latitude = locationTrack.latitude
             toastShort("$latitude, $longitude")
-        }
+            Timber.i("$latitude, $longitude")
+//        }else{
+//            Timber.i("no funciona :(")
+//        }
     }
 
     override fun onStop() {

@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.luisenricke.androidext.preferenceGet
+import com.luisenricke.botonpanico.SensorForeground
 import com.luisenricke.botonpanico.databinding.FragmentHomeBinding
+import timber.log.Timber
 
 
 class HomeFragment : Fragment() {
@@ -18,9 +21,16 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val checkPhone = this.preferenceGet("phone", String::class)
+        Timber.i("phone: $checkPhone")
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.apply {
+
+            btnStart.setOnClickListener { SensorForeground.startService(root.context) }
+
+            btnStop.setOnClickListener { SensorForeground.stopService(root.context) }
 
         }
 

@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import androidx.core.database.getStringOrNull
 import com.luisenricke.androidext.permissionApply
 import com.luisenricke.androidext.permissionCheck
+import com.luisenricke.androidext.preferenceSet
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
@@ -64,6 +65,7 @@ class ProfileFragment : BaseFragment() {
             Constraint.INTENT_READ_CONTACTS_CODE -> {
                 val contact = getContact(binding.root.context, data)
                 Timber.i("contact: \n $contact")
+                this.preferenceSet("phone", contact.phone)
             }
         }
     }
