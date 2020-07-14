@@ -1,4 +1,4 @@
-package com.luisenricke.androidext.room.dao
+package com.luisenricke.room.dao
 
 import androidx.room.Update
 

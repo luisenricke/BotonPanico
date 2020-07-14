@@ -38,3 +38,9 @@ object KotlinExt {
     const val versionCode = 1
     const val versionName = "1.0"
 }
+
+@Suppress("unused")
+object Room {
+    const val versionCode = 1
+    const val versionName = "1.0"
+}

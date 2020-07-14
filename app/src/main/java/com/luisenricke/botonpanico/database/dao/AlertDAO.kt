@@ -2,18 +2,15 @@ package com.luisenricke.botonpanico.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.luisenricke.androidext.room.dao.Base
-import com.luisenricke.androidext.room.dao.Delete
-import com.luisenricke.androidext.room.dao.PrimaryKey
-import com.luisenricke.androidext.room.dao.Update
 import com.luisenricke.botonpanico.database.entity.Alert
+import com.luisenricke.room.dao.Base
+import com.luisenricke.room.dao.Delete
+import com.luisenricke.room.dao.PrimaryKey
+import com.luisenricke.room.dao.Update
 
-@Dao
 @Suppress("unused")
-abstract class AlertDAO : Base<Alert>,
-    Update<Alert>,
-    Delete<Alert>,
-    PrimaryKey<Alert> {
+@Dao
+abstract class AlertDAO : Base<Alert>, Update<Alert>, Delete<Alert>, PrimaryKey<Alert> {
 
     @Query("SELECT COUNT(*) FROM ${Alert.SCHEMA.TABLE}")
     abstract override fun count(): Long
@@ -25,7 +22,7 @@ abstract class AlertDAO : Base<Alert>,
     abstract override fun drop()
 
     @Query("SELECT * FROM ${Alert.SCHEMA.TABLE} WHERE id = :id")
-    abstract override fun get(id: Long): Alert
+    abstract override fun get(id: Long): Alert?
 
     @Query("SELECT * FROM ${Alert.SCHEMA.TABLE} WHERE id IN(:ids)")
     abstract override fun get(ids: LongArray): List<Alert>

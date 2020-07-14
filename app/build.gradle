@@ -45,6 +45,7 @@ dependencies {
 
     implementation project(Modules.androidExt)
     implementation project(Modules.kotlinExt)
+    implementation project(Modules.room)
 
     implementation DefaultConfig.kotlin
 
@@ -61,10 +62,10 @@ dependencies {
     implementation ViewLib.constraintLayout
     implementation ViewLib.recyclerview
 
-    implementation DatabaseLib.runtimeRoom
-    kapt DatabaseLib.compilerRoom
-    implementation DatabaseLib.rxJavaRoom
-    testImplementation DatabaseLib.testingRoom
+    implementation RoomLib.runtime
+    kapt RoomLib.compiler
+    implementation RoomLib.rxJava
+    testImplementation RoomLib.testing
 
     testImplementation TestLib.junit
     androidTestImplementation TestLib.junitExt

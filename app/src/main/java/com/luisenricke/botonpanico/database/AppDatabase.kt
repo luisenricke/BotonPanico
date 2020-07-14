@@ -6,12 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.luisenricke.androidext.room.converter.Date
-import com.luisenricke.androidext.room.ioThread
 import com.luisenricke.botonpanico.database.dao.AlertDAO
 import com.luisenricke.botonpanico.database.dao.ContactDAO
 import com.luisenricke.botonpanico.database.entity.Alert
 import com.luisenricke.botonpanico.database.entity.Contact
+import com.luisenricke.room.converter.Date
+import com.luisenricke.room.ioThread
 
 @Database(
     entities = [

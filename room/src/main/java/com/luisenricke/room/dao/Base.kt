@@ -1,6 +1,7 @@
-package com.luisenricke.androidext.room.dao
+package com.luisenricke.room.dao
 
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 
 @Suppress("unused")
 interface Base<X> {
@@ -10,7 +11,7 @@ interface Base<X> {
      * @param row: the object to be inserted.
      * @return id of the row inserted.
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(row: X): Long
 
     /**
@@ -19,7 +20,7 @@ interface Base<X> {
      * @param rows: the objects to be inserted.
      * @return the list of id's of the rows inserted.
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun inserts(vararg rows: X): List<Long>
 
     /**
@@ -28,7 +29,7 @@ interface Base<X> {
      * @param rows: the objects to be inserted.
      * @return the list of id's of the rows inserted.
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun inserts(rows: List<X>): List<Long>
 
     /**

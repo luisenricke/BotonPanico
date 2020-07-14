@@ -77,16 +77,16 @@ object ToolLib {
 }
 
 @Suppress("unused")
-object DatabaseLib {
+object RoomLib {
 
     object Version {
         const val room = "2.2.5"
     }
 
-    const val runtimeRoom = "androidx.room:room-runtime:${Version.room}"
-    const val compilerRoom = "androidx.room:room-compiler:${Version.room}"
-    const val rxJavaRoom = "androidx.room:room-rxjava2:${Version.room}"
-    const val testingRoom = "androidx.room:room-testing:${Version.room}"
+    const val runtime = "androidx.room:room-runtime:${Version.room}"
+    const val compiler = "androidx.room:room-compiler:${Version.room}"
+    const val rxJava = "androidx.room:room-rxjava2:${Version.room}"
+    const val testing = "androidx.room:room-testing:${Version.room}"
 }
 
 @Suppress("unused")

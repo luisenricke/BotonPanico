@@ -2,16 +2,16 @@ package com.luisenricke.botonpanico.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.luisenricke.androidext.room.dao.*
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.database.entity.Contact.SCHEMA
+import com.luisenricke.room.dao.Base
+import com.luisenricke.room.dao.Delete
+import com.luisenricke.room.dao.PrimaryKey
+import com.luisenricke.room.dao.Update
 
-@Dao
 @Suppress("unused")
-abstract class ContactDAO : Base<Contact>,
-    Update<Contact>,
-    Delete<Contact>,
-    PrimaryKey<Contact> {
+@Dao
+abstract class ContactDAO : Base<Contact>, Update<Contact>, Delete<Contact>, PrimaryKey<Contact> {
 
     @Query("SELECT COUNT(*) FROM ${SCHEMA.TABLE}")
     abstract override fun count(): Long
@@ -23,7 +23,7 @@ abstract class ContactDAO : Base<Contact>,
     abstract override fun drop()
 
     @Query("SELECT * FROM ${SCHEMA.TABLE} WHERE id = :id")
-    abstract override fun get(id: Long): Contact
+    abstract override fun get(id: Long): Contact?
 
     @Query("SELECT * FROM ${SCHEMA.TABLE} WHERE id IN(:ids)")
     abstract override fun get(ids: LongArray): List<Contact>

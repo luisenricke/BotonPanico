@@ -11,8 +11,8 @@ android {
         minSdkVersion DefaultConfig.minSdk
         targetSdkVersion DefaultConfig.targetSdk
 
-        versionCode AndroidExt.versionCode
-        versionName AndroidExt.versionName
+        versionCode Room.versionCode
+        versionName Room.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -37,10 +37,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-
     implementation DefaultConfig.kotlin
 
     implementation AndroidLib.appCompat
     implementation AndroidLib.coreKtx
-    implementation AndroidLib.preference
+
+    testImplementation TestLib.junit
+    androidTestImplementation TestLib.junitExt
+    androidTestImplementation TestLib.espresso
+
+    implementation RoomLib.runtime
 }
