@@ -26,12 +26,12 @@
         android:theme="@style/AppTheme">
 
         <service
-            android:name=".SensorForeground"
+            android:name=".service.SensorForeground"
             android:enabled="true"
             android:exported="false" />
 
         <receiver
-            android:name=".AutoStartUpBootReceiver"
+            android:name=".receiver.AutoStartUpBootReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

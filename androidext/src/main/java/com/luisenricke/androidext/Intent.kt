@@ -1,4 +1,4 @@
-package com.luisenricke.botonpanico
+package com.luisenricke.androidext
 
 import android.content.Context
 import android.content.Intent
@@ -8,15 +8,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 @Suppress("unused")
-fun AppCompatActivity.intentSelectContact() {
+fun AppCompatActivity.intentSelectContact(requestCode: Int) {
     val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
-    this.startActivityForResult(intent, Constraint.INTENT_READ_CONTACTS_CODE)
+    this.startActivityForResult(intent, requestCode)
 }
 
 @Suppress("unused")
-fun Fragment.intentSelectContact() {
+fun Fragment.intentSelectContact(requestCode: Int) {
     val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
-    this.startActivityForResult(intent, Constraint.INTENT_READ_CONTACTS_CODE)
+    this.startActivityForResult(intent, requestCode)
 }
 
 @Suppress("unused")

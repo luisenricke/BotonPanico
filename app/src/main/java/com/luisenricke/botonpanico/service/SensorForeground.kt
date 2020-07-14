@@ -1,4 +1,4 @@
-package com.luisenricke.botonpanico
+package com.luisenricke.botonpanico.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -17,7 +17,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.luisenricke.androidext.preferenceGet
-import com.luisenricke.androidext.toastShort
+import com.luisenricke.botonpanico.MainActivity
 import com.luisenricke.kotlinext.roundDecimals
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +26,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.lang.Math.abs
 
+// https://expertise.jetruby.com/how-to-implement-motion-sensor-in-a-kotlin-app-b70db1b5b8e5
+/// https://stackoverflow.com/a/55607504/12923478
 class SensorForeground : Service(), SensorEventListener {
 
     private val CHANNEL_ID = SensorForeground.javaClass.name + "ChannelID"
@@ -126,7 +128,6 @@ class SensorForeground : Service(), SensorEventListener {
         }
     }
 
-    /// https://stackoverflow.com/a/55607504/12923478
     private fun motionCheck() {
         val duration = 5_000
         var startTime = System.currentTimeMillis()
@@ -143,6 +144,7 @@ class SensorForeground : Service(), SensorEventListener {
             if(count>8){
                 // Get phone
                 val phone = applicationContext.preferenceGet("phone", String::class)
+
                 // Location
                 val locationTrack = LocationTrack(applicationContext)
                 locationTrack.process()

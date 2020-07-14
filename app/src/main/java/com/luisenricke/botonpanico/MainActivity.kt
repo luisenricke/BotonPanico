@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.luisenricke.androidext.toastShort
 import com.luisenricke.botonpanico.databinding.ActivityMainBinding
+import com.luisenricke.botonpanico.service.LocationTrack
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
@@ -45,7 +46,8 @@ class MainActivity : AppCompatActivity() {
             bottom.setupWithNavController(navController)
         }
 
-        val locationTrack = LocationTrack(this)
+        val locationTrack =
+            LocationTrack(this)
 //        if (locationTrack.isProvidersAvailable) {
             locationTrack.process()
             val longitude = locationTrack.longitude

@@ -2,6 +2,7 @@ package com.luisenricke.botonpanico
 
 import android.content.pm.PackageManager
 import androidx.fragment.app.Fragment
+import com.luisenricke.androidext.intentSelectContact
 import timber.log.Timber
 
 @Suppress("unused")
@@ -25,7 +26,7 @@ abstract class BaseFragment : Fragment() {
             Constraint.PERMISSION_READ_CONTACTS_CODE -> {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Timber.i(getString(R.string.permission_read_contacts_granted))
-                    intentSelectContact()
+                    intentSelectContact(Constraint.INTENT_READ_CONTACTS_CODE)
                 } else {
                     Timber.e(getString(R.string.permission_read_contacts_denied))
                 }

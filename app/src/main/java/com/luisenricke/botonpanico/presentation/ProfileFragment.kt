@@ -19,7 +19,7 @@ import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.FragmentProfileBinding
-import com.luisenricke.botonpanico.intentSelectContact
+import com.luisenricke.androidext.intentSelectContact
 import timber.log.Timber
 
 class ProfileFragment : BaseFragment() {
@@ -45,7 +45,7 @@ class ProfileFragment : BaseFragment() {
                         getString(R.string.permission_read_contacts_apply_denied)
                     )
                 } else {
-                    intentSelectContact()
+                    intentSelectContact(Constraint.INTENT_READ_CONTACTS_CODE)
                 }
 
             }

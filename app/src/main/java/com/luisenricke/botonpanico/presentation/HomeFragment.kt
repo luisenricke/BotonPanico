@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.luisenricke.androidext.preferenceGet
-import com.luisenricke.botonpanico.SensorForeground
+import com.luisenricke.botonpanico.service.SensorForeground
 import com.luisenricke.botonpanico.databinding.FragmentHomeBinding
 import timber.log.Timber
 

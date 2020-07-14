@@ -1,4 +1,4 @@
-package com.luisenricke.botonpanico
+package com.luisenricke.botonpanico.service
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -12,6 +12,8 @@ import android.os.Bundle
 import android.os.IBinder
 import com.luisenricke.androidext.permissionApply
 import com.luisenricke.androidext.permissionCheck
+import com.luisenricke.botonpanico.Constraint
+import com.luisenricke.botonpanico.R
 import timber.log.Timber
 
 // https://stackoverflow.com/questions/3145089/what-is-the-simplest-and-most-robust-way-to-get-the-users-current-location-on-a?lq=1
