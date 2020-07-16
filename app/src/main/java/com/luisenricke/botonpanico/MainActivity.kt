@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.luisenricke.androidext.toastShort
 import com.luisenricke.botonpanico.databinding.ActivityMainBinding
+import com.luisenricke.botonpanico.service.LocationIntentService
 import com.luisenricke.botonpanico.service.LocationTrack
 import timber.log.Timber
 
@@ -46,17 +47,18 @@ class MainActivity : AppCompatActivity() {
             bottom.setupWithNavController(navController)
         }
 
-        val locationTrack =
-            LocationTrack(this)
+//        val locationTrack = LocationTrack()
 //        if (locationTrack.isProvidersAvailable) {
-            locationTrack.process()
-            val longitude = locationTrack.longitude
-            val latitude = locationTrack.latitude
-            toastShort("$latitude, $longitude")
-            Timber.i("$latitude, $longitude")
+//            locationTrack.process()
+//            val longitude = locationTrack.longitude
+//            val latitude = locationTrack.latitude
+//            toastShort("$latitude, $longitude")
+//            Timber.i("$latitude, $longitude")
 //        }else{
 //            Timber.i("no funciona :(")
 //        }
+
+        LocationIntentService.startService(this)
     }
 
     override fun onStop() {

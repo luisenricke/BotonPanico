@@ -1,9 +1,6 @@
 package com.luisenricke.botonpanico.service
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
@@ -28,6 +25,7 @@ import java.lang.Math.abs
 
 // https://expertise.jetruby.com/how-to-implement-motion-sensor-in-a-kotlin-app-b70db1b5b8e5
 /// https://stackoverflow.com/a/55607504/12923478
+// TODO: migrate IntentService
 class SensorForeground : Service(), SensorEventListener {
 
     private val CHANNEL_ID = SensorForeground.javaClass.name + "ChannelID"

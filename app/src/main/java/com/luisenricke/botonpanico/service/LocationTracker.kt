@@ -10,6 +10,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import com.luisenricke.androidext.permissionApply
 import com.luisenricke.androidext.permissionCheck
 import com.luisenricke.botonpanico.Constraint
@@ -32,7 +33,7 @@ class LocationTrack(private val context: Context) : Service(), LocationListener 
 
     val isProvidersAvailable: Boolean
         get() = (isGPSAvailable && isNetworkAvailable)
-            .also { Timber.e("gps: ${isGPSAvailable} && network: ${isNetworkAvailable}") }
+            .also { Log.e(TAG, "gps: ${isGPSAvailable} && network: ${isNetworkAvailable}") }
 
     val latitude: Double
         get() = location?.latitude ?: 0.0
@@ -49,7 +50,7 @@ class LocationTrack(private val context: Context) : Service(), LocationListener 
         isNetworkAvailable.takeIf { !it }
             .also { Timber.e(context.getString(R.string.network_provider_disable)) }
 
-       // if (!isProvidersAvailable) return
+        // if (!isProvidersAvailable) return
 
         if (!context.permissionCheck(Manifest.permission.ACCESS_FINE_LOCATION)
             && !context.permissionCheck(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -70,7 +71,7 @@ class LocationTrack(private val context: Context) : Service(), LocationListener 
                 this
             )
 
-            location = when{
+            location = when {
                 isGPSAvailable -> manager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
                 isNetworkAvailable -> manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
                 else -> null
@@ -82,9 +83,7 @@ class LocationTrack(private val context: Context) : Service(), LocationListener 
         manager.removeUpdates(this)
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onLocationChanged(location: Location?) {}
     override fun onStatusChanged(s: String, i: Int, bundle: Bundle) {}
@@ -92,6 +91,8 @@ class LocationTrack(private val context: Context) : Service(), LocationListener 
     override fun onProviderDisabled(s: String) {}
 
     companion object {
+        private val TAG = LocationTrack::class.simpleName
+
         private const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Long = 10
         private const val MIN_TIME_BW_UPDATES = 1000 * 60 * 1.toLong()
     }
