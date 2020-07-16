@@ -26,6 +26,12 @@ android {
         }
     }
 
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
     compileOptions {
         sourceCompatibility = DefaultConfig.jvm
         targetCompatibility = DefaultConfig.jvm
@@ -68,6 +74,7 @@ dependencies {
     testImplementation RoomLib.testing
 
     testImplementation TestLib.junit
+    testImplementation TestLib.robolectric
     androidTestImplementation TestLib.junitExt
     androidTestImplementation TestLib.espresso
 

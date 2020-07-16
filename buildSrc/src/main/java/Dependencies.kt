@@ -36,6 +36,7 @@ object TestLib {
         const val mockitoCore = "3.3.3"
         const val testRunner = "1.2.0"
         const val espressoCore = "3.2.0"
+        const val robolectric = "4.3"
     }
 
     const val junit = "junit:junit:${Version.junit}"
@@ -44,6 +45,7 @@ object TestLib {
 
     const val mockito = "org.mockito:mockito-core:${Version.mockitoCore}"
     const val runner = "androidx.test:runner:${Version.testRunner}"
+    const val robolectric = "org.robolectric:robolectric:${Version.robolectric}"
 }
 
 @Suppress("unused")
