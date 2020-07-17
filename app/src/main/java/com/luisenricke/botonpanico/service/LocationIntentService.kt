@@ -1,10 +1,16 @@
 package com.luisenricke.botonpanico.service
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.IntentService
-import android.content.Intent
 import android.content.Context
-import android.location.Criteria
+import android.content.Intent
+import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Bundle
+import com.luisenricke.androidext.checkProviders
+import com.luisenricke.androidext.permissionCheck
 import com.luisenricke.botonpanico.R
 import timber.log.Timber
 
@@ -13,60 +19,74 @@ import timber.log.Timber
 class LocationIntentService : IntentService("LocationIntentService") {
 
     companion object {
+        private const val MIN_TIME: Long = 1000L * 60L * 1L // milliseconds * seconds * minutes
+        private const val MIN_DISTANCE: Float = 10f         // meters
+
         @JvmStatic
         fun startService(context: Context) {
             val intent = Intent(context, LocationIntentService::class.java)
             context.startService(intent)
         }
-
-        var isGPSAvailable = false
-        var isNetworkAvailable = false
-        var isPassiveNetworkAvailable = false
     }
 
-    private lateinit var context: Context
-    private lateinit var manager: LocationManager
+    //    private lateinit var context: Context
+    private val manager: LocationManager =
+        getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
     private var bestProvider: String? = null
 
-    val criteria = Criteria().apply {
-        accuracy = Criteria.ACCURACY_FINE
-        isAltitudeRequired = false
-        isBearingRequired = false
-        isSpeedRequired = false
-        isCostAllowed = true
-        powerRequirement = Criteria.POWER_HIGH
+    private val isPermissionEnable: Boolean
+        get() = permissionCheck(Manifest.permission.ACCESS_FINE_LOCATION)
+
+    private var listener: LocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location?) {}
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+        override fun onProviderEnabled(provider: String?) {}
+        override fun onProviderDisabled(provider: String?) {}
     }
 
     override fun onCreate() {
         super.onCreate()
-
-        context = applicationContext
-        manager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
-        isGPSAvailable = manager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        isNetworkAvailable = manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-        isPassiveNetworkAvailable = manager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER)
-
-
-
-        bestProvider = manager.getBestProvider(criteria, true)
-        Timber.i("gps: $isGPSAvailable, network: $isNetworkAvailable, passive: $isPassiveNetworkAvailable")
-
-        isGPSAvailable.let { if (!it) Timber.e(context.getString(R.string.gps_provider_disable)) }
-
-        isNetworkAvailable.let { if (!it) Timber.e(context.getString(R.string.network_provider_disable)) }
-
-        // TODO: Generate String
-        isPassiveNetworkAvailable.let { if (!it) Timber.e("Passive provider don't available") }
+        manager.checkProviders(this)
     }
 
     override fun onHandleIntent(intent: Intent?) {
-        Timber.i("Provider: $bestProvider")
+        val location: Location? = getLocation()
+        Timber.i("lat: ${location?.latitude}, lon: ${location?.longitude}")
+
+        stopSelf()
     }
 
-    override fun onStart(intent: Intent?, startId: Int) {
-        //super.onStart(intent, startId)
-        onHandleIntent(intent!!)
-        stopSelf()
+    @SuppressLint("MissingPermission")
+    private fun getLocation(): Location? {
+        var location: Location? = null
+
+        if (!isPermissionEnable) Timber.e(getString(R.string.permission_access_fine_location_denied))
+            .also { return location }
+
+        if (bestProvider == null) Timber.e(getString(R.string.location_provider_null))
+            .also { return location }
+
+//        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
+        manager.requestSingleUpdate(bestProvider!!, listener, null)
+        location = manager.getLastKnownLocation(bestProvider!!)
+
+        return location
+    }
+
+    private fun removeUpdate() {
+        manager.removeUpdates(listener)
+    }
+
+    //    override fun onStart(intent: Intent?, startId: Int) {
+//        //super.onStart(intent, startId)
+//        onHandleIntent(intent!!)
+//        stopSelf()
+//    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.d("onDestroy -> LocationIntentService")
+        removeUpdate() // FIX: Check if get location with this
     }
 }

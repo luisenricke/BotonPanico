@@ -10,30 +10,37 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
-import com.luisenricke.androidext.permissionApply
+import com.luisenricke.androidext.getBestProvider
 import com.luisenricke.androidext.permissionCheck
-import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
 import timber.log.Timber
 
 // https://stackoverflow.com/questions/3145089/what-is-the-simplest-and-most-robust-way-to-get-the-users-current-location-on-a?lq=1
 // https://stackoverflow.com/questions/20210565/android-location-manager-get-gps-location-if-no-gps-then-get-to-network-provid
-class LocationTrack(private val context: Context) : Service(), LocationListener {
+class LocationTrack() : Service() {
+
+    companion object {
+        private const val MIN_TIME: Long = 1000L * 60L * 1L // milliseconds * seconds * minutes
+        private const val MIN_DISTANCE: Float = 10f         // meters
+    }
+
+    private val manager: LocationManager =
+        getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+    private val bestProvider: String?
+        get() = manager.getBestProvider()
+
+    private val isPermissionEnable: Boolean
+        get() = permissionCheck(Manifest.permission.ACCESS_FINE_LOCATION)
+
+    private val listener: LocationListener = object : LocationListener {
+        override fun onLocationChanged(location: Location?) {}
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+        override fun onProviderEnabled(provider: String?) {}
+        override fun onProviderDisabled(provider: String?) {}
+    }
 
     private var location: Location? = null
-
-    private val manager: LocationManager by lazy { context.getSystemService(Context.LOCATION_SERVICE) as LocationManager }
-
-    private val isGPSAvailable: Boolean
-        get() = manager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-
-    private val isNetworkAvailable: Boolean
-        get() = manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-
-    val isProvidersAvailable: Boolean
-        get() = (isGPSAvailable && isNetworkAvailable)
-            .also { Log.e(TAG, "gps: ${isGPSAvailable} && network: ${isNetworkAvailable}") }
 
     val latitude: Double
         get() = location?.latitude ?: 0.0
@@ -41,59 +48,28 @@ class LocationTrack(private val context: Context) : Service(), LocationListener 
     val longitude: Double
         get() = location?.longitude ?: 0.0
 
-
-    @SuppressLint("MissingPermission")
-    fun process() {
-        isGPSAvailable.takeIf { !it }
-            .also { Timber.e(context.getString(R.string.gps_provider_disable)) }
-
-        isNetworkAvailable.takeIf { !it }
-            .also { Timber.e(context.getString(R.string.network_provider_disable)) }
-
-        // if (!isProvidersAvailable) return
-
-        if (!context.permissionCheck(Manifest.permission.ACCESS_FINE_LOCATION)
-            && !context.permissionCheck(Manifest.permission.ACCESS_COARSE_LOCATION)
-        ) {
-            Timber.i("request permission")
-            context.permissionApply(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Constraint.PERMISSION_ACCESS_FINE_LOCATION_CODE,
-                context.getString(R.string.permission_access_fine_location_apply_message),
-                context.getString(R.string.permission_access_fine_location_apply_denied)
-            )
-        } else {
-            Timber.i("request location")
-            manager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                MIN_TIME_BW_UPDATES,
-                MIN_DISTANCE_CHANGE_FOR_UPDATES.toFloat(),
-                this
-            )
-
-            location = when {
-                isGPSAvailable -> manager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                isNetworkAvailable -> manager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                else -> null
-            }
-        }
+    init {
+        location = getLocation()
+        Timber.i("lat: ${location?.latitude}, lon: ${location?.longitude}")
     }
 
-    fun stopListener() {
-        manager.removeUpdates(this)
+    @SuppressLint("MissingPermission")
+    fun getLocation(): Location? {
+        var location: Location? = null
+
+        if (!isPermissionEnable) Timber.e(getString(R.string.permission_access_fine_location_denied))
+            .also { return location }
+
+        if (bestProvider == null) Timber.e(getString(R.string.location_provider_null))
+            .also { return location }
+
+//        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
+        manager.requestSingleUpdate(bestProvider!!, listener, null)
+        location = manager.getLastKnownLocation(bestProvider!!)
+        Timber.i("lat: ${location?.latitude}, lon: ${location?.longitude}")
+
+        return location
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
-
-    override fun onLocationChanged(location: Location?) {}
-    override fun onStatusChanged(s: String, i: Int, bundle: Bundle) {}
-    override fun onProviderEnabled(s: String) {}
-    override fun onProviderDisabled(s: String) {}
-
-    companion object {
-        private val TAG = LocationTrack::class.simpleName
-
-        private const val MIN_DISTANCE_CHANGE_FOR_UPDATES: Long = 10
-        private const val MIN_TIME_BW_UPDATES = 1000 * 60 * 1.toLong()
-    }
 }

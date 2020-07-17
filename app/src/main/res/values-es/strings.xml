@@ -21,6 +21,5 @@
     <string name="permission_access_fine_location_apply_message">Este permiso sirve para obtener la ubicación de tu dispositivo</string>
     <string name="permission_access_fine_location_apply_denied">Sin el permiso no se puedrá obtener la ubicación cuando se activan las alertas</string>
 
-    <string name="gps_provider_disable">El proveedor de GPS no está disponible.</string>
-    <string name="network_provider_disable">El proveedor de red no está disponible.</string>
+    <string name="location_provider_null">No coincide con ningún proveedor de localización</string>
 </resources>
