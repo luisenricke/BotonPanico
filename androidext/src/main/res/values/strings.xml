@@ -3,7 +3,11 @@
     <string name="permission_granted">Permission already granted</string>
     <string name="permission_denied">The functionality of the application may be restricted without permission</string>
     <string name="permission_message">The permission is needed for the normal functionality of the app, please enable it</string>
-    <string name="permission_title">Permission</string>
+    <string name="permission_title">Request permission</string>
     <string name="permission_positive_button">Accept</string>
     <string name="permission_negative_button">Cancel</string>
+
+    <string name="gps_provider_disable">GPS provider don\'t available</string>
+    <string name="network_provider_disable">Network provider don\'t available</string>
+    <string name="passive_provider_disable">Passive provider don\'t available</string>
 </resources>

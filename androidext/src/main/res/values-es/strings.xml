@@ -3,7 +3,11 @@
     <string name="permission_granted">Permiso ya concedido</string>
     <string name="permission_denied">La funcionalidad de la aplicación puede ser restringida sin el permiso</string>
     <string name="permission_message">El permiso es necesario para el correcto funcionamiento de la aplicación, por favor activalo</string>
-    <string name="permission_title">Permiso</string>
+    <string name="permission_title">Solicitud de permiso</string>
     <string name="permission_positive_button">Aceptar</string>
     <string name="permission_negative_button">Cancelar</string>
+
+    <string name="gps_provider_disable">El proveedor de GPS no está disponible.</string>
+    <string name="network_provider_disable">El proveedor de red no está disponible.</string>
+    <string name="passive_provider_disable">El proveedor de pasivo de red no está disponible.</string>
 </resources>
