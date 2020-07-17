@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 
 // TODO: make functions to handle list of permission
 
+private const val TAG = "LocationManagerExt"
+
 @Suppress("unused")
 fun AppCompatActivity.permissionApply(
     permission: String,
@@ -22,7 +24,7 @@ fun AppCompatActivity.permissionApply(
 ) {
     when {
         checkSelfPermission(this, permission) == PERMISSION_GRANTED -> {
-            Log.d("PermissionExt", "${getString(R.string.permission_granted)} of $permission")
+            Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
         }
 
         shouldShowRequestPermissionRationale(this, permission) -> {
@@ -63,7 +65,7 @@ fun Fragment.permissionApply(
 
     when {
         checkSelfPermission(context, permission) == PERMISSION_GRANTED -> {
-            Log.d("PermissionExt", "${getString(R.string.permission_granted)} of $permission")
+            Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
         }
 
         shouldShowRequestPermissionRationale(activity, permission) -> {
@@ -103,7 +105,7 @@ fun Context.permissionApply(
 
     when {
         checkSelfPermission(this, permission) == PERMISSION_GRANTED -> {
-            Log.d("PermissionExt", "${getString(R.string.permission_granted)} of $permission")
+            Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
         }
 
         shouldShowRequestPermissionRationale(activity, permission) -> {
