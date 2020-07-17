@@ -8,11 +8,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.luisenricke.androidext.toastShort
 import com.luisenricke.botonpanico.databinding.ActivityMainBinding
-import com.luisenricke.botonpanico.service.LocationIntentService
-import com.luisenricke.botonpanico.service.LocationTrack
-import timber.log.Timber
+import com.luisenricke.botonpanico.service.LastLocation
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,11 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     private val appBarConfiguration: AppBarConfiguration by lazy {
-        AppBarConfiguration(
-            setOf(
-                R.id.nav_home, R.id.nav_alert, R.id.nav_profile
-            )
-        )
+        AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_alert, R.id.nav_profile))
     }
 
     private val navController: NavController by lazy {
@@ -47,18 +40,7 @@ class MainActivity : AppCompatActivity() {
             bottom.setupWithNavController(navController)
         }
 
-//        val locationTrack = LocationTrack()
-//        if (locationTrack.isProvidersAvailable) {
-//            locationTrack.process()
-//            val longitude = locationTrack.longitude
-//            val latitude = locationTrack.latitude
-//            toastShort("$latitude, $longitude")
-//            Timber.i("$latitude, $longitude")
-//        }else{
-//            Timber.i("no funciona :(")
-//        }
-
-        LocationIntentService.startService(this)
+        LastLocation.getInstance(this).getLocation()
     }
 
     override fun onStop() {

@@ -26,6 +26,11 @@ import org.robolectric.shadows.*
 
 
 // http://robolectric.org/javadoc/4.3/
+// https://stackoverflow.com/questions/12025611/how-to-test-an-intentservice-with-robolectric
+// https://stackoverflow.com/questions/30625378/shadownetworkinfo-is-always-type-mobile-when-testing-wifi-connectivity-with-robo
+// https://stackoverflow.com/questions/27230186/change-android-connectivity-with-robolectric
+// https://github.com/robolectric/robolectric/blob/master/robolectric/src/test/java/org/robolectric/shadows/ShadowWifiManagerTest.java
+// https://stackoverflow.com/questions/32547006/connectivitymanager-getnetworkinfoint-deprecated
 @RunWith(RobolectricTestRunner::class)
 @Config(
     sdk = [Build.VERSION_CODES.P]
