@@ -16,11 +16,12 @@ import timber.log.Timber
 
 // https://stackoverflow.com/questions/6775257/android-location-providers-gps-or-network-provider
 // https://developerlife.com/2010/10/20/gps/
+@Suppress("unused")
 class LocationIntentService : IntentService("LocationIntentService") {
 
     companion object {
         private const val MIN_TIME: Long = 1000L * 60L * 1L // milliseconds * seconds * minutes
-        private const val MIN_DISTANCE: Float = 10f         // meters
+        private const val MIN_DISTANCE: Float = 10f // meters
 
         @JvmStatic
         fun startService(context: Context) {
@@ -29,7 +30,8 @@ class LocationIntentService : IntentService("LocationIntentService") {
         }
     }
 
-    //    private lateinit var context: Context
+//    private lateinit var context: Context
+
     private val manager: LocationManager =
         getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -50,11 +52,21 @@ class LocationIntentService : IntentService("LocationIntentService") {
         manager.checkProviders(this)
     }
 
+//    override fun onStart(intent: Intent?, startId: Int) {
+//        //super.onStart(intent, startId)
+//        onHandleIntent(intent!!)
+//        stopSelf()
+//    }
+
     override fun onHandleIntent(intent: Intent?) {
         val location: Location? = getLocation()
         Timber.i("lat: ${location?.latitude}, lon: ${location?.longitude}")
-
         stopSelf()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        removeUpdate() // FIX: Check if get location with this
     }
 
     @SuppressLint("MissingPermission")
@@ -76,17 +88,5 @@ class LocationIntentService : IntentService("LocationIntentService") {
 
     private fun removeUpdate() {
         manager.removeUpdates(listener)
-    }
-
-    //    override fun onStart(intent: Intent?, startId: Int) {
-//        //super.onStart(intent, startId)
-//        onHandleIntent(intent!!)
-//        stopSelf()
-//    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Timber.d("onDestroy -> LocationIntentService")
-        removeUpdate() // FIX: Check if get location with this
     }
 }

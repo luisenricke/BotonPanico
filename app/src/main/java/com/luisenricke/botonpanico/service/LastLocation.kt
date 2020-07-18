@@ -19,7 +19,7 @@ class LastLocation private constructor(private val context: Context) {
 
     companion object : SingletonHolder<LastLocation, Context>(::LastLocation) {
         private const val MIN_TIME: Long = 1000L * 60L * 1L // milliseconds * seconds * minutes
-        private const val MIN_DISTANCE: Float = 10f         // meters
+        private const val MIN_DISTANCE: Float = 10f // meters
     }
 
     //    private lateinit var context: Context
@@ -39,12 +39,6 @@ class LastLocation private constructor(private val context: Context) {
         override fun onProviderDisabled(provider: String?) {}
     }
 
-    // TODO: delete this when finish class
-    init {
-        manager.checkProviders(context)
-        Timber.i("provider: $bestProvider")
-    }
-
     @SuppressLint("MissingPermission")
     fun getLocation(): Location? {
         var location: Location? = null
@@ -58,7 +52,6 @@ class LastLocation private constructor(private val context: Context) {
 //        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
         manager.requestSingleUpdate(bestProvider!!, listener, null)
         location = manager.getLastKnownLocation(bestProvider!!)
-        Timber.i("lat: ${location?.latitude}, lon: ${location?.longitude}")
 
         return location
     }

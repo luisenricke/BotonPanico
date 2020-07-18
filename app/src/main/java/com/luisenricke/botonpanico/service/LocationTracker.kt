@@ -17,6 +17,7 @@ import timber.log.Timber
 
 // https://stackoverflow.com/questions/3145089/what-is-the-simplest-and-most-robust-way-to-get-the-users-current-location-on-a?lq=1
 // https://stackoverflow.com/questions/20210565/android-location-manager-get-gps-location-if-no-gps-then-get-to-network-provid
+@Suppress("unused")
 class LocationTrack() : Service() {
 
     companion object {

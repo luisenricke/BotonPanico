@@ -1,5 +1,6 @@
 package com.luisenricke.botonpanico.receiver
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -13,6 +14,7 @@ class AutoStartUpBootReceiver : BroadcastReceiver() {
         val TAG = AutoStartUpBootReceiver::class.simpleName
     }
 
+    @SuppressLint("LogNotTimber")
     override fun onReceive(context: Context, intent: Intent) {
         Log.i(TAG, "onReceive")
 
