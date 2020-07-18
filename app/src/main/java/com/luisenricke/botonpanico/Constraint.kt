@@ -7,4 +7,6 @@ object Constraint {
 
     const val PERMISSION_ACCESS_FINE_LOCATION_CODE = 20
     const val PERMISSION_ACCESS_COARSE_LOCATION = 30
+
+    const val PERMISSION_SEND_SMS = 40
 }

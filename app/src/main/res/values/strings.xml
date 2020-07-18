@@ -22,5 +22,12 @@
     <string name="permission_access_fine_location_apply_message">This permission is used to get locations from your device</string>
     <string name="permission_access_fine_location_apply_denied">Without permission, the location cannot be obtained when the alerts are triggered.</string>
 
+    <string name="permission_send_sms_granted">Permission to send sms is granted</string>
+    <string name="permission_send_sms_denied">Permission to send sms is denied</string>
+    <string name="permission_send_sms_apply_message">This permission is used to send messages to selected contacts</string>
+    <string name="permission_send_sms_apply_denied">Without permission, sms cannot be sent when alerts are activated</string>
+
     <string name="location_provider_null">Doesn\'t match with any location provider</string>
+
+    <string name="vibrator_doesnt_available">Vibrator doesn\'t available</string>
 </resources>
