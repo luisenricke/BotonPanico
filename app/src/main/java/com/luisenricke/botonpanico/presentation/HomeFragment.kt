@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.luisenricke.androidext.preferenceGet
-import com.luisenricke.botonpanico.service.SensorForeground
+import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.databinding.FragmentHomeBinding
+import com.luisenricke.botonpanico.service.SensorForeground
 import timber.log.Timber
 
-
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!

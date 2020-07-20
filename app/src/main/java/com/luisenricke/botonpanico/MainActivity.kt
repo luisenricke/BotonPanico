@@ -9,7 +9,6 @@ import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.luisenricke.botonpanico.databinding.ActivityMainBinding
-import com.luisenricke.botonpanico.service.LastLocation
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,8 +38,6 @@ class MainActivity : AppCompatActivity() {
             setupActionBarWithNavController(navController, appBarConfiguration)
             bottom.setupWithNavController(navController)
         }
-
-        LastLocation.getInstance(this).getLocation()
     }
 
     override fun onStop() {

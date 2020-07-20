@@ -9,4 +9,6 @@ object Constraint {
     const val PERMISSION_ACCESS_COARSE_LOCATION = 30
 
     const val PERMISSION_SEND_SMS = 40
+
+    const val PERMISSION_GROUP_MAKE_ALERT = 100
 }

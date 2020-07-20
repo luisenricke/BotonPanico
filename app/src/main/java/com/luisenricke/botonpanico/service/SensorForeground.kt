@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.abs
 
 // https://expertise.jetruby.com/how-to-implement-motion-sensor-in-a-kotlin-app-b70db1b5b8e5
-/// https://stackoverflow.com/a/55607504/12923478
+// https://stackoverflow.com/a/55607504/12923478
 @Suppress("unused")
 class SensorForeground : Service(), SensorEventListener {
 
@@ -161,30 +161,6 @@ class SensorForeground : Service(), SensorEventListener {
             }
 
             isCycleTriggered = false
-        }
-    }
-    // endregion
-
-    // region permission
-    fun checkLocationPermission() {
-        if (!isPermissionLocationEnable) {
-            permissionApply(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Constraint.PERMISSION_ACCESS_FINE_LOCATION_CODE,
-                getString(R.string.permission_access_fine_location_apply_message),
-                getString(R.string.permission_access_fine_location_apply_denied)
-            )
-        }
-    }
-
-    fun checkSendSMSPermission() {
-        if (!isPermissionSendSMSEnable) {
-            permissionApply(
-                Manifest.permission.SEND_SMS,
-                Constraint.PERMISSION_SEND_SMS,
-                getString(R.string.permission_send_sms_apply_message),
-                getString(R.string.permission_send_sms_apply_denied)
-            )
         }
     }
     // endregion

@@ -22,9 +22,14 @@
     <string name="permission_access_fine_location_apply_denied">Sin el permiso no se puedrá obtener la ubicación cuando se activan las alertas</string>
 
     <string name="permission_send_sms_granted">El permiso para enviar un mensaje concendio</string>
-    <string name="permission_send_sms_denied">El permiso para enviar un mensaje negegado</string>
+    <string name="permission_send_sms_denied">El permiso para enviar un mensaje denegado</string>
     <string name="permission_send_sms_apply_message">Este permiso sirve para enviar mensajes a los contactos seleccionados</string>
     <string name="permission_send_sms_apply_denied">Sin el permiso no se puedrá enviar los mensajes cuando se activan las alertas</string>
+
+    <string name="permissions_make_alert_granted">Los permisos para activar la alerta concendio</string>
+    <string name="permissions_make_alert_denied">Los permisos para activar la alerta denegado</string>
+    <string name="permissions_make_alert_apply_message">Estos permisos sirven para poder enviar la alerta</string>
+    <string name="permissions_make_alert_apply_denied">Sin el permiso no se puedrá podrá activar la alerta</string>
 
     <string name="location_provider_null">No coincide con ningún proveedor de localización</string>
 
