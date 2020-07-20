@@ -52,7 +52,7 @@ object TestLib {
 object ViewLib {
 
     object Version {
-        const val materialDesign = "1.0.0"
+        const val materialDesign = "1.2.0-rc01"
         const val recyclerView = "1.1.0"
         const val cardView = "1.0.0"
         const val constraintLayout = "1.1.3"
