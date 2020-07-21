@@ -12,6 +12,7 @@ import com.luisenricke.kotlinext.roundDecimals
 // https://stackoverflow.com/questions/4967448/show-compose-sms-view-in-android
 // https://stackoverflow.com/questions/18771356/check-if-an-sms-is-actually-sent
 // TODO: Fix this with broadcast receiver [SentSMSReceiver, DeliverySMSReceiver]
+// TODO: check if it is possible to send messages
 @Suppress("unused")
 class SendSMS private constructor(private val context: Context) {
 

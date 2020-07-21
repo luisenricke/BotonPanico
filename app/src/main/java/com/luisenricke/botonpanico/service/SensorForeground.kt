@@ -13,12 +13,9 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import com.luisenricke.androidext.permissionApply
-import com.luisenricke.androidext.permissionCheck
+import com.luisenricke.androidext.checkPermission
 import com.luisenricke.androidext.preferenceGet
-import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.MainActivity
-import com.luisenricke.botonpanico.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -27,6 +24,7 @@ import kotlin.math.abs
 
 // https://expertise.jetruby.com/how-to-implement-motion-sensor-in-a-kotlin-app-b70db1b5b8e5
 // https://stackoverflow.com/a/55607504/12923478
+// TODO customize the notification
 @Suppress("unused")
 class SensorForeground : Service(), SensorEventListener {
 
@@ -61,10 +59,10 @@ class SensorForeground : Service(), SensorEventListener {
     private var accelerometer: Sensor? = null
 
     private val isPermissionLocationEnable: Boolean
-        get() = permissionCheck(Manifest.permission.ACCESS_FINE_LOCATION)
+        get() = checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
 
     private val isPermissionSendSMSEnable: Boolean
-        get() = permissionCheck(Manifest.permission.SEND_SMS)
+        get() = checkPermission(Manifest.permission.SEND_SMS)
 
     // region service
     override fun onCreate() {
@@ -132,6 +130,7 @@ class SensorForeground : Service(), SensorEventListener {
 
     private fun sensorCycleCheck(xAxis: Float) {
         val startTime = System.currentTimeMillis()
+
         CoroutineScope(Dispatchers.Default).launch {
             isCycleTriggered = true
 
@@ -162,6 +161,7 @@ class SensorForeground : Service(), SensorEventListener {
 
             isCycleTriggered = false
         }
+
     }
     // endregion
 }

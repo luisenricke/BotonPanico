@@ -18,10 +18,15 @@ class App : Application() {
     }
 
     private fun initTimber() {
-        if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+
     }
 
     private fun initRoom() {
+
         if (database.contactDAO().count() <= 0) {
             Timber.i("Empty contact list")
 
@@ -31,5 +36,6 @@ class App : Application() {
             Timber.i("Empty alert list")
 
         }
+
     }
 }

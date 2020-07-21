@@ -1,6 +1,5 @@
 package com.luisenricke.botonpanico.presentation
 
-import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -11,15 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.database.getStringOrNull
-import com.luisenricke.androidext.permissionApply
-import com.luisenricke.androidext.permissionCheck
 import com.luisenricke.androidext.preferenceSet
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.FragmentProfileBinding
-import com.luisenricke.androidext.intentSelectContact
 import timber.log.Timber
 
 class ProfileFragment : BaseFragment() {
@@ -35,20 +31,9 @@ class ProfileFragment : BaseFragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         binding.apply {
-            contact.setOnClickListener {
 
-                if (!permissionCheck(Manifest.permission.READ_CONTACTS)) {
-                    permissionApply(
-                        Manifest.permission.READ_CONTACTS,
-                        Constraint.PERMISSION_READ_CONTACTS_CODE,
-                        getString(R.string.permission_read_contacts_apply_message),
-                        getString(R.string.permission_read_contacts_apply_denied)
-                    )
-                } else {
-                    intentSelectContact(Constraint.INTENT_READ_CONTACTS_CODE)
-                }
+            contact.setOnClickListener { checkContactsPermission() }
 
-            }
         }
 
         return binding.root
@@ -86,10 +71,13 @@ class ProfileFragment : BaseFragment() {
             contact.name = contacts
                 .getStringOrNull(contacts.getColumnIndex(Contacts.DISPLAY_NAME))
                 .let { str ->
-                    if (!str.isNullOrEmpty() && !str.contains("\\d+".toRegex()))
+
+                    if (!str.isNullOrEmpty() && !str.contains("\\d+".toRegex())) {
                         str
-                    else
+                    } else {
                         context.getString(R.string.safety_contact)
+                    }
+
                 }
 
             val phones = contentResolver.query(

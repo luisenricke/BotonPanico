@@ -4,14 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.luisenricke.androidext.toastShort
+import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.adapter.ContactAdapter
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.FragmentContactBinding
 
-class ContactFragment : Fragment() {
+class ContactFragment : BaseFragment() {
 
     private var _binding: FragmentContactBinding? = null
     private val binding get() = _binding!!

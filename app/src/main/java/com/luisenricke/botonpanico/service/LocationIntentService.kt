@@ -10,12 +10,13 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import com.luisenricke.androidext.checkProviders
-import com.luisenricke.androidext.permissionCheck
+import com.luisenricke.androidext.checkPermission
 import com.luisenricke.botonpanico.R
 import timber.log.Timber
 
 // https://stackoverflow.com/questions/6775257/android-location-providers-gps-or-network-provider
 // https://developerlife.com/2010/10/20/gps/
+// TODO: make upgrading location with time
 @Suppress("unused")
 class LocationIntentService : IntentService("LocationIntentService") {
 
@@ -38,7 +39,7 @@ class LocationIntentService : IntentService("LocationIntentService") {
     private var bestProvider: String? = null
 
     private val isPermissionEnable: Boolean
-        get() = permissionCheck(Manifest.permission.ACCESS_FINE_LOCATION)
+        get() = checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
 
     private var listener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {}
@@ -73,11 +74,15 @@ class LocationIntentService : IntentService("LocationIntentService") {
     private fun getLocation(): Location? {
         var location: Location? = null
 
-        if (!isPermissionEnable) Timber.e(getString(R.string.permission_access_fine_location_denied))
-            .also { return location }
+        if (!isPermissionEnable) {
+            Timber.e(getString(R.string.location_service_permission_denied))
+            return location
+        }
 
-        if (bestProvider == null) Timber.e(getString(R.string.location_provider_null))
-            .also { return location }
+        if (bestProvider == null) {
+            Timber.e(getString(R.string.location_service_provider_null))
+            return location
+        }
 
 //        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
         manager.requestSingleUpdate(bestProvider!!, listener, null)

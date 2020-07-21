@@ -11,7 +11,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.IBinder
 import com.luisenricke.androidext.getBestProvider
-import com.luisenricke.androidext.permissionCheck
+import com.luisenricke.androidext.checkPermission
 import com.luisenricke.botonpanico.R
 import timber.log.Timber
 
@@ -32,7 +32,7 @@ class LocationTrack() : Service() {
         get() = manager.getBestProvider()
 
     private val isPermissionEnable: Boolean
-        get() = permissionCheck(Manifest.permission.ACCESS_FINE_LOCATION)
+        get() = checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
 
     private val listener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {}
@@ -58,11 +58,15 @@ class LocationTrack() : Service() {
     fun getLocation(): Location? {
         var location: Location? = null
 
-        if (!isPermissionEnable) Timber.e(getString(R.string.permission_access_fine_location_denied))
-            .also { return location }
+        if (!isPermissionEnable) {
+            Timber.e(getString(R.string.location_service_permission_denied))
+            return location
+        }
 
-        if (bestProvider == null) Timber.e(getString(R.string.location_provider_null))
-            .also { return location }
+        if (bestProvider == null) {
+            Timber.e(getString(R.string.location_service_provider_null))
+            return location
+        }
 
 //        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
         manager.requestSingleUpdate(bestProvider!!, listener, null)

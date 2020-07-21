@@ -15,6 +15,7 @@ class HomeFragment : BaseFragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,7 +28,7 @@ class HomeFragment : BaseFragment() {
 
         binding.apply {
 
-            btnStart.setOnClickListener { SensorForeground.startService(root.context) }
+            btnStart.setOnClickListener { checkAlertPermissions() }
 
             btnStop.setOnClickListener { SensorForeground.stopService(root.context) }
 

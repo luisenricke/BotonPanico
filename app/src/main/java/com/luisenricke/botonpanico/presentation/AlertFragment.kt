@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.databinding.FragmentAlertBinding
 
-class AlertFragment : Fragment() {
+class AlertFragment : BaseFragment() {
 
     private var _binding: FragmentAlertBinding? = null
     private val binding get() = _binding!!

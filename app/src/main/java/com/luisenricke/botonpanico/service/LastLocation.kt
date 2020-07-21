@@ -7,9 +7,8 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
-import com.luisenricke.androidext.checkProviders
 import com.luisenricke.androidext.getBestProvider
-import com.luisenricke.androidext.permissionCheck
+import com.luisenricke.androidext.checkPermission
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.SingletonHolder
 import timber.log.Timber
@@ -30,7 +29,7 @@ class LastLocation private constructor(private val context: Context) {
         get() = manager.getBestProvider()
 
     private val isPermissionEnable: Boolean
-        get() = context.permissionCheck(Manifest.permission.ACCESS_FINE_LOCATION)
+        get() = context.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
 
     private val listener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {}
@@ -43,11 +42,15 @@ class LastLocation private constructor(private val context: Context) {
     fun getLocation(): Location? {
         var location: Location? = null
 
-        if (!isPermissionEnable) Timber.e(context.getString(R.string.permission_access_fine_location_denied))
-            .also { return location }
+        if (!isPermissionEnable) {
+            Timber.e(context.getString(R.string.location_service_permission_denied))
+            return location
+        }
 
-        if (bestProvider == null) Timber.e(context.getString(R.string.location_provider_null))
-            .also { return location }
+        if (bestProvider == null) {
+            Timber.e(context.getString(R.string.location_service_provider_null))
+            return location
+        }
 
 //        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
         manager.requestSingleUpdate(bestProvider!!, listener, null)
