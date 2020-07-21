@@ -9,30 +9,30 @@
 
     <string name="safety_contact">Safety contact</string>
 
+    <!-- region Base Fragment -->
     <string name="on_request_permissions_result_grant_results">The permission confirmations are empty</string>
     <string name="on_request_permissions_result_doesnt_find_permission">The permission confirmations doesn\'t find</string>
+    <string name="on_request_permissions_result_denied_permissions">Permissions were not granted for the functionality of</string>
+    <!-- endregion -->
 
-    <string name="permission_read_contacts_granted">Permission to read contacts is granted</string>
-    <string name="permission_read_contacts_denied">Permission to read contacts is denied</string>
-    <string name="permission_read_contacts_apply_message">This permission is used to select a contact from your list and export it to the app</string>
-    <string name="permission_read_contacts_apply_denied">Without the permission you will have to write the information manually</string>
+    <!-- regions Permissions -->
+    <string name="permission_message_alert_title">Request for alert permissions</string>
+    <string name="permission_message_alert_message">To activate the alert, we need to be able to send SMS messages and access the location of the device. Go to the application settings and enable the permissions</string>
+    <string name="permission_message_alert_positive_button">Settings</string>
+    <string name="permission_message_alert_negative_button">Cancel</string>
+    <string name="permission_message_alert_denied">Without permission you cannot activate the alert</string>
 
-    <string name="permission_access_fine_location_granted">Permission to get location is granted</string>
-    <string name="permission_access_fine_location_denied">Permission to get location is denied</string>
-    <string name="permission_access_fine_location_apply_message">This permission is used to get locations from your device</string>
-    <string name="permission_access_fine_location_apply_denied">Without permission, the location cannot be obtained when the alerts are triggered.</string>
+    <string name="permission_message_read_contacts_title">Request for contact permission</string>
+    <string name="permission_message_read_contacts_message">To activate the import of a contact, we need to be able to access the contacts. Go to the application settings and enable the permission</string>
+    <string name="permission_message_read_contacts_positive_button">Settings</string>
+    <string name="permission_message_read_contacts_negative_button">Cancel</string>
+    <string name="permission_message_read_contacts_denied">Without the permission you cannot export the contacts</string>
+    <!-- endregion -->
 
-    <string name="permission_send_sms_granted">Permission to send sms is granted</string>
-    <string name="permission_send_sms_denied">Permission to send sms is denied</string>
-    <string name="permission_send_sms_apply_message">This permission is used to send messages to selected contacts</string>
-    <string name="permission_send_sms_apply_denied">Without permission, sms cannot be sent when alerts are activated</string>
+    <!-- region Services -->
+    <string name="location_service_provider_null">Doesn\'t match with any location provider</string>
+    <string name="location_service_permission_denied">The permission of location is disable</string>
 
-    <string name="permissions_make_alert_granted">Permissions to enabled alert is granted</string>
-    <string name="permissions_make_alert_denied">¨Permissions to enabled alert is denied</string>
-    <string name="permissions_make_alert_apply_message">This permission is used to enable the alert</string>
-    <string name="permissions_make_alert_apply_denied">Without permission, alerts cannot be enable</string>
-
-    <string name="location_provider_null">Doesn\'t match with any location provider</string>
-
-    <string name="vibrator_doesnt_available">Vibrator doesn\'t available</string>
+    <string name="vibrator_service_doesnt_available">Vibrator doesn\'t available</string>
+    <!-- endregion -->
 </resources>

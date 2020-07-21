@@ -8,30 +8,30 @@
 
     <string name="safety_contact">Contacto de seguridad</string>
 
+    <!-- region Base Fragment -->
     <string name="on_request_permissions_result_grant_results">Las confirmaciones de los permisos están vacíos</string>
     <string name="on_request_permissions_result_doesnt_find_permission">El permiso solicitado no se encuentra</string>
+    <string name="on_request_permissions_result_denied_permissions">Los permisos no fueron condedidos para la funcionalidad de</string>
+    <!-- endregion -->
 
-    <string name="permission_read_contacts_granted">El permiso para leer los contactos concendio</string>
-    <string name="permission_read_contacts_denied">El permiso para leer los contactos denegado</string>
-    <string name="permission_read_contacts_apply_message">Este permiso sirve para seleccionar un contacto de tu lista y exportarlo a la applicación</string>
-    <string name="permission_read_contacts_apply_denied">Sin el permiso se tendrá que escribir los datos manualmente de los contactos</string>
+    <!-- region Permissions -->
+    <string name="permission_message_alert_title">Solicitud de permisos de alerta</string>
+    <string name="permission_message_alert_message">Para activar la alerta, necesitamos poder enviar mensajes SMS y accesar a la ubicación del dispositivo. Ve a los ajustes de la aplicación y habilita los permisos</string>
+    <string name="permission_message_alert_positive_button">Ajustes</string>
+    <string name="permission_message_alert_negative_button">Cancelar</string>
+    <string name="permission_message_alert_denied">Sin el permiso no se puedrá podrá activar la alerta</string>
 
-    <string name="permission_access_fine_location_granted">El permiso para obtener la ubicación concendio</string>
-    <string name="permission_access_fine_location_denied">El permiso para obtener la ubicación negegado</string>
-    <string name="permission_access_fine_location_apply_message">Este permiso sirve para obtener la ubicación de tu dispositivo</string>
-    <string name="permission_access_fine_location_apply_denied">Sin el permiso no se puedrá obtener la ubicación cuando se activan las alertas</string>
+    <string name="permission_message_read_contacts_title">Solicitud de permiso de contactos</string>
+    <string name="permission_message_read_contacts_message">Para activar importar un contacto, necesitamos poder acceder a los contactos. Ve a los ajustes de la aplicación y habilita el permiso</string>
+    <string name="permission_message_read_contacts_positive_button">Ajustes</string>
+    <string name="permission_message_read_contacts_negative_button">Cancelar</string>
+    <string name="permission_message_read_contacts_denied">Sin el permiso no se puedrá podrá exportar los contactos</string>
+    <!-- endregion -->
 
-    <string name="permission_send_sms_granted">El permiso para enviar un mensaje concendio</string>
-    <string name="permission_send_sms_denied">El permiso para enviar un mensaje denegado</string>
-    <string name="permission_send_sms_apply_message">Este permiso sirve para enviar mensajes a los contactos seleccionados</string>
-    <string name="permission_send_sms_apply_denied">Sin el permiso no se puedrá enviar los mensajes cuando se activan las alertas</string>
+    <!-- region Services -->
+    <string name="location_service_provider_null">No coincide con ningún proveedor de localización</string>
+    <string name="location_service_permission_denied">el permiso de la ubicación está deshabilitado</string>
 
-    <string name="permissions_make_alert_granted">Los permisos para activar la alerta concendio</string>
-    <string name="permissions_make_alert_denied">Los permisos para activar la alerta denegado</string>
-    <string name="permissions_make_alert_apply_message">Estos permisos sirven para poder enviar la alerta</string>
-    <string name="permissions_make_alert_apply_denied">Sin el permiso no se puedrá podrá activar la alerta</string>
-
-    <string name="location_provider_null">No coincide con ningún proveedor de localización</string>
-
-    <string name="vibrator_doesnt_available">El vibrador no está disponible</string>
+    <string name="vibrator_service_doesnt_available">El vibrador no está disponible</string>
+    <!-- endregion -->
 </resources>
