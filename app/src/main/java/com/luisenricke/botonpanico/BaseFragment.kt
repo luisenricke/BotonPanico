@@ -26,54 +26,69 @@ abstract class BaseFragment : Fragment() {
 
         when (requestCode) {
             Constraint.PERMISSION_READ_CONTACTS_CODE -> {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Timber.i(getString(R.string.permission_read_contacts_granted))
+                val isGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
+
+                if (isGranted) {
                     intentSelectContact(Constraint.INTENT_READ_CONTACTS_CODE)
                 } else {
-                    Timber.e(getString(R.string.permission_read_contacts_denied))
+                    Timber.e("${getString(R.string.on_request_permissions_result_denied_permissions)} READ_CONTACTS")
                 }
+
                 return
             }
 
-            Constraint.PERMISSION_GROUP_MAKE_ALERT -> {
+            Constraint.PERMISSION_GROUP_ALERT -> {
                 val isGranted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
 
-                Timber.i("onRequestPermissionsResult $isGranted")
                 if (isGranted) {
-                    Timber.i(getString(R.string.permissions_make_alert_granted))
                     SensorForeground.startService(getActivityContext())
                 } else {
-                    Timber.e(getString(R.string.permissions_make_alert_denied))
+                    Timber.e("${getString(R.string.on_request_permissions_result_denied_permissions)} ALERT")
                 }
+
                 return
             }
 
             else -> Timber.e(getString(R.string.on_request_permissions_result_doesnt_find_permission))
         }
+
     }
 
-    fun checkLocationPermission() {
-        if (!permissionCheck(Manifest.permission.ACCESS_FINE_LOCATION))
-            permissionApply(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Constraint.PERMISSION_ACCESS_FINE_LOCATION_CODE,
-                getString(R.string.permission_access_fine_location_apply_message),
-                getString(R.string.permission_access_fine_location_apply_denied)
+    fun checkContactsPermission() {
+
+        if (checkPermission(Manifest.permission.READ_CONTACTS)) {
+            intentSelectContact(Constraint.INTENT_READ_CONTACTS_CODE)
+        } else {
+            requestPermission(
+                Manifest.permission.READ_CONTACTS,
+                Constraint.PERMISSION_READ_CONTACTS_CODE,
+                getString(R.string.permission_message_read_contacts_denied),
+                true
             )
+        }
+
     }
 
     fun checkAlertPermissions() {
-        val alertPermissions = arrayListOf(
+        val permissions = arrayListOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.SEND_SMS
         )
 
-        if (!permissionsCheck(alertPermissions))
-            permissionsApply(
-                alertPermissions,
-                Constraint.PERMISSION_GROUP_MAKE_ALERT,
-                getString(R.string.permissions_make_alert_apply_message),
-                getString(R.string.permissions_make_alert_apply_denied)
-            )
+        val message = PermissionMessage(
+            context = getActivityContext(),
+            title = getString(R.string.permission_message_alert_title),
+            message = getString(R.string.permission_message_alert_message),
+            positiveButton = getString(R.string.permission_message_alert_positive_button),
+            negativeButton = getString(R.string.permission_message_alert_negative_button),
+            denied = getString(R.string.permission_message_alert_denied)
+        )
+
+        if (checkPermissions(permissions)) {
+            SensorForeground.startService(getActivityContext())
+        } else {
+            requestCriticalPermissions(permissions, Constraint.PERMISSION_GROUP_ALERT, message)
+        }
+
     }
 }
