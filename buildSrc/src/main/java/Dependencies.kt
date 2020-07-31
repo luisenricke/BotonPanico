@@ -28,6 +28,38 @@ object AndroidLib {
 }
 
 @Suppress("unused")
+object ViewLib {
+
+    object Version {
+        const val materialDesign = "1.2.0-rc01"
+        const val recyclerView = "1.1.0"
+        const val cardView = "1.0.0"
+        const val constraintLayout = "1.1.3"
+        const val circleImageView = "3.2.0"
+    }
+
+    const val materialDesign = "com.google.android.material:material:${Version.materialDesign}"
+    const val recyclerview = "androidx.recyclerview:recyclerview:${Version.recyclerView}"
+    const val cardView = "androidx.cardview:cardview:${Version.cardView}"
+    const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
+    const val circleImageView = "com.mikhaellopez:circularimageview:${Version.circleImageView}"
+}
+
+@Suppress("unused")
+object ToolLib {
+
+    object Version {
+        const val timber = "4.7.1"
+        const val picasso = "2.5.2"
+        const val glide = "4.11.0"
+    }
+
+    const val timber = "com.jakewharton.timber:timber:${Version.timber}"
+    const val picasso = "com.squareup.picasso:picasso:${Version.picasso}"
+    const val glide = "com.github.bumptech.glide:glide:${Version.glide}"
+}
+
+@Suppress("unused")
 object TestLib {
 
     object Version {
@@ -46,36 +78,6 @@ object TestLib {
     const val mockito = "org.mockito:mockito-core:${Version.mockitoCore}"
     const val runner = "androidx.test:runner:${Version.testRunner}"
     const val robolectric = "org.robolectric:robolectric:${Version.robolectric}"
-}
-
-@Suppress("unused")
-object ViewLib {
-
-    object Version {
-        const val materialDesign = "1.2.0-rc01"
-        const val recyclerView = "1.1.0"
-        const val cardView = "1.0.0"
-        const val constraintLayout = "1.1.3"
-    }
-
-    const val materialDesign = "com.google.android.material:material:${Version.materialDesign}"
-    const val recyclerview = "androidx.recyclerview:recyclerview:${Version.recyclerView}"
-    const val cardView = "androidx.cardview:cardview:${Version.cardView}"
-    const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Version.constraintLayout}"
-}
-
-@Suppress("unused")
-object ToolLib {
-
-    object Version {
-        const val timber = "4.7.1"
-        const val picasso = "2.5.2"
-        const val glide = "4.11.0"
-    }
-
-    const val timber = "com.jakewharton.timber:timber:${Version.timber}"
-    const val picasso = "com.squareup.picasso:picasso:${Version.picasso}"
-    const val glide = "com.github.bumptech.glide:glide:${Version.glide}"
 }
 
 @Suppress("unused")

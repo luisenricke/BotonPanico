@@ -67,6 +67,7 @@ dependencies {
     implementation ViewLib.materialDesign
     implementation ViewLib.constraintLayout
     implementation ViewLib.recyclerview
+    implementation ViewLib.circleImageView
 
     implementation RoomLib.runtime
     kapt RoomLib.compiler
