@@ -3,13 +3,14 @@ package com.luisenricke.botonpanico
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.luisenricke.botonpanico.databinding.ActivityMainBinding
 
+// https://developer.android.com/training/tv/playback/onboarding
+// TODO: Make service to INPUT_METHOD
 class MainActivity : AppCompatActivity() {
 
 //    private val inputMethodManager: InputMethodManager by lazy {
@@ -24,8 +25,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val navController: NavController by lazy {
-        (supportFragmentManager.findFragmentById(binding.fragmentHost.id) as NavHostFragment)
-            .navController
+//        fragment
+        findNavController(R.id.fragment_host)
+//        FragmentContainerView
+//        (supportFragmentManager.findFragmentById(binding.fragmentHost.id) as NavHostFragment)
+//            .navController
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,8 +38,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             setContentView(root)
-            setSupportActionBar(toolbar)
-            setupActionBarWithNavController(navController, appBarConfiguration)
             bottom.setupWithNavController(navController)
         }
     }
