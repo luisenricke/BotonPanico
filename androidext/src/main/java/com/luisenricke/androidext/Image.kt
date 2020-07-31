@@ -61,6 +61,6 @@ fun Context.loadImageInternalStorage(name: String): Bitmap? {
 }
 
 @Suppress("unused")
-fun Context.deleteImageInternalStorage(context: Context, name: String): Boolean {
-    return context.deleteFile(name)
+fun Context.deleteImageInternalStorage(name: String): Boolean {
+    return this.deleteFile(name)
 }
