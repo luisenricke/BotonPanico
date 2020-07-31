@@ -37,7 +37,7 @@ abstract class BaseFragment : Fragment() {
                 return
             }
 
-            Constraint.PERMISSION_GROUP_ALERT -> {
+            Constraint.PERMISSIONS_ALERT_SERVICE -> {
                 val isGranted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
 
                 if (isGranted) {
@@ -87,7 +87,7 @@ abstract class BaseFragment : Fragment() {
         if (checkPermissions(permissions)) {
             SensorForeground.startService(getActivityContext())
         } else {
-            requestCriticalPermissions(permissions, Constraint.PERMISSION_GROUP_ALERT, message)
+            requestCriticalPermissions(permissions, Constraint.PERMISSIONS_ALERT_SERVICE, message)
         }
 
     }
