@@ -16,6 +16,11 @@
         android:label="fragment_alert"
         tools:layout="@layout/fragment_alert" />
     <fragment
+        android:id="@+id/nav_contact"
+        android:name="com.luisenricke.botonpanico.presentation.ContactFragment"
+        android:label="fragment_contact"
+        tools:layout="@layout/fragment_contact" />
+    <fragment
         android:id="@+id/nav_profile"
         android:name="com.luisenricke.botonpanico.presentation.ProfileFragment"
         android:label="fragment_profile"
