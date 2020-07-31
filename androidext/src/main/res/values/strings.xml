@@ -18,4 +18,6 @@
     <string name="gps_provider_disable">GPS provider don\'t available</string>
     <string name="network_provider_disable">Network provider don\'t available</string>
     <string name="passive_provider_disable">Passive provider don\'t available</string>
+
+    <string name="intent_select_image_from_gallery">Select image</string>
 </resources>

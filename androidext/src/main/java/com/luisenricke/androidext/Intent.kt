@@ -24,7 +24,10 @@ fun AppCompatActivity.intentSelectImageFromGallery(requestCode: Int) {
     val actionPick = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
     actionPick.type = "image/*"
 
-    val intent = Intent.createChooser(actionGetContent, "Select Image")
+    val intent = Intent.createChooser(
+        actionGetContent,
+        this.getString(R.string.intent_select_image_from_gallery)
+    )
     intent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(actionPick))
 
     this.startActivityForResult(intent, requestCode)
@@ -46,7 +49,10 @@ fun Fragment.intentSelectImageFromGallery(requestCode: Int) {
     val actionPick = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
     actionPick.type = "image/*"
 
-    val intent = Intent.createChooser(actionGetContent, "Select Image")
+    val intent = Intent.createChooser(
+        actionGetContent,
+        this.getString(R.string.intent_select_image_from_gallery)
+    )
     intent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(actionPick))
 
     this.startActivityForResult(intent, requestCode)

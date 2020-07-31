@@ -18,4 +18,6 @@
     <string name="gps_provider_disable">El proveedor de GPS no está disponible.</string>
     <string name="network_provider_disable">El proveedor de red no está disponible.</string>
     <string name="passive_provider_disable">El proveedor de pasivo de red no está disponible.</string>
+
+    <string name="intent_select_image_from_gallery">Selecciona una imagen</string>
 </resources>
