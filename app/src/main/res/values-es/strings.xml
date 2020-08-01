@@ -2,10 +2,11 @@
     <string name="app_name">Boton Panico</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="home">Principal</string>
+    <string name="alert">Alerta</string>
     <string name="notification">Notificaciones</string>
     <string name="profile">Perfil</string>
-    <string name="contact">Contactos</string>
 
     <string name="safety_contact">Contacto de seguridad</string>
 
@@ -34,5 +35,12 @@
     <string name="location_service_permission_denied">el permiso de la ubicación está deshabilitado</string>
 
     <string name="vibrator_service_doesnt_available">El vibrador no está disponible</string>
+    <!-- endregion -->
+
+    <!-- region Contacts -->
+    <string name="contact">Contactos</string>
+
+    <string name="contact_add">Agregar contacto</string>
+    <string name="contact_add_import">Importar contacto</string>
     <!-- endregion -->
 </resources>

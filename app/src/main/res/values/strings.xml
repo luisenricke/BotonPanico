@@ -4,9 +4,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="home">Home</string>
+    <string name="alert">Alert</string>
     <string name="notification">Notification</string>
     <string name="profile">Profile</string>
-    <string name="contact">Contacts</string>
 
     <string name="safety_contact">Safety contact</string>
 
@@ -16,7 +16,7 @@
     <string name="on_request_permissions_result_denied_permissions">Permissions were not granted for the functionality of</string>
     <!-- endregion -->
 
-    <!-- regions Permissions -->
+    <!-- region Permissions -->
     <string name="permission_message_alert_title">Request for alert permissions</string>
     <string name="permission_message_alert_message">To activate the alert, we need to be able to send SMS messages and access the location of the device. Go to the application settings and enable the permissions</string>
     <string name="permission_message_alert_positive_button">Settings</string>
@@ -36,4 +36,11 @@
 
     <string name="vibrator_service_doesnt_available">Vibrator doesn\'t available</string>
     <!-- endregion -->
+
+    <!-- region Contacts -->
+    <string name="contact">Contacts</string>
+    <string name="contact_add">Add contact</string>
+    <string name="contact_add_import">Import contact</string>
+    <!-- endregion -->
+
 </resources>

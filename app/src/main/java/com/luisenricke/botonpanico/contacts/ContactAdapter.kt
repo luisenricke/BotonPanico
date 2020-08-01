@@ -1,4 +1,4 @@
-package com.luisenricke.botonpanico.adapter
+package com.luisenricke.botonpanico.contacts
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,14 +9,14 @@ import com.luisenricke.botonpanico.databinding.ItemContactBinding
 class ContactAdapter(private val contacts: List<Contact>, val clickListener: (Contact) -> Unit) :
     RecyclerView.Adapter<ContactAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemContactBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int = contacts.size
 
-    override fun onBindViewHolder(holder: ContactAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(contacts[position])
     }
 

@@ -1,4 +1,4 @@
-package com.luisenricke.botonpanico.presentation
+package com.luisenricke.botonpanico.contacts
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.luisenricke.androidext.toastShort
 import com.luisenricke.botonpanico.BaseFragment
-import com.luisenricke.botonpanico.adapter.ContactAdapter
+import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.FragmentContactBinding
 
@@ -29,12 +29,17 @@ class ContactFragment : BaseFragment() {
         _binding = FragmentContactBinding.inflate(inflater, container, false)
 
         binding.apply {
+            btnAddContact.setOnClickListener {
+                navController.navigate(R.id.action_contact_to_contact_add)
+            }
+
             recyclerContacts.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(this.context)
-                adapter = ContactAdapter(list) { item ->
-                    toastShort("clicked ${item.name}")
-                }
+                adapter =
+                    ContactAdapter(list) { item ->
+                        toastShort("clicked ${item.name}")
+                    }
             }
         }
 

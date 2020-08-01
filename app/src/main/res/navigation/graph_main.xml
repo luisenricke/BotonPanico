@@ -8,22 +8,37 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.luisenricke.botonpanico.presentation.HomeFragment"
-        android:label="fragment_home"
+        android:label="@string/home"
         tools:layout="@layout/fragment_home" />
+
     <fragment
         android:id="@+id/nav_alert"
         android:name="com.luisenricke.botonpanico.presentation.AlertFragment"
-        android:label="fragment_alert"
+        android:label="@string/alert"
         tools:layout="@layout/fragment_alert" />
+
+    <!-- region Contact -->
     <fragment
         android:id="@+id/nav_contact"
-        android:name="com.luisenricke.botonpanico.presentation.ContactFragment"
-        android:label="fragment_contact"
-        tools:layout="@layout/fragment_contact" />
+        android:name="com.luisenricke.botonpanico.contacts.ContactFragment"
+        android:label="@string/contact"
+        tools:layout="@layout/fragment_contact">
+        <action
+            android:id="@+id/action_contact_to_contact_add"
+            app:destination="@id/contactAddFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/contactAddFragment"
+        android:name="com.luisenricke.botonpanico.contacts.ContactAddFragment"
+        android:label="@string/contact_add"
+        tools:layout="@layout/fragment_contact_add" />
+    <!-- endregion -->
+
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.luisenricke.botonpanico.presentation.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 
 </navigation>
