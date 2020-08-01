@@ -2,13 +2,19 @@ package com.luisenricke.botonpanico
 
 import android.Manifest
 import android.content.pm.PackageManager
+import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.luisenricke.androidext.*
 import com.luisenricke.botonpanico.service.SensorForeground
 import timber.log.Timber
 
 @Suppress("unused")
 abstract class BaseFragment : Fragment() {
+
+    val navController: NavController
+        get() = findNavController()
 
     fun getActivityContext(): MainActivity = (activity as MainActivity)
 
@@ -52,6 +58,17 @@ abstract class BaseFragment : Fragment() {
             else -> Timber.e(getString(R.string.on_request_permissions_result_doesnt_find_permission))
         }
 
+    }
+
+    fun setupActionBar(actionBar: ActionBar?, title: String) {
+        if (actionBar == null) return
+
+        setHasOptionsMenu(true)
+        actionBar.apply {
+            this.title = title
+            this.setDisplayHomeAsUpEnabled(true)
+            this.setDisplayShowHomeEnabled(true)
+        }
     }
 
     fun checkContactsPermission() {

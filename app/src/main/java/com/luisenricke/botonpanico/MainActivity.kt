@@ -1,6 +1,7 @@
 package com.luisenricke.botonpanico
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -49,6 +50,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    fun setBottomNavigationViewVisibility(isVisible: Boolean) {
+        if(isVisible) binding.bottom.visibility = View.VISIBLE
+        else binding.bottom.visibility = View.GONE
     }
 
 //    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
