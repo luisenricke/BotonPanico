@@ -3,6 +3,7 @@ package com.luisenricke.botonpanico.contacts
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.telephony.PhoneNumberFormattingTextWatcher
@@ -23,6 +24,8 @@ class ContactAddFragment : BaseFragment() {
     private var _binding: FragmentContactAddBinding? = null
     private val binding get() = _binding!!
 
+    private var image: Bitmap? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +36,11 @@ class ContactAddFragment : BaseFragment() {
         binding.apply {
             getActivityContext().setSupportActionBar(toolbar)
             setupActionBar(getActivityContext().supportActionBar, getString(R.string.contact_add))
+
+            // Image
+            imgProfile.setOnClickListener {
+                imageOptionsSimple(root.context, imgProfile, image)
+            }
 
             // Phone
             txtPhone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
@@ -54,6 +62,15 @@ class ContactAddFragment : BaseFragment() {
             txtLayoutMessage.apply {
                 counterMaxLength = SendSMS.getInstance(root.context).getMaxLength()
             }
+
+            // Buttons
+            btnCancel.setOnClickListener {
+                clearStack()
+            }
+
+            btnAccept.setOnClickListener {
+
+            }
         }
 
         return binding.root
@@ -73,6 +90,10 @@ class ContactAddFragment : BaseFragment() {
                 binding.txtPhone.setText(contact.phone)
                 Timber.i("contact: \n $contact")
             }
+            Constraint.INTENT_IMAGE_FROM_GALLERY -> {
+                image = getImage(binding.root.context, data) ?: return
+                binding.imgProfile.setImageBitmap(image)
+            }
         }
     }
 
@@ -84,8 +105,7 @@ class ContactAddFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                navController.popBackStack(R.id.nav_contact, true)
-                navController.navigate(R.id.nav_contact)
+                clearStack()
                 true
             }
             R.id.menu_contact_import -> {
@@ -100,6 +120,11 @@ class ContactAddFragment : BaseFragment() {
         super.onDestroyView()
         _binding = null
         getActivityContext().setBottomNavigationViewVisibility(true)
+    }
+
+    private fun clearStack() {
+        navController.popBackStack(R.id.nav_contact, true)
+        navController.navigate(R.id.nav_contact)
     }
 
     // TODO get image of the contact if has

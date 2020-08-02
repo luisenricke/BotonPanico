@@ -24,17 +24,30 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/img_profile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/profile_photo_description"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_baseline_person_24"
+        app:layout_constraintEnd_toEndOf="@id/guideline_right"
+        app:layout_constraintStart_toEndOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        tools:background="#80FFEB3B" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txtLayoutName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/contact_form_margin_top"
         android:hint="@string/contact_name"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toEndOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@id/guideline_top">
+        app:layout_constraintTop_toBottomOf="@id/img_profile">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtName"
@@ -114,6 +127,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/swt_highlighted"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/contact_form_margin_top"
@@ -124,13 +138,16 @@
         app:layout_constraintTop_toBottomOf="@id/txtLayoutMessage" />
 
     <LinearLayout
+        android:id="@+id/layout_buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
         app:layout_constraintEnd_toStartOf="@id/guideline_right"
-        app:layout_constraintStart_toStartOf="@id/guideline_left">
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/swt_highlighted">
 
         <Button
             android:id="@+id/btn_cancel"
@@ -155,6 +172,14 @@
             android:text="@string/contact_accept" />
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_right"
+        app:layout_constraintStart_toStartOf="@id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@id/layout_buttons" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_left"
@@ -175,14 +200,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
-
+        app:layout_constraintGuide_percent="0.10" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
