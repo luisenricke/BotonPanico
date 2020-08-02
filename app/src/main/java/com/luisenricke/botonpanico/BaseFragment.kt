@@ -1,11 +1,15 @@
 package com.luisenricke.botonpanico
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.widget.ImageView
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.luisenricke.androidext.*
 import com.luisenricke.botonpanico.service.SensorForeground
 import timber.log.Timber
@@ -69,6 +73,52 @@ abstract class BaseFragment : Fragment() {
             this.setDisplayHomeAsUpEnabled(true)
             this.setDisplayShowHomeEnabled(true)
         }
+    }
+
+    fun imageOptionsSimple(context: Context, view: ImageView, image: Bitmap?) {
+
+        val resource = context.resources
+        val options: Array<out String> =
+            if (image == null) resource.getStringArray(R.array.photo_options_empty)
+            else resource.getStringArray(R.array.photo_options_filled)
+
+        MaterialAlertDialogBuilder(context)
+            .setTitle(resource.getString(R.string.photo_options_title))
+            .setItems(options) { dialog, which ->
+                when (options[which]) {
+                    context.getString(R.string.photo_options_gallery) ->
+                        intentSelectImageFromGallery(Constraint.INTENT_IMAGE_FROM_GALLERY)
+                    context.getString(R.string.photo_options_delete) ->
+                        view.setImageResource(R.drawable.ic_baseline_person_24)
+                    context.getString(R.string.photo_options_cancel) ->
+                        dialog.dismiss()
+                }
+            }
+            .show()
+    }
+
+    fun imageOptionsWipe(context: Context, view: ImageView, image: Bitmap?, file: String) {
+
+        val resource = context.resources
+        val options: Array<out String> =
+            if (image == null) resource.getStringArray(R.array.photo_options_empty)
+            else resource.getStringArray(R.array.photo_options_filled)
+
+        MaterialAlertDialogBuilder(context)
+            .setTitle(resource.getString(R.string.photo_options_title))
+            .setItems(options) { dialog, which ->
+                when (options[which]) {
+                    context.getString(R.string.photo_options_gallery) ->
+                        intentSelectImageFromGallery(Constraint.INTENT_IMAGE_FROM_GALLERY)
+                    context.getString(R.string.photo_options_delete) -> {
+                        view.setImageResource(R.drawable.ic_baseline_person_24)
+                        context.deleteImageInternalStorage(file)
+                    }
+                    context.getString(R.string.photo_options_cancel) ->
+                        dialog.dismiss()
+                }
+            }
+            .show()
     }
 
     fun checkContactsPermission() {

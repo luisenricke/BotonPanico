@@ -6,9 +6,32 @@
     <string name="home">Home</string>
     <string name="alert">Alert</string>
     <string name="notification">Notification</string>
-    <string name="profile">Profile</string>
 
     <string name="safety_contact">Safety contact</string>
+    <!-- region Profile -->
+    <string name="profile">Profile</string>
+
+    <string name="profile_photo_description">Profile image</string>
+    <!-- endregion -->
+
+    <!-- region Photo Options AlertDialog -->
+    <string name="photo_options_title">Select image</string>
+
+    <string name="photo_options_gallery">Open the gallery</string>
+    <string name="photo_options_delete">Delete image</string>
+    <string name="photo_options_cancel">Cancel</string>
+
+    <string-array name="photo_options_empty">
+        <item>@string/photo_options_gallery</item>
+        <item>@string/photo_options_cancel</item>
+    </string-array>
+
+    <string-array name="photo_options_filled">
+        <item>@string/photo_options_gallery</item>
+        <item>@string/photo_options_delete</item>
+        <item>@string/photo_options_cancel</item>
+    </string-array>
+    <!-- endregion -->
 
     <!-- region Base Fragment -->
     <string name="on_request_permissions_result_grant_results">The permission confirmations are empty</string>

@@ -12,7 +12,8 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.luisenricke.androidext.deleteImageInternalStorage
+import android.widget.ImageView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.luisenricke.androidext.intentSelectImageFromGallery
 import com.luisenricke.androidext.loadImageInternalStorage
 import com.luisenricke.androidext.saveImageInternalStorage
@@ -27,6 +28,8 @@ class ProfileFragment : BaseFragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
+    private var imageStorage: Bitmap? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,16 +39,11 @@ class ProfileFragment : BaseFragment() {
 
         binding.apply {
 
-            val imageStorage = root.context.loadImageInternalStorage(Constraint.PROFILE_PHOTO)
+            imageStorage = root.context.loadImageInternalStorage(Constraint.PROFILE_PHOTO)
             if (imageStorage != null) imgProfile.setImageBitmap(imageStorage)
 
-            btnGallery.setOnClickListener {
-                intentSelectImageFromGallery(Constraint.INTENT_IMAGE_FROM_GALLERY)
-            }
-            btnDeleteImage.setOnClickListener {
-                imgProfile.setImageResource(R.drawable.ic_baseline_person_24)
-                val isDeleted = context?.deleteImageInternalStorage(Constraint.PROFILE_PHOTO)
-                Timber.i("Is profile photo deleted? $isDeleted")
+            imgProfile.setOnClickListener {
+                imageOptionsWipe(root.context, imgProfile, imageStorage, Constraint.PROFILE_PHOTO)
             }
 
         }
@@ -62,10 +60,10 @@ class ProfileFragment : BaseFragment() {
 
         when (requestCode) {
             Constraint.INTENT_IMAGE_FROM_GALLERY -> {
-                val image = getImage(binding.root.context, data) ?: return
-                binding.imgProfile.setImageBitmap(image)
+                imageStorage = getImage(binding.root.context, data) ?: return
+                binding.imgProfile.setImageBitmap(imageStorage)
                 val isSaved = binding.root.context
-                    .saveImageInternalStorage(image, Constraint.PROFILE_PHOTO)
+                    .saveImageInternalStorage(imageStorage, Constraint.PROFILE_PHOTO)
                 Timber.i("Photo saved: $isSaved")
             }
         }
