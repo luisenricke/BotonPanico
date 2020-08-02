@@ -2,8 +2,13 @@ package com.luisenricke.botonpanico
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.widget.ImageView
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
@@ -119,6 +124,22 @@ abstract class BaseFragment : Fragment() {
                 }
             }
             .show()
+    }
+
+    // TODO test this
+    fun getImage(context: Context, data: Intent?): Bitmap? {
+        val contentURI: Uri = data?.data!!
+        var bitmap: Bitmap? = null
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val source = ImageDecoder.createSource(context.contentResolver, contentURI)
+            bitmap = ImageDecoder.decodeBitmap(source)
+
+        } else {
+            bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, contentURI)
+        }
+
+        return bitmap!!
     }
 
     fun checkContactsPermission() {

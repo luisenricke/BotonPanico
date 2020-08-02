@@ -69,22 +69,6 @@ class ProfileFragment : BaseFragment() {
         }
     }
 
-    // TODO test this
-    fun getImage(context: Context, data: Intent?): Bitmap? {
-        val contentURI: Uri = data?.data!!
-        var bitmap: Bitmap? = null
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val source = ImageDecoder.createSource(context.contentResolver, contentURI)
-            bitmap = ImageDecoder.decodeBitmap(source)
-
-        } else {
-            bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, contentURI)
-        }
-
-        return bitmap!!
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
