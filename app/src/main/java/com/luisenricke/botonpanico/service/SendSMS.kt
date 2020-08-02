@@ -11,6 +11,7 @@ import com.luisenricke.kotlinext.roundDecimals
 // https://stackoverflow.com/questions/26893796/how-to-set-emoji-by-unicode-in-a-textview
 // https://stackoverflow.com/questions/4967448/show-compose-sms-view-in-android
 // https://stackoverflow.com/questions/18771356/check-if-an-sms-is-actually-sent
+// https://www.quora.com/Why-does-using-emoji-reduce-my-SMS-character-limit-to-70
 // TODO: Fix this with broadcast receiver [SentSMSReceiver, DeliverySMSReceiver]
 // TODO: check if it is possible to send messages
 // TODO: view sent messages in the default message app
@@ -19,6 +20,7 @@ class SendSMS private constructor(private val context: Context) {
 
     companion object : SingletonHolder<SendSMS, Context>(::SendSMS) {
         const val GOOGLE_MAPS = "http://maps.google.com/?q=" // latitude , longitude
+
         @JvmStatic
         var pin = String(Character.toChars(0x1F4CD))
 
@@ -44,6 +46,8 @@ class SendSMS private constructor(private val context: Context) {
 
         manager.sendTextMessage(phone, null, message, null, null)
     }
+
+    fun getMaxLength(): Int = 100
 
     fun unregisterReceivers() {
         context.unregisterReceiver(sentBroadcastReceiver)

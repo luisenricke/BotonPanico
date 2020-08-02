@@ -35,12 +35,30 @@
     <string name="location_service_permission_denied">The permission of location is disable</string>
 
     <string name="vibrator_service_doesnt_available">Vibrator doesn\'t available</string>
+
+    <string name="keyboard_service_hide">Keyboard hides from</string>
     <!-- endregion -->
 
     <!-- region Contacts -->
     <string name="contact">Contacts</string>
     <string name="contact_add">Add contact</string>
     <string name="contact_add_import">Import contact</string>
+
+    <string-array name="contact_relationship_list">
+        <item>Couple</item>
+        <item>Family</item>
+        <item>Friend</item>
+        <item>Well-known</item>
+    </string-array>
+
+    <string name="contact_name">Name</string>
+    <string name="contact_phone">Phone</string>
+    <string name="contact_relationship">Relationship</string>
+    <string name="contact_message">Alert message</string>
+    <string name="contact_message_helper">If you leave the input field empty, the default alert message will be applied</string>
+    <string name="contact_is_highlighted">Will this contact be sent the alert message?</string>
+    <string name="contact_accept">Accept</string>
+    <string name="contact_cancel">Cancel</string>
     <!-- endregion -->
 
 </resources>

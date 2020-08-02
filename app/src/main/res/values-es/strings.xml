@@ -35,6 +35,8 @@
     <string name="location_service_permission_denied">el permiso de la ubicación está deshabilitado</string>
 
     <string name="vibrator_service_doesnt_available">El vibrador no está disponible</string>
+
+    <string name="keyboard_service_hide">El teclado se esconde del</string>
     <!-- endregion -->
 
     <!-- region Contacts -->
@@ -42,5 +44,21 @@
 
     <string name="contact_add">Agregar contacto</string>
     <string name="contact_add_import">Importar contacto</string>
+
+    <string-array name="contact_relationship_list">
+        <item>Pareja</item>
+        <item>Familiar</item>
+        <item>Amig@</item>
+        <item>Conocid@</item>
+    </string-array>
+
+    <string name="contact_name">Nombre</string>
+    <string name="contact_phone">Teléfono</string>
+    <string name="contact_relationship">Relación</string>
+    <string name="contact_message">Mensaje de alerta</string>
+    <string name="contact_message_helper">Si deja el campo de entrada vacío, se aplicará el mensaje de alerta predeterminado</string>
+    <string name="contact_is_highlighted">¿Se enviará a este contacto el mensaje de alerta?</string>
+    <string name="contact_accept">Aceptar</string>
+    <string name="contact_cancel">Cancelar</string>
     <!-- endregion -->
 </resources>

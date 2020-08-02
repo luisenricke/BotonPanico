@@ -5,13 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.*
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.core.database.getStringOrNull
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.FragmentContactAddBinding
+import com.luisenricke.botonpanico.service.SendSMS
 import timber.log.Timber
 
 class ContactAddFragment : BaseFragment() {
@@ -29,6 +33,27 @@ class ContactAddFragment : BaseFragment() {
         binding.apply {
             getActivityContext().setSupportActionBar(toolbar)
             setupActionBar(getActivityContext().supportActionBar, getString(R.string.contact_add))
+
+            // Phone
+            txtPhone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+
+            // Relationship
+            val adapter = ArrayAdapter(
+                root.context,
+                R.layout.item_relationship,
+                root.context.resources.getStringArray(R.array.contact_relationship_list)
+            )
+
+            (txtLayoutRelationship.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
+            txtRelationship.setOnFocusChangeListener { v, hasFocus ->
+                if (hasFocus) getActivityContext().keyboard.hide(v)
+            }
+
+            // Message
+            txtLayoutMessage.apply {
+                counterMaxLength = SendSMS.getInstance(root.context).getMaxLength()
+            }
         }
 
         return binding.root
@@ -44,6 +69,8 @@ class ContactAddFragment : BaseFragment() {
         when (requestCode) {
             Constraint.INTENT_READ_CONTACTS_CODE -> {
                 val contact = getContact(binding.root.context, data)
+                binding.txtName.setText(contact.name)
+                binding.txtPhone.setText(contact.phone)
                 Timber.i("contact: \n $contact")
             }
         }
