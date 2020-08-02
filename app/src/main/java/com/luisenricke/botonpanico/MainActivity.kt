@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.luisenricke.botonpanico.databinding.ActivityMainBinding
 import com.luisenricke.botonpanico.service.Keyboard
 
@@ -44,8 +45,8 @@ class MainActivity : AppCompatActivity() {
         keyboard = Keyboard.getInstance(this)
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         _binding = null
     }
 

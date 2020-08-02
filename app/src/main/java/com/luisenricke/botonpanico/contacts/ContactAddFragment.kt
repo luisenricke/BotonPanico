@@ -65,11 +65,12 @@ class ContactAddFragment : BaseFragment() {
 
             // Buttons
             btnCancel.setOnClickListener {
+                imgProfile.setImageResource(R.drawable.ic_baseline_person_24)
                 clearStack()
             }
 
             btnAccept.setOnClickListener {
-
+            // TODO save in the database
             }
         }
 
@@ -118,8 +119,8 @@ class ContactAddFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
         getActivityContext().setBottomNavigationViewVisibility(true)
+        _binding = null
     }
 
     private fun clearStack() {
@@ -128,7 +129,7 @@ class ContactAddFragment : BaseFragment() {
     }
 
     // TODO get image of the contact if has
-    fun getContact(context: Context, data: Intent?): Contact {
+    private fun getContact(context: Context, data: Intent?): Contact {
         val contact = Contact()
 
         if (data!!.data == null) return contact
