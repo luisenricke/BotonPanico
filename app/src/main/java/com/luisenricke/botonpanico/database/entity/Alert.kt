@@ -35,12 +35,12 @@ data class Alert(
     }
 
     override fun toString(): String {
-        return """
-            id:         ${id}
-            latitude:   ${latitude}
-            longitude:  ${longitude}
-            type:       ${type}
-            timestamp:  ${timestamp}
-        """.trimIndent()
+        return """ ${System.lineSeparator()}
+            id:         $id
+            latitude:   $latitude
+            longitude:  $longitude
+            type:       $type
+            timestamp:  $timestamp
+        ${System.lineSeparator()} """.trimIndent()
     }
 }
