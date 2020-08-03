@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.luisenricke.androidext.toastShort
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.R
@@ -17,8 +18,72 @@ class ContactFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private val list = arrayListOf(
-        Contact(phone = "123456789", name = "test", relationship = "test1", id = 1),
-        Contact(phone = "987456321", name = "luis", relationship = "test2", id = 2)
+        Contact(
+            phone = "123456789",
+            name = "Luis Enrique Villalobos Meléndez",
+            relationship = "test1",
+            id = 1
+        ),
+        Contact(
+            phone = "987456321",
+            name = "Paola Nashely Osorio Guzman",
+            relationship = "test2",
+            id = 2
+        ),
+        Contact(
+            phone = "987456321",
+            name = "Paola Nashely Osorio Guzman",
+            relationship = "test2",
+            id = 3
+        ),
+        Contact(
+            phone = "987456321",
+            name = "Paola Nashely Osorio Guzman",
+            relationship = "test2",
+            id = 4
+        ),
+        Contact(
+            phone = "987456321",
+            name = "Paola Nashely Osorio Guzman",
+            relationship = "test2",
+            id = 5
+        ),
+        Contact(
+            phone = "987456321",
+            name = "Paola Nashely Osorio Guzman",
+            relationship = "test2",
+            id = 6
+        ),
+        Contact(
+            phone = "987456321",
+            name = "Paola Nashely Osorio Guzman",
+            relationship = "test2",
+            id = 7
+        ),
+        Contact(
+            phone = "987456321",
+            name = "Paola Nashely Osorio Guzman",
+            relationship = "test2",
+            id = 8
+        ),
+        Contact(
+            phone = "987456321",
+            name = "Paola Nashely Osorio Guzman",
+            relationship = "test2",
+            id = 9
+        ),
+        Contact(
+            phone = "987456321",
+            name = "Paola Nashely Osorio Guzman",
+            relationship = "test2",
+            id = 10
+        ),
+        Contact(
+            phone = "987456321",
+            name = "Paola Nashely Osorio Guzman",
+            relationship = "test2",
+            id = 11
+        )
     )
 
     override fun onCreateView(
@@ -35,11 +100,19 @@ class ContactFragment : BaseFragment() {
 
             recyclerContacts.apply {
                 setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(this.context)
-                adapter =
-                    ContactAdapter(list) { item ->
-                        toastShort("clicked ${item.name}")
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        if (dy > 0 && btnAddContact.visibility == View.VISIBLE) {
+                            btnAddContact.hide()
+                            getActivityContext().setBottomNavigationViewVisibility(false)
+                        } else if (dy < 0 && btnAddContact.visibility != View.VISIBLE) {
+                            btnAddContact.show()
+                            getActivityContext().setBottomNavigationViewVisibility(true)
+                        }
                     }
+                })
+                adapter = ContactAdapter(list)
             }
         }
 

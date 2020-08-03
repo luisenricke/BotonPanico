@@ -5,8 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.ItemContactBinding
+import timber.log.Timber
 
-class ContactAdapter(private val contacts: List<Contact>, val clickListener: (Contact) -> Unit) :
+class ContactAdapter(
+    private val contacts: List<Contact>
+) :
     RecyclerView.Adapter<ContactAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,10 +30,20 @@ class ContactAdapter(private val contacts: List<Contact>, val clickListener: (Co
             with(binding) {
                 lblId.text = contact.id.toString()
                 lblName.text = contact.name
-                lblPhone.text = contact.phone
+                lblRelationship.text = contact.relationship
 
-                btnDelete.setOnClickListener { }
-                root.setOnClickListener { clickListener(contact) }
+//                btnDelete.setOnClickListener { }
+//                root.setOnClickListener { clickListener(contact) }
+                cardContact.setOnClickListener {
+                    Timber.i("clicked contact")
+                }
+
+                cardContact.setOnLongClickListener {
+                    Timber.i("longcliked contact")
+                    val checked = !cardContact.isChecked
+                    cardContact.isChecked = checked
+                    true
+                }
             }
         }
     }
