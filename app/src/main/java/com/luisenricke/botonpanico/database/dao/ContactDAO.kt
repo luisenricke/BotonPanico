@@ -34,9 +34,6 @@ abstract class ContactDAO : Base<Contact>, Update<Contact>, Delete<Contact>, Pri
     @Query("DELETE FROM ${SCHEMA.TABLE} WHERE id IN(:ids)")
     abstract override fun deletes(ids: LongArray): Int
 
-    @Query("SELECT * FROM ${SCHEMA.TABLE} ORDER BY ${SCHEMA.ID} LIMIT 1")
-    abstract fun last(): Contact?
-
-    @Query("DELETE FROM ${SCHEMA.TABLE} WHERE id = (SELECT MAX(id) FROM ${SCHEMA.TABLE})")
-    abstract fun deleteLast()
+    @Query("SELECT * FROM ${SCHEMA.TABLE} WHERE isHighlighted = 1")
+    abstract fun getHighlighted(): List<Contact>
 }
