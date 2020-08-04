@@ -4,87 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.luisenricke.androidext.toastShort
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.R
+import com.luisenricke.botonpanico.database.dao.ContactDAO
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.FragmentContactBinding
+import timber.log.Timber
 
 class ContactFragment : BaseFragment() {
 
     private var _binding: FragmentContactBinding? = null
     private val binding get() = _binding!!
 
-    private val list = arrayListOf(
-        Contact(
-            phone = "123456789",
-            name = "Luis Enrique Villalobos Meléndez",
-            relationship = "test1",
-            id = 1
-        ),
-        Contact(
-            phone = "987456321",
-            name = "Paola Nashely Osorio Guzman",
-            relationship = "test2",
-            id = 2
-        ),
-        Contact(
-            phone = "987456321",
-            name = "Paola Nashely Osorio Guzman",
-            relationship = "test2",
-            id = 3
-        ),
-        Contact(
-            phone = "987456321",
-            name = "Paola Nashely Osorio Guzman",
-            relationship = "test2",
-            id = 4
-        ),
-        Contact(
-            phone = "987456321",
-            name = "Paola Nashely Osorio Guzman",
-            relationship = "test2",
-            id = 5
-        ),
-        Contact(
-            phone = "987456321",
-            name = "Paola Nashely Osorio Guzman",
-            relationship = "test2",
-            id = 6
-        ),
-        Contact(
-            phone = "987456321",
-            name = "Paola Nashely Osorio Guzman",
-            relationship = "test2",
-            id = 7
-        ),
-        Contact(
-            phone = "987456321",
-            name = "Paola Nashely Osorio Guzman",
-            relationship = "test2",
-            id = 8
-        ),
-        Contact(
-            phone = "987456321",
-            name = "Paola Nashely Osorio Guzman",
-            relationship = "test2",
-            id = 9
-        ),
-        Contact(
-            phone = "987456321",
-            name = "Paola Nashely Osorio Guzman",
-            relationship = "test2",
-            id = 10
-        ),
-        Contact(
-            phone = "987456321",
-            name = "Paola Nashely Osorio Guzman",
-            relationship = "test2",
-            id = 11
-        )
+    private val dao: ContactDAO
+        get() = database.contactDAO()
+
+    private lateinit var contactAdapter: ContactAdapter
+
+    private val list = mutableListOf(
+        Contact(phone = "123456789", name = "A", relationship = "1", isHighlighted = true, id = 1),
+        Contact(phone = "987456321", name = "B", relationship = "2", id = 2),
+        Contact(phone = "987456321", name = "c", relationship = "3", id = 3),
+        Contact(phone = "987456321", name = "D", relationship = "$", isHighlighted = true, id = 4)
     )
+
+    private var contacts: List<Contact> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -92,6 +37,12 @@ class ContactFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentContactBinding.inflate(inflater, container, false)
+
+        contactAdapter = ContactAdapter(binding.root.context, { item->
+            Timber.i("Clicked from Fragment ${item.name}")
+        }, { item->
+            Timber.i("LongClicked from Fragment ${item.name}")
+        })
 
         binding.apply {
             btnAddContact.setOnClickListener {
@@ -112,11 +63,17 @@ class ContactFragment : BaseFragment() {
                         }
                     }
                 })
-                adapter = ContactAdapter(list)
+
+                adapter = contactAdapter
             }
         }
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        contactAdapter.updateList()
     }
 
     override fun onDestroyView() {
