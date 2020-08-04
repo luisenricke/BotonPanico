@@ -16,6 +16,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.luisenricke.androidext.*
+import com.luisenricke.botonpanico.database.AppDatabase
 import com.luisenricke.botonpanico.service.SensorForeground
 import timber.log.Timber
 
@@ -26,6 +27,9 @@ abstract class BaseFragment : Fragment() {
         get() = findNavController()
 
     fun getActivityContext(): MainActivity = (activity as MainActivity)
+
+    val database: AppDatabase
+        get() = AppDatabase.getInstance(getActivityContext())
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
