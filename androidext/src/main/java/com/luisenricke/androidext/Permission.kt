@@ -14,94 +14,78 @@ import androidx.fragment.app.Fragment
 private const val TAG = "PermissionExt"
 private const val EXCEPTION_CONTEXT_NULL = "The context is null"
 
-// TODO Check this, revert conditions when checkshoultRequestPermission
 // region AppCompatActivity
-//@Suppress("unused")
-fun AppCompatActivity.requestPermission(
-    permission: String,
-    requestCode: Int,
-    deniedMessage: String,
-    displayMessage: Boolean = false
-) {
-    val activeNetwork = !shouldShowRequestPermissionRationale(this, permission)
-            && !checkPermission(permission)
+@Suppress("unused")
+fun AppCompatActivity.requestPermission(permission: String, requestCode: Int, deniedMessage: String, displayMessage: Boolean = false) {
 
     when {
-        checkPermission(permission) ->
+        checkPermission(permission)                            ->
             Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
 
-        activeNetwork -> if (displayMessage) toastLong(deniedMessage)
+        shouldShowRequestPermissionRationale(this, permission) ->
+            requestPermissions(this, arrayOf(permission), requestCode)
 
-        else -> requestPermissions(this, arrayOf(permission), requestCode)
+        else                                                   ->
+            if (displayMessage) toastLong(deniedMessage)
+
     }
 }
 
 @Suppress("unused")
-fun AppCompatActivity.requestCriticalPermission(
-    permission: String,
-    requestCode: Int,
-    permissionMessage: PermissionMessage
-) {
+fun AppCompatActivity.requestCriticalPermission(permission: String, requestCode: Int, permissionMessage: PermissionMessage) {
     when {
-        checkPermission(permission) ->
+        checkPermission(permission)                            ->
             Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
 
-        !shouldShowRequestPermissionRationale(this, permission) ->
+        shouldShowRequestPermissionRationale(this, permission) ->
+            requestPermissions(this, arrayOf(permission), requestCode)
+
+        else                                                   ->
             alertDialog(this, permissionMessage)
-
-        else -> requestPermissions(this, arrayOf(permission), requestCode)
     }
 }
 
 @Suppress("unused")
-fun AppCompatActivity.requestPermissions(
-    permissions: MutableList<String>,
-    requestCode: Int,
-    deniedMessage: String,
-    displayMessage: Boolean = false
-) {
+fun AppCompatActivity.requestPermissions(permissions: MutableList<String>, requestCode: Int, deniedMessage: String, displayMessage: Boolean = false) {
     val permissionNeeded: MutableList<String> = mutableListOf()
-    var activeNeverAsk = false
+    var shouldAskAgain = false
 
     for (permission in permissions) {
         if (!checkPermission(permission)) permissionNeeded.add(permission)
-        else Log.i(TAG, "${getString(R.string.permission_granted)} of $permission")
+        else Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
 
-        val checkPermission = !shouldShowRequestPermissionRationale(this, permission)
-                && !checkPermission(permission)
+        val checkPermission = shouldShowRequestPermissionRationale(this, permission)
 
-        if (checkPermission) activeNeverAsk = true
+        if (checkPermission) shouldAskAgain = true
     }
 
     if (permissionNeeded.isEmpty()) return
 
-    if (activeNeverAsk) {
-        if (displayMessage) toastLong(deniedMessage)
-    } else requestPermissions(this, permissions.toTypedArray(), requestCode)
+    if (shouldAskAgain) {
+        if (displayMessage) requestPermissions(this, permissions.toTypedArray(), requestCode)
+    } else {
+        toastLong(deniedMessage)
+    }
 }
 
 @Suppress("unused")
-fun AppCompatActivity.requestCriticalPermissions(
-    permissions: MutableList<String>,
-    requestCode: Int,
-    permissionMessage: PermissionMessage
-) {
+fun AppCompatActivity.requestCriticalPermissions(permissions: MutableList<String>, requestCode: Int, permissionMessage: PermissionMessage) {
     val permissionNeeded: MutableList<String> = mutableListOf()
-    var activeNeverAsk = false
+    var shouldAskAgain = false
 
     for (permission in permissions) {
         if (!checkPermission(permission)) permissionNeeded.add(permission)
+        else Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
 
-        val checkedPermission = !shouldShowRequestPermissionRationale(this, permission)
-                && !checkPermission(permission)
+        val checkedPermission = shouldShowRequestPermissionRationale(this, permission)
 
-        if (checkedPermission) activeNeverAsk = true
+        if (checkedPermission) shouldAskAgain = true
     }
 
     if (permissionNeeded.isEmpty()) return
 
-    if (activeNeverAsk) alertDialog(this, permissionMessage)
-    else requestPermissions(this, permissions.toTypedArray(), requestCode)
+    if (shouldAskAgain) requestPermissions(this, permissions.toTypedArray(), requestCode)
+    else alertDialog(this, permissionMessage)
 }
 
 @Suppress("unused")
@@ -114,99 +98,85 @@ fun AppCompatActivity.checkPermissions(permissions: MutableList<String>): Boolea
 // endregion
 
 // region fragment
-//@Suppress("unused")
-fun Fragment.requestPermission(
-    permission: String,
-    requestCode: Int,
-    deniedMessage: String,
-    displayMessage: Boolean = false
-) {
+@Suppress("unused")
+fun Fragment.requestPermission(permission: String, requestCode: Int, deniedMessage: String, displayMessage: Boolean = false) {
     val activity = this.activity!!
 
     when {
-        checkPermission(permission) ->
+        checkPermission(permission)                                ->
             Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
 
         shouldShowRequestPermissionRationale(activity, permission) ->
-             requestPermissions(arrayOf(permission), requestCode)
+            requestPermissions(arrayOf(permission), requestCode)
 
-        else -> if (displayMessage) toastLong(deniedMessage)
+        else                                                       ->
+            if (displayMessage) toastLong(deniedMessage)
     }
 }
 
-//@Suppress("unused")
-fun Fragment.requestCriticalPermission(
-    permission: String,
-    requestCode: Int,
-    permissionMessage: PermissionMessage
-) {
+@Suppress("unused")
+fun Fragment.requestCriticalPermission(permission: String, requestCode: Int, permissionMessage: PermissionMessage) {
     val context = this.context!!
     val activity = this.activity!!
 
     when {
-        checkPermission(permission) ->
+        checkPermission(permission)                                ->
             Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
 
-        !shouldShowRequestPermissionRationale(activity, permission) ->
-            alertDialog(context, permissionMessage)
+        shouldShowRequestPermissionRationale(activity, permission) ->
+            requestPermissions(arrayOf(permission), requestCode)
 
-        else -> requestPermissions(arrayOf(permission), requestCode)
+        else                                                       ->
+            alertDialog(context, permissionMessage)
     }
 }
 
-//@Suppress("unused")
-fun Fragment.requestPermissions(
-    permissions: MutableList<String>,
-    requestCode: Int,
-    deniedMessage: String,
-    displayMessage: Boolean = false
-) {
+@Suppress("unused")
+fun Fragment.requestPermissions(permissions: MutableList<String>, requestCode: Int, deniedMessage: String, displayMessage: Boolean = false) {
     val activity = this.activity!!
 
     val permissionNeeded: MutableList<String> = mutableListOf()
-    var activeNeverAsk = false
+    var shouldAskAgain = false
 
     for (permission in permissions) {
         if (!checkPermission(permission)) permissionNeeded.add(permission)
-        else Log.i(TAG, "${getString(R.string.permission_granted)} of $permission")
+        else Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
 
-        val checkPermission = !shouldShowRequestPermissionRationale(activity, permission)
-                && !checkPermission(permission)
+        val checkPermission = shouldShowRequestPermissionRationale(activity, permission)
 
-        if (checkPermission) activeNeverAsk = true
+        if (checkPermission) shouldAskAgain = true
     }
 
     if (permissionNeeded.isEmpty()) return
 
-    if (activeNeverAsk) {
-        if (displayMessage) toastLong(deniedMessage)
-    } else requestPermissions(permissions.toTypedArray(), requestCode)
+    if (shouldAskAgain) {
+        if (displayMessage) requestPermissions(permissions.toTypedArray(), requestCode)
+    } else {
+        toastLong(deniedMessage)
+    }
 }
 
-//@Suppress("unused")
-fun Fragment.requestCriticalPermissions(
-    permissions: MutableList<String>,
-    requestCode: Int,
-    permissionMessage: PermissionMessage
-) {
+@Suppress("unused")
+fun Fragment.requestCriticalPermissions(permissions: MutableList<String>, requestCode: Int, permissionMessage: PermissionMessage) {
     val context = this.context!!
     val activity = this.activity!!
 
     val permissionNeeded: MutableList<String> = mutableListOf()
-    var activeNeverAsk = false
+    var shouldAskAgain = false
 
     for (permission in permissions) {
         if (!checkPermission(permission)) permissionNeeded.add(permission)
+        else Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
 
-        val checkedPermission = !shouldShowRequestPermissionRationale(activity, permission)
+        val checkedPermission = shouldShowRequestPermissionRationale(activity, permission)
 
-        if (checkedPermission) activeNeverAsk = true
+        if (checkedPermission) shouldAskAgain = true
     }
 
     if (permissionNeeded.isEmpty()) return
 
-    if (activeNeverAsk) alertDialog(context, permissionMessage)
-    else requestPermissions(permissions.toTypedArray(), requestCode)
+    if (shouldAskAgain) requestPermissions(permissions.toTypedArray(), requestCode)
+    else alertDialog(context, permissionMessage)
 }
 
 @Suppress("unused")
@@ -235,12 +205,12 @@ fun Context?.checkPermissions(permissions: MutableList<String>): Boolean {
 // endregion
 
 data class PermissionMessage(
-    val context: Context,
-    var title: String = context.getString(R.string.permissions_title),
-    var message: String = context.getString(R.string.permission_message),
-    var positiveButton: String = context.getString(R.string.permission_positive_button),
-    var negativeButton: String = context.getString(R.string.permission_negative_button),
-    var denied: String = context.getString(R.string.permission_denied)
+        val context: Context,
+        var title: String = context.getString(R.string.permissions_title),
+        var message: String = context.getString(R.string.permission_message),
+        var positiveButton: String = context.getString(R.string.permission_positive_button),
+        var negativeButton: String = context.getString(R.string.permission_negative_button),
+        var denied: String = context.getString(R.string.permission_denied)
 )
 
 private fun alertDialog(context: Context, permissionMessage: PermissionMessage) =
