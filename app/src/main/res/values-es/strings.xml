@@ -86,5 +86,7 @@
     <string name="contact_cancel">Cancelar</string>
 
     <string name="contact_added_successfully">Se agrego satisfactoriamente el contacto</string>
+
+    <string name="contact_limit_highlighted">Se escedio el limite de contactos para enviar el mensaje, desahibilita uno para activar otro</string>
     <!-- endregion -->
 </resources>

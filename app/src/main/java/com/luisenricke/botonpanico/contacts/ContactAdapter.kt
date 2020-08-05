@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.luisenricke.androidext.loadImageInternalStorage
+import com.luisenricke.androidext.toastShort
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.AppDatabase
 import com.luisenricke.botonpanico.database.dao.ContactDAO
@@ -54,13 +56,15 @@ class ContactAdapter(
                 cardContact.setOnLongClickListener {
                     longClickListener(contact)
 
-                    val check = !contact.isHighlighted
-                    contact.isHighlighted = check
-                    cardContact.isChecked = check
+                    val highlightedList = dao.countHighlighted()
 
-                    dao.update(contact)
+                    if (highlightedList >= 5) {
+                        if (contact.isHighlighted) checkItem(contact, cardContact)
+                        else context.toastShort(context.getString(R.string.contact_limit_highlighted))
+                    } else {
+                        checkItem(contact, cardContact)
+                    }
 
-                    updateList()
                     true
                 }
             }
@@ -70,5 +74,13 @@ class ContactAdapter(
     fun updateList() {
         contacts = dao.get().sortedBy { it.name }.sortedByDescending { it.isHighlighted }
         notifyDataSetChanged()
+    }
+
+    fun checkItem(contact: Contact, card: MaterialCardView) {
+        val check = !contact.isHighlighted
+        contact.isHighlighted = check
+        card.isChecked = check
+        dao.update(contact)
+        updateList()
     }
 }

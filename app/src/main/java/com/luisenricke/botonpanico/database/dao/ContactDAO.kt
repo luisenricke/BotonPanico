@@ -34,6 +34,9 @@ abstract class ContactDAO : Base<Contact>, Update<Contact>, Delete<Contact>, Pri
     @Query("DELETE FROM ${SCHEMA.TABLE} WHERE id IN(:ids)")
     abstract override fun deletes(ids: LongArray): Int
 
+    @Query("SELECT COUNT(*) FROM ${SCHEMA.TABLE} WHERE isHighlighted = 1")
+    abstract fun countHighlighted(): Long
+
     @Query("SELECT * FROM ${SCHEMA.TABLE} WHERE isHighlighted = 1")
     abstract fun getHighlighted(): List<Contact>
 }

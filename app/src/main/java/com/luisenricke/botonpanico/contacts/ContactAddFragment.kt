@@ -74,6 +74,12 @@ class ContactAddFragment : BaseFragment() {
             // Message
             txtLayoutMessage.counterMaxLength = SendSMS.getInstance(context).getMaxLength()
 
+            // Switch
+            val highlightedList = database.contactDAO().countHighlighted()
+            if (highlightedList >= 5) {
+                swtHighlighted.visibility = View.GONE
+            }
+
             // Buttons
             btnCancel.setOnClickListener {
                 imgProfile.setImageResource(R.drawable.ic_baseline_person_24)
