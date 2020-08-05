@@ -31,11 +31,7 @@ abstract class BaseFragment : Fragment() {
     val database: AppDatabase
         get() = AppDatabase.getInstance(getActivityContext())
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if (grantResults.isEmpty()) {
@@ -47,28 +43,22 @@ abstract class BaseFragment : Fragment() {
             Constraint.PERMISSION_READ_CONTACTS_CODE -> {
                 val isGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
 
-                if (isGranted) {
-                    intentSelectContact(Constraint.INTENT_READ_CONTACTS_CODE)
-                } else {
-                    Timber.e("${getString(R.string.on_request_permissions_result_denied_permissions)} READ_CONTACTS")
-                }
+                if (isGranted) intentSelectContact(Constraint.INTENT_READ_CONTACTS_CODE)
+                else Timber.e("${getString(R.string.on_request_permissions_result_denied_permissions)} READ_CONTACTS")
 
                 return
             }
 
-            Constraint.PERMISSIONS_ALERT_SERVICE -> {
+            Constraint.PERMISSIONS_ALERT_SERVICE     -> {
                 val isGranted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
 
-                if (isGranted) {
-                    SensorForeground.startService(getActivityContext())
-                } else {
-                    Timber.e("${getString(R.string.on_request_permissions_result_denied_permissions)} ALERT")
-                }
+                if (isGranted) SensorForeground.startService(getActivityContext())
+                else Timber.e("${getString(R.string.on_request_permissions_result_denied_permissions)} ALERT")
 
                 return
             }
 
-            else -> Timber.e(getString(R.string.on_request_permissions_result_doesnt_find_permission))
+            else                                     -> Timber.e(getString(R.string.on_request_permissions_result_doesnt_find_permission))
         }
 
     }
@@ -84,50 +74,38 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
+    // TODO make manager for ImageOptions
     fun imageOptionsSimple(context: Context, view: ImageView, image: Bitmap?) {
 
         val resource = context.resources
-        val options: Array<out String> =
-            if (image == null) resource.getStringArray(R.array.photo_options_empty)
-            else resource.getStringArray(R.array.photo_options_filled)
+        val options: Array<out String> = if (image == null) resource.getStringArray(R.array.photo_options_empty)
+        else resource.getStringArray(R.array.photo_options_filled)
 
-        MaterialAlertDialogBuilder(context)
-            .setTitle(resource.getString(R.string.photo_options_title))
-            .setItems(options) { dialog, which ->
-                when (options[which]) {
-                    context.getString(R.string.photo_options_gallery) ->
-                        intentSelectImageFromGallery(Constraint.INTENT_IMAGE_FROM_GALLERY)
-                    context.getString(R.string.photo_options_delete) ->
-                        view.setImageResource(R.drawable.ic_baseline_person_24)
-                    context.getString(R.string.photo_options_cancel) ->
-                        dialog.dismiss()
-                }
+        MaterialAlertDialogBuilder(context).setTitle(resource.getString(R.string.photo_options_title)).setItems(options) { dialog, which ->
+            when (options[which]) {
+                context.getString(R.string.photo_options_gallery) -> intentSelectImageFromGallery(Constraint.INTENT_IMAGE_FROM_GALLERY)
+                context.getString(R.string.photo_options_delete)  -> view.setImageResource(R.drawable.ic_baseline_person_24)
+                context.getString(R.string.photo_options_cancel)  -> dialog.dismiss()
             }
-            .show()
+        }.show()
     }
 
     fun imageOptionsWipe(context: Context, view: ImageView, image: Bitmap?, file: String) {
 
         val resource = context.resources
-        val options: Array<out String> =
-            if (image == null) resource.getStringArray(R.array.photo_options_empty)
-            else resource.getStringArray(R.array.photo_options_filled)
+        val options: Array<out String> = if (image == null) resource.getStringArray(R.array.photo_options_empty)
+        else resource.getStringArray(R.array.photo_options_filled)
 
-        MaterialAlertDialogBuilder(context)
-            .setTitle(resource.getString(R.string.photo_options_title))
-            .setItems(options) { dialog, which ->
-                when (options[which]) {
-                    context.getString(R.string.photo_options_gallery) ->
-                        intentSelectImageFromGallery(Constraint.INTENT_IMAGE_FROM_GALLERY)
-                    context.getString(R.string.photo_options_delete) -> {
-                        view.setImageResource(R.drawable.ic_baseline_person_24)
-                        context.deleteImageInternalStorage(file)
-                    }
-                    context.getString(R.string.photo_options_cancel) ->
-                        dialog.dismiss()
+        MaterialAlertDialogBuilder(context).setTitle(resource.getString(R.string.photo_options_title)).setItems(options) { dialog, which ->
+            when (options[which]) {
+                context.getString(R.string.photo_options_gallery) -> intentSelectImageFromGallery(Constraint.INTENT_IMAGE_FROM_GALLERY)
+                context.getString(R.string.photo_options_delete)  -> {
+                    view.setImageResource(R.drawable.ic_baseline_person_24)
+                    context.deleteImageInternalStorage(file)
                 }
+                context.getString(R.string.photo_options_cancel)  -> dialog.dismiss()
             }
-            .show()
+        }.show()
     }
 
     // TODO test this
@@ -146,41 +124,19 @@ abstract class BaseFragment : Fragment() {
         return bitmap!!
     }
 
-    fun checkContactsPermission() {
-
-        if (checkPermission(Manifest.permission.READ_CONTACTS)) {
-            intentSelectContact(Constraint.INTENT_READ_CONTACTS_CODE)
-        } else {
-            requestPermission(
-                Manifest.permission.READ_CONTACTS,
-                Constraint.PERMISSION_READ_CONTACTS_CODE,
-                getString(R.string.permission_message_read_contacts_denied),
-                true
-            )
-        }
-
-    }
-
-    fun checkAlertPermissions() {
-        val permissions = arrayListOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.SEND_SMS
-        )
+    fun requestAlertService() {
+        val permissions = arrayListOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS)
 
         val message = PermissionMessage(
-            context = getActivityContext(),
-            title = getString(R.string.permission_message_alert_title),
-            message = getString(R.string.permission_message_alert_message),
-            positiveButton = getString(R.string.permission_message_alert_positive_button),
-            negativeButton = getString(R.string.permission_message_alert_negative_button),
-            denied = getString(R.string.permission_message_alert_denied)
+                context = getActivityContext(),
+                title = getString(R.string.permission_message_alert_title),
+                message = getString(R.string.permission_message_alert_message),
+                positiveButton = getString(R.string.permission_message_alert_positive_button),
+                negativeButton = getString(R.string.permission_message_alert_negative_button),
+                denied = getString(R.string.permission_message_alert_denied)
         )
 
-        if (checkPermissions(permissions)) {
-            SensorForeground.startService(getActivityContext())
-        } else {
-            requestCriticalPermissions(permissions, Constraint.PERMISSIONS_ALERT_SERVICE, message)
-        }
-
+        if (checkPermissions(permissions)) SensorForeground.startService(getActivityContext())
+        else requestCriticalPermissions(permissions, Constraint.PERMISSIONS_ALERT_SERVICE, message)
     }
 }

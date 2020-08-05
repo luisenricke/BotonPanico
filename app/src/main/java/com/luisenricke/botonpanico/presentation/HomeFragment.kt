@@ -28,7 +28,7 @@ class HomeFragment : BaseFragment() {
 
         binding.apply {
 
-            btnStart.setOnClickListener { checkAlertPermissions() }
+            btnStart.setOnClickListener { requestAlertService() }
 
             btnStop.setOnClickListener { SensorForeground.stopService(root.context) }
 
