@@ -14,8 +14,9 @@ import androidx.fragment.app.Fragment
 private const val TAG = "PermissionExt"
 private const val EXCEPTION_CONTEXT_NULL = "The context is null"
 
+// TODO Check this, revert conditions when checkshoultRequestPermission
 // region AppCompatActivity
-@Suppress("unused")
+//@Suppress("unused")
 fun AppCompatActivity.requestPermission(
     permission: String,
     requestCode: Int,
@@ -113,7 +114,7 @@ fun AppCompatActivity.checkPermissions(permissions: MutableList<String>): Boolea
 // endregion
 
 // region fragment
-@Suppress("unused")
+//@Suppress("unused")
 fun Fragment.requestPermission(
     permission: String,
     requestCode: Int,
@@ -122,20 +123,18 @@ fun Fragment.requestPermission(
 ) {
     val activity = this.activity!!
 
-    val activeNetwork = !shouldShowRequestPermissionRationale(activity, permission)
-            && !checkPermission(permission)
-
     when {
         checkPermission(permission) ->
             Log.d(TAG, "${getString(R.string.permission_granted)} of $permission")
 
-        activeNetwork -> if (displayMessage) toastLong(deniedMessage)
+        shouldShowRequestPermissionRationale(activity, permission) ->
+             requestPermissions(arrayOf(permission), requestCode)
 
-        else -> requestPermissions(arrayOf(permission), requestCode)
+        else -> if (displayMessage) toastLong(deniedMessage)
     }
 }
 
-@Suppress("unused")
+//@Suppress("unused")
 fun Fragment.requestCriticalPermission(
     permission: String,
     requestCode: Int,
@@ -155,7 +154,7 @@ fun Fragment.requestCriticalPermission(
     }
 }
 
-@Suppress("unused")
+//@Suppress("unused")
 fun Fragment.requestPermissions(
     permissions: MutableList<String>,
     requestCode: Int,
@@ -184,7 +183,7 @@ fun Fragment.requestPermissions(
     } else requestPermissions(permissions.toTypedArray(), requestCode)
 }
 
-@Suppress("unused")
+//@Suppress("unused")
 fun Fragment.requestCriticalPermissions(
     permissions: MutableList<String>,
     requestCode: Int,
@@ -200,7 +199,6 @@ fun Fragment.requestCriticalPermissions(
         if (!checkPermission(permission)) permissionNeeded.add(permission)
 
         val checkedPermission = !shouldShowRequestPermissionRationale(activity, permission)
-                && !checkPermission(permission)
 
         if (checkedPermission) activeNeverAsk = true
     }
