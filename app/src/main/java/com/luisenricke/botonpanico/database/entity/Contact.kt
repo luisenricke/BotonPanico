@@ -42,15 +42,15 @@ data class Contact(
     }
 
     override fun toString(): String {
-        return """ ${System.lineSeparator()}
-            id:             $id
-            name:           $name
-            phone:          $phone
-            relationship:   $relationship
-            message:        $message
-            image:          $image
-            isHighlighted   $isHighlighted
-        ${System.lineSeparator()} """.trimIndent()
+        return """/* ${System.lineSeparator()}
+            |id:             $id
+            |name:           $name
+            |phone:          $phone
+            |relationship:   $relationship
+            |message:        $message
+            |image:          $image
+            |isHighlighted   $isHighlighted
+        ${System.lineSeparator()} */""".trimMargin()
     }
 
     data class Minimal(var name: String = "", var phone: String = "")
