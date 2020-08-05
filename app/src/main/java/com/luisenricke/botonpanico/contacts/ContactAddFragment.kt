@@ -1,23 +1,25 @@
 package com.luisenricke.botonpanico.contacts
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import androidx.core.database.getStringOrNull
+import com.luisenricke.androidext.saveImageInternalStorage
+import com.luisenricke.androidext.toastShort
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.FragmentContactAddBinding
 import com.luisenricke.botonpanico.service.SendSMS
+import com.luisenricke.kotlinext.formatPhone
+import com.luisenricke.kotlinext.removeWhiteSpaces
 import timber.log.Timber
+import com.luisenricke.botonpanico.contacts.ContactUtils as utils
 
 class ContactAddFragment : BaseFragment() {
 
@@ -25,52 +27,89 @@ class ContactAddFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private var image: Bitmap? = null
+    private var isSetImage: Boolean = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         getActivityContext().setBottomNavigationViewVisibility(false)
         _binding = FragmentContactAddBinding.inflate(inflater, container, false)
 
         binding.apply {
+            val context = root.context
+
+            // Toolbar
             getActivityContext().setSupportActionBar(toolbar)
             setupActionBar(getActivityContext().supportActionBar, getString(R.string.contact_add))
 
             // Image
             imgProfile.setOnClickListener {
                 imageOptionsSimple(root.context, imgProfile, image)
+                isSetImage = utils.checkDefaultImage(context, imgProfile.drawable)
+                if (!isSetImage) image = null
+            }
+
+            //Name
+            txtName.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) utils.hasError(context, txtLayoutName, txtName.text!!)
             }
 
             // Phone
             txtPhone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+            txtPhone.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    utils.hasError(context, txtLayoutPhone, txtPhone.text!!)
+                    utils.hasErrorPhone(txtLayoutPhone, txtPhone.text!!)
+                }
+            }
 
             // Relationship
-            val adapter = ArrayAdapter(
-                root.context,
-                R.layout.item_relationship,
-                root.context.resources.getStringArray(R.array.contact_relationship_list)
-            )
+            val adapter = ArrayAdapter(context, R.layout.item_relationship, context.resources.getStringArray(R.array.contact_relationship_list))
 
             (txtLayoutRelationship.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
             txtRelationship.setOnFocusChangeListener { v, hasFocus ->
                 if (hasFocus) getActivityContext().keyboard.hide(v)
+                else utils.hasError(context, txtLayoutRelationship, txtRelationship.text!!)
             }
 
             // Message
-            txtLayoutMessage.apply {
-                counterMaxLength = SendSMS.getInstance(root.context).getMaxLength()
-            }
+            txtLayoutMessage.counterMaxLength = SendSMS.getInstance(context).getMaxLength()
 
             // Buttons
             btnCancel.setOnClickListener {
                 imgProfile.setImageResource(R.drawable.ic_baseline_person_24)
-                clearStack()
+                utils.clearStack(navController)
             }
 
             btnAccept.setOnClickListener {
-            // TODO save in the database
+                val isEmptyName = utils.hasError(context, txtLayoutName, txtName.text!!)
+                val isEmptyPhone = utils.hasError(context, txtLayoutPhone, txtPhone.text!!)
+                val isEmptyRelationShip = utils.hasError(context, txtLayoutRelationship, txtRelationship.text!!)
+                val isPhoneValid = utils.hasErrorPhone(txtLayoutPhone, txtPhone.text!!)
+
+                if (!isEmptyName && !isEmptyPhone && !isEmptyRelationShip && !isPhoneValid) {
+                    val formatPhone = txtPhone.text.toString().removeWhiteSpaces().formatPhone("")
+                    val name = txtName.text.toString()
+
+                    var imageSrc = ""
+                    if (isSetImage) {
+                        imageSrc = "${formatPhone}_${name.removeWhiteSpaces()}"
+                        val isSavedImage = binding.root.context.saveImageInternalStorage(image, imageSrc)
+                        if (!isSavedImage) imageSrc = ""
+                    }
+
+                    val contact = Contact(
+                            name = name,
+                            phone = formatPhone,
+                            isHighlighted = swtHighlighted.isChecked,
+                            relationship = txtRelationship.text.toString(),
+                            message = txtMessage.text.toString(),
+                            image = imageSrc
+                    )
+                    Timber.i(contact.toString())
+                    database.contactDAO().insert(contact)
+                    toastShort(context.getString(R.string.contact_added_successfully))
+                    utils.clearStack(navController)
+                }
             }
         }
 
@@ -80,19 +119,25 @@ class ContactAddFragment : BaseFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode != Activity.RESULT_OK) {
-            return
-        }
+        if (resultCode != Activity.RESULT_OK) return
 
         when (requestCode) {
             Constraint.INTENT_READ_CONTACTS_CODE -> {
-                val contact = getContact(binding.root.context, data)
+                val contact = utils.getContact(binding.root.context, data)
+                Timber.d("Imported contact: \n $contact")
+
                 binding.txtName.setText(contact.name)
+                utils.hasError(binding.root.context, binding.txtLayoutName, binding.txtName.text!!)
+
                 binding.txtPhone.setText(contact.phone)
-                Timber.i("contact: \n $contact")
+                utils.hasError(binding.root.context, binding.txtLayoutPhone, binding.txtPhone.text!!)
+                utils.hasErrorPhone(binding.txtLayoutPhone, binding.txtPhone.text!!)
             }
             Constraint.INTENT_IMAGE_FROM_GALLERY -> {
                 image = getImage(binding.root.context, data) ?: return
+                Timber.d("The image was set with ${image?.width}x${image?.height}")
+
+                isSetImage = true
                 binding.imgProfile.setImageBitmap(image)
             }
         }
@@ -105,15 +150,15 @@ class ContactAddFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> {
-                clearStack()
+            android.R.id.home        -> {
+                utils.clearStack(navController)
                 true
             }
             R.id.menu_contact_import -> {
-                checkContactsPermission()
+                utils.requestContact(this)
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else                     -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -121,66 +166,5 @@ class ContactAddFragment : BaseFragment() {
         super.onDestroyView()
         getActivityContext().setBottomNavigationViewVisibility(true)
         _binding = null
-    }
-
-    private fun clearStack() {
-        navController.popBackStack(R.id.nav_contact, true)
-        navController.navigate(R.id.nav_contact)
-    }
-
-    // TODO get image of the contact if has
-    private fun getContact(context: Context, data: Intent?): Contact {
-        val contact = Contact()
-
-        if (data!!.data == null) return contact
-
-        val contentResolver = context.contentResolver
-        val uri = data.data
-
-        val contacts = contentResolver.query(uri!!, null, null, null, null)
-        if (contacts!!.moveToFirst()) {
-            val id: String =
-                contacts.getString(contacts.getColumnIndex(ContactsContract.Contacts._ID))
-                    ?: return contact
-
-            contact.name = contacts
-                .getStringOrNull(contacts.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
-                .let { str ->
-
-                    if (!str.isNullOrEmpty() && !str.contains("\\d+".toRegex())) {
-                        str
-                    } else {
-                        context.getString(R.string.safety_contact)
-                    }
-
-                }
-
-            val phones = contentResolver.query(
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                null,
-                "${ContactsContract.CommonDataKinds.Phone.CONTACT_ID} = $id",
-                null,
-                null
-            )
-
-            while (phones!!.moveToNext()) {
-                val type =
-                    phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE))
-                contact.phone =
-                    phones.getStringOrNull(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                        .takeIf {
-                            type == ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
-                                    || type == ContactsContract.CommonDataKinds.Phone.TYPE_WORK_MOBILE
-                                    || type == ContactsContract.CommonDataKinds.Phone.TYPE_MAIN
-                        }
-                        .let { str -> str ?: "" }
-            }
-
-            phones.close()
-        }
-
-        contacts.close()
-
-        return contact
     }
 }

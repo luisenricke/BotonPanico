@@ -84,5 +84,7 @@
     <string name="contact_is_highlighted">¿Se enviará a este contacto el mensaje de alerta?</string>
     <string name="contact_accept">Aceptar</string>
     <string name="contact_cancel">Cancelar</string>
+
+    <string name="contact_added_successfully">Se agrego satisfactoriamente el contacto</string>
     <!-- endregion -->
 </resources>

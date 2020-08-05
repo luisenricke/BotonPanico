@@ -44,7 +44,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/contact_form_margin_top"
         android:hint="@string/contact_name"
-        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toEndOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@id/img_profile">
@@ -64,7 +63,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/contact_form_margin_top"
         android:hint="@string/contact_phone"
-        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toEndOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@id/txtLayoutName">
@@ -85,7 +83,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/contact_form_margin_top"
         android:hint="@string/contact_relationship"
-        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toEndOf="@id/guideline_left"
         app:layout_constraintTop_toBottomOf="@id/txtLayoutPhone">

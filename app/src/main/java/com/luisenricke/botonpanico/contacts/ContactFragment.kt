@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.dao.ContactDAO
-import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.FragmentContactBinding
 import timber.log.Timber
 
@@ -22,26 +21,13 @@ class ContactFragment : BaseFragment() {
 
     private lateinit var contactAdapter: ContactAdapter
 
-    private val list = mutableListOf(
-        Contact(phone = "123456789", name = "A", relationship = "1", isHighlighted = true, id = 1),
-        Contact(phone = "987456321", name = "B", relationship = "2", id = 2),
-        Contact(phone = "987456321", name = "c", relationship = "3", id = 3),
-        Contact(phone = "987456321", name = "D", relationship = "$", isHighlighted = true, id = 4)
-    )
-
-    private var contacts: List<Contact> = listOf()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentContactBinding.inflate(inflater, container, false)
 
-        contactAdapter = ContactAdapter(binding.root.context, { item->
-            Timber.i("Clicked from Fragment ${item.name}")
-        }, { item->
-            Timber.i("LongClicked from Fragment ${item.name}")
+        contactAdapter = ContactAdapter(binding.root.context, { item ->
+//            Timber.i("Clicked from Fragment ${item.name}")
+        }, { item ->
+//            Timber.i("LongClicked from Fragment ${item.name}")
         })
 
         binding.apply {
