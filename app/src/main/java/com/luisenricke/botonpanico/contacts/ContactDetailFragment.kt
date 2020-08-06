@@ -14,14 +14,18 @@ class ContactDetailFragment : BaseFragment() {
 
     private var idContact: Long = 0L
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        getActivityContext().setBottomNavigationViewVisibility(false)
-        _binding = FragmentContactDetailBinding.inflate(inflater, container, false)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         arguments?.let {
             val args = ContactDetailFragmentArgs.fromBundle(it)
             idContact = args.idContact
         }
+
+        getActivityContext().setBottomNavigationViewVisibility(false)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentContactDetailBinding.inflate(inflater, container, false)
 
         binding.apply {
             val context = root.context
@@ -45,17 +49,20 @@ class ContactDetailFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home      -> {
+            android.R.id.home        -> {
                 navController.popBackStack()
                 true
             }
-            R.id.menu_contact_edit -> {
+            R.id.menu_contact_edit   -> {
                 val action = ContactDetailFragmentDirections.actionContactDetailToContactEdit()
                 action.idContact = idContact
                 navController.navigate(action)
                 true
             }
-            else                   -> super.onOptionsItemSelected(item)
+            R.id.menu_contact_delete -> {
+                true
+            }
+            else                     -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -64,8 +71,8 @@ class ContactDetailFragment : BaseFragment() {
         _binding = null
     }
 
-    override fun onDetach() {
-        super.onDetach()
+    override fun onDestroy() {
+        super.onDestroy()
         getActivityContext().setBottomNavigationViewVisibility(true)
     }
 }
