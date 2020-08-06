@@ -11,11 +11,36 @@
             android:label="@string/home"
             tools:layout="@layout/fragment_home" />
 
+    <!-- region Contact -->
     <fragment
             android:id="@+id/nav_alert"
-            android:name="com.luisenricke.botonpanico.presentation.AlertFragment"
+            android:name="com.luisenricke.botonpanico.alert.AlertFragment"
             android:label="@string/alert"
-            tools:layout="@layout/fragment_alert" />
+            tools:layout="@layout/fragment_alert">
+
+        <action
+                android:id="@+id/action_alert_to_alert_detail"
+                app:destination="@id/alertDetailFragment">
+
+            <argument
+                    android:name="idAlert"
+                    android:defaultValue="0L"
+                    app:argType="long" />
+        </action>
+    </fragment>
+
+    <fragment
+            android:id="@+id/alertDetailFragment"
+            android:name="com.luisenricke.botonpanico.alert.AlertDetailFragment"
+            android:label="@string/alert_detail"
+            tools:layout="@layout/fragment_alert_detail">
+
+        <argument
+                android:name="idAlert"
+                android:defaultValue="0L"
+                app:argType="long" />
+    </fragment>
+    <!-- endregion -->
 
     <!-- region Contact -->
     <fragment
@@ -47,7 +72,7 @@
     <fragment
             android:id="@+id/contactDetailFragment"
             android:name="com.luisenricke.botonpanico.contacts.ContactDetailFragment"
-            android:label="fragment_contact_detail"
+            android:label="@string/contact_detail"
             tools:layout="@layout/fragment_contact_detail">
 
         <argument
@@ -69,7 +94,7 @@
     <fragment
             android:id="@+id/contactEditFragment"
             android:name="com.luisenricke.botonpanico.contacts.ContactEditFragment"
-            android:label="fragment_contact_edit"
+            android:label="@string/contact_edit"
             tools:layout="@layout/fragment_contact_edit">
 
         <argument
@@ -84,4 +109,5 @@
             android:name="com.luisenricke.botonpanico.presentation.ProfileFragment"
             android:label="@string/profile"
             tools:layout="@layout/fragment_profile" />
+
 </navigation>

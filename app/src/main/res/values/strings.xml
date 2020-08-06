@@ -4,7 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="home">Home</string>
-    <string name="alert">Alert</string>
     <string name="notification">Notification</string>
 
     <string name="safety_contact">Safety contact</string>
@@ -71,6 +70,7 @@
 
     <string name="contact_detail">Contact details</string>
     <string name="contact_detail_edit">Edit contact</string>
+    <string name="contact_detail_delete">Delete contact</string>
 
     <string name="contact_edit">Edit contact</string>
 
@@ -95,4 +95,9 @@
     <string name="contact_limit_highlighted">Exceeded the limit of contacts to send the message, disable one to activate another</string>
     <!-- endregion -->
 
+    <!-- region Alerts -->
+    <string name="alert">Alert</string>
+
+    <string name="alert_detail">Alert details</string>
+    <!-- endregion -->
 </resources>
