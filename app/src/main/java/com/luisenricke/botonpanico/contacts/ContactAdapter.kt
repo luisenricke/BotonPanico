@@ -13,11 +13,7 @@ import com.luisenricke.botonpanico.database.dao.ContactDAO
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.ItemContactBinding
 
-class ContactAdapter(
-        val context: Context,
-        val clickListener: (Contact) -> Unit,
-        val longClickListener: (Contact) -> Unit
-) : RecyclerView.Adapter<ContactAdapter.ViewHolder>() {
+class ContactAdapter(val context: Context, val clickListener: (Contact) -> Unit, val longClickListener: (Contact) -> Unit) : RecyclerView.Adapter<ContactAdapter.ViewHolder>() {
 
     private var contacts: List<Contact> = arrayListOf()
     private val dao: ContactDAO = AppDatabase.getInstance(context).contactDAO()
@@ -27,11 +23,13 @@ class ContactAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
-        ViewHolder(ItemContactBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            ViewHolder(ItemContactBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
-    override fun getItemCount(): Int = contacts.size
+    override fun getItemCount(): Int =
+            contacts.size
 
-    override fun onBindViewHolder(holder: ViewHolder, pos: Int) = holder.bind(contacts[pos])
+    override fun onBindViewHolder(holder: ViewHolder, pos: Int) =
+            holder.bind(contacts[pos])
 
     inner class ViewHolder(private val binding: ItemContactBinding) : RecyclerView.ViewHolder(binding.root) {
 
