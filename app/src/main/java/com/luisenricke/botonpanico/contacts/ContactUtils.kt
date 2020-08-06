@@ -63,9 +63,9 @@ object ContactUtils {
             val phones = contentResolver.query(Phone.CONTENT_URI, null, "${Phone.CONTACT_ID} = $id", null, null)
 
             while (phones!!.moveToNext()) {
-                val type = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE))
-                contact.phone = phones.getStringOrNull(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)).takeIf {
-                    type == ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE || type == ContactsContract.CommonDataKinds.Phone.TYPE_WORK_MOBILE || type == ContactsContract.CommonDataKinds.Phone.TYPE_MAIN
+                val type = phones.getInt(phones.getColumnIndex(Phone.TYPE))
+                contact.phone = phones.getStringOrNull(phones.getColumnIndex(Phone.NUMBER)).takeIf {
+                    type == Phone.TYPE_MOBILE || type == Phone.TYPE_WORK_MOBILE || type == Phone.TYPE_MAIN
                 }.let { str -> str ?: "" }
             }
 
@@ -87,8 +87,7 @@ object ContactUtils {
         else android.util.Patterns.PHONE.matcher(phone).matches()
     }
 
-    // TODO sent to resource of strings
-    fun hasError(context: Context, layout: TextInputLayout, editable: Editable): Boolean {
+    fun hasEmptyField(context: Context, layout: TextInputLayout, editable: Editable): Boolean {
         val isNotEmpty = editable.toString().isNotEmpty()
         val name = layout.hint
 
@@ -100,15 +99,15 @@ object ContactUtils {
 
         layout.isErrorEnabled = true
         layout.error = when (name) {
-            context.getString(R.string.contact_name)         -> "Es necesario poner el nombre"
-            context.getString(R.string.contact_phone)        -> "Es necesario poner el telefono"
-            context.getString(R.string.contact_relationship) -> "Es necesario escoger alguna de las opciones"
-            else                                             -> "Es necesario poner el campo"
+            context.getString(R.string.contact_name)         -> context.getString(R.string.contact_name_empty_error)
+            context.getString(R.string.contact_phone)        -> context.getString(R.string.contact_phone_empty_error)
+            context.getString(R.string.contact_relationship) -> context.getString(R.string.contact_relationship_empty_error)
+            else                                             -> context.getString(R.string.contact_empty_error_default)
         }
         return true
     }
 
-    fun hasErrorPhone(layout: TextInputLayout, editable: Editable): Boolean {
+    fun hasValidPhoneField(context: Context, layout: TextInputLayout, editable: Editable): Boolean {
         val isNotEmpty = editable.toString().isNotEmpty()
 
         if (isValidPhone(editable.toString()) && isNotEmpty) {
@@ -119,7 +118,7 @@ object ContactUtils {
 
         if (!isValidPhone(editable.toString())) {
             layout.isErrorEnabled = true
-            layout.error = "Numero invalido"
+            layout.error = context.getString(R.string.contact_phone_invalid_error)
             return true
         }
 

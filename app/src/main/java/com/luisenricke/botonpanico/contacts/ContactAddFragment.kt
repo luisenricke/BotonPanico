@@ -49,15 +49,15 @@ class ContactAddFragment : BaseFragment() {
 
             //Name
             txtName.setOnFocusChangeListener { _, hasFocus ->
-                if (!hasFocus) utils.hasError(context, txtLayoutName, txtName.text!!)
+                if (!hasFocus) utils.hasEmptyField(context, txtLayoutName, txtName.text!!)
             }
 
             // Phone
             txtPhone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
             txtPhone.setOnFocusChangeListener { _, hasFocus ->
                 if (!hasFocus) {
-                    utils.hasError(context, txtLayoutPhone, txtPhone.text!!)
-                    utils.hasErrorPhone(txtLayoutPhone, txtPhone.text!!)
+                    utils.hasEmptyField(context, txtLayoutPhone, txtPhone.text!!)
+                    utils.hasValidPhoneField(context, txtLayoutPhone, txtPhone.text!!)
                 }
             }
 
@@ -68,7 +68,7 @@ class ContactAddFragment : BaseFragment() {
 
             txtRelationship.setOnFocusChangeListener { v, hasFocus ->
                 if (hasFocus) getActivityContext().keyboard.hide(v)
-                else utils.hasError(context, txtLayoutRelationship, txtRelationship.text!!)
+                else utils.hasEmptyField(context, txtLayoutRelationship, txtRelationship.text!!)
             }
 
             // Message
@@ -87,10 +87,10 @@ class ContactAddFragment : BaseFragment() {
             }
 
             btnAccept.setOnClickListener {
-                val isEmptyName = utils.hasError(context, txtLayoutName, txtName.text!!)
-                val isEmptyPhone = utils.hasError(context, txtLayoutPhone, txtPhone.text!!)
-                val isEmptyRelationShip = utils.hasError(context, txtLayoutRelationship, txtRelationship.text!!)
-                val isPhoneValid = utils.hasErrorPhone(txtLayoutPhone, txtPhone.text!!)
+                val isEmptyName = utils.hasEmptyField(context, txtLayoutName, txtName.text!!)
+                val isEmptyPhone = utils.hasEmptyField(context, txtLayoutPhone, txtPhone.text!!)
+                val isEmptyRelationShip = utils.hasEmptyField(context, txtLayoutRelationship, txtRelationship.text!!)
+                val isPhoneValid = utils.hasValidPhoneField(context, txtLayoutPhone, txtPhone.text!!)
 
                 if (!isEmptyName && !isEmptyPhone && !isEmptyRelationShip && !isPhoneValid) {
                     val formatPhone = txtPhone.text.toString().removeWhiteSpaces().formatPhone("")
@@ -133,11 +133,11 @@ class ContactAddFragment : BaseFragment() {
                 Timber.d("Imported contact: \n $contact")
 
                 binding.txtName.setText(contact.name)
-                utils.hasError(binding.root.context, binding.txtLayoutName, binding.txtName.text!!)
+                utils.hasEmptyField(binding.root.context, binding.txtLayoutName, binding.txtName.text!!)
 
                 binding.txtPhone.setText(contact.phone)
-                utils.hasError(binding.root.context, binding.txtLayoutPhone, binding.txtPhone.text!!)
-                utils.hasErrorPhone(binding.txtLayoutPhone, binding.txtPhone.text!!)
+                utils.hasEmptyField(binding.root.context, binding.txtLayoutPhone, binding.txtPhone.text!!)
+                utils.hasValidPhoneField(binding.root.context, binding.txtLayoutPhone, binding.txtPhone.text!!)
             }
             Constraint.INTENT_IMAGE_FROM_GALLERY -> {
                 image = getImage(binding.root.context, data) ?: return
