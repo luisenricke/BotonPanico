@@ -85,25 +85,22 @@ class SensorForeground : Service(), SensorEventListener {
         // SendSMS.getInstance(this).unregisterReceivers()
     }
 
-    override fun onBind(intent: Intent): IBinder? = null
+    override fun onBind(intent: Intent): IBinder? =
+            null
 
     private fun buildNotification(): Notification {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, IMPORTANCE_HIGH)
-            val notificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(serviceChannel)
         }
 
         val intent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
-        return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(NOTIFICATION_TITLE)
-//            .setContentText(input)
-            .setSmallIcon(NOTIFICATION_ICON)
-            .setContentIntent(pendingIntent)
-            .build()
+        return NotificationCompat.Builder(this, CHANNEL_ID).setContentTitle(NOTIFICATION_TITLE)
+                //            .setContentText(input)
+                .setSmallIcon(NOTIFICATION_ICON).setContentIntent(pendingIntent).build()
     }
     // endregion
 
@@ -126,7 +123,8 @@ class SensorForeground : Service(), SensorEventListener {
         }
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) = Unit
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) =
+            Unit
 
     private fun sensorCycleCheck(xAxis: Float) {
         val startTime = System.currentTimeMillis()
@@ -139,7 +137,7 @@ class SensorForeground : Service(), SensorEventListener {
             while (totalElapsed < CYCLE_TIME_DURATION) {
                 totalElapsed = System.currentTimeMillis() - startTime
                 count = if (xAxis >= X_AXIS_TRIGGER) count + 1 else count
-//                Timber.d("total: $totalElapsed, xAxis: $xAxis, count: $count")
+                //                Timber.d("total: $totalElapsed, xAxis: $xAxis, count: $count")
                 delay(CYCLE_TIME_PAUSE)
             }
 
@@ -152,11 +150,10 @@ class SensorForeground : Service(), SensorEventListener {
 
                 // Location
                 val location = LastLocation.getInstance(this@SensorForeground).getLocation()
-//                Timber.i("${location?.latitude}, ${location?.longitude}")
+                //                Timber.i("${location?.latitude}, ${location?.longitude}")
 
                 // SMS
-                if (phone != null && location != null)
-                    SendSMS.getInstance(this@SensorForeground).locationMessage(phone, location)
+                if (phone != null && location != null) SendSMS.getInstance(this@SensorForeground).locationMessage(phone, location)
             }
 
             isCycleTriggered = false

@@ -31,10 +31,9 @@ class LocationIntentService : IntentService("LocationIntentService") {
         }
     }
 
-//    private lateinit var context: Context
+    //    private lateinit var context: Context
 
-    private val manager: LocationManager =
-        getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private val manager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     private var bestProvider: String? = null
 
@@ -53,11 +52,11 @@ class LocationIntentService : IntentService("LocationIntentService") {
         manager.checkProviders(this)
     }
 
-//    override fun onStart(intent: Intent?, startId: Int) {
-//        //super.onStart(intent, startId)
-//        onHandleIntent(intent!!)
-//        stopSelf()
-//    }
+    //    override fun onStart(intent: Intent?, startId: Int) {
+    //        //super.onStart(intent, startId)
+    //        onHandleIntent(intent!!)
+    //        stopSelf()
+    //    }
 
     override fun onHandleIntent(intent: Intent?) {
         val location: Location? = getLocation()
@@ -67,7 +66,7 @@ class LocationIntentService : IntentService("LocationIntentService") {
 
     override fun onDestroy() {
         super.onDestroy()
-//        removeUpdate() // FIX: Check if get location with this
+        //        removeUpdate() // FIX: Check if get location with this
     }
 
     @SuppressLint("MissingPermission")
@@ -84,7 +83,7 @@ class LocationIntentService : IntentService("LocationIntentService") {
             return location
         }
 
-//        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
+        //        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
         manager.requestSingleUpdate(bestProvider!!, listener, null)
         location = manager.getLastKnownLocation(bestProvider!!)
 

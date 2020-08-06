@@ -26,8 +26,6 @@ abstract class BaseFragment : Fragment() {
     val navController: NavController
         get() = findNavController()
 
-    fun getActivityContext(): MainActivity = (activity as MainActivity)
-
     val database: AppDatabase
         get() = AppDatabase.getInstance(getActivityContext())
 
@@ -107,6 +105,9 @@ abstract class BaseFragment : Fragment() {
             }
         }.show()
     }
+
+    fun getActivityContext(): MainActivity =
+            (activity as MainActivity)
 
     // TODO test this
     fun getImage(context: Context, data: Intent?): Bitmap? {

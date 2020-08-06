@@ -47,7 +47,8 @@ class SendSMS private constructor(private val context: Context) {
         manager.sendTextMessage(phone, null, message, null, null)
     }
 
-    fun getMaxLength(): Int = 100
+    fun getMaxLength(): Int =
+            100
 
     fun unregisterReceivers() {
         context.unregisterReceiver(sentBroadcastReceiver)

@@ -16,11 +16,7 @@ class HomeFragment : BaseFragment() {
     private val binding get() = _binding!!
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val checkPhone = this.preferenceGet("phone", String::class)
         Timber.i("phone: $checkPhone")
 

@@ -14,22 +14,15 @@ import com.luisenricke.botonpanico.database.entity.Contact.SCHEMA.TABLE
 
 @Entity(tableName = TABLE)
 data class Contact(
-    @ColumnInfo(name = NAME)
-    var name: String = "",
-    @ColumnInfo(name = PHONE)
-    var phone: String = "",
-    @ColumnInfo(name = RELATIONSHIP)
-    var relationship: String = "",
-    @ColumnInfo(name = MESSAGE)
-    var message: String = "",
-    @ColumnInfo(name = IMAGE)
-    var image: String = "",
-    @ColumnInfo(name = IS_HIGHLIGHTED)
-    var isHighlighted: Boolean = false,
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = ID)
-    val id: Long = 0
-) {
+    @ColumnInfo(name = NAME) var name: String = "",
+    @ColumnInfo(name = PHONE) var phone: String = "",
+    @ColumnInfo(name = RELATIONSHIP) var relationship: String = "",
+    @ColumnInfo(name = MESSAGE) var message: String = "",
+    @ColumnInfo(name = IMAGE) var image: String = "",
+    @ColumnInfo(name = IS_HIGHLIGHTED) var isHighlighted: Boolean = false,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = ID) val id: Long = 0)
+{
+
     object SCHEMA {
         const val TABLE = "Contact"
         const val ID = "id"
@@ -52,6 +45,4 @@ data class Contact(
             |isHighlighted   $isHighlighted
         ${System.lineSeparator()} */""".trimMargin()
     }
-
-    data class Minimal(var name: String = "", var phone: String = "")
 }

@@ -18,8 +18,7 @@ class Keyboard private constructor(private val context: Context) {
 
     companion object : SingletonHolder<Keyboard, Context>(::Keyboard)
 
-    private val manager: InputMethodManager = context
-        .getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    private val manager: InputMethodManager = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
     fun hide(view: View) {
         if (!view.requestFocus()) return
@@ -38,10 +37,8 @@ class Keyboard private constructor(private val context: Context) {
         if (event?.action != MotionEvent.ACTION_DOWN) return
 
         when (currentFocus) {
-            is EditText,
-            is AutoCompleteTextView,
-            is TextInputEditText -> Timber.d(context.getString(R.string.keyboard_service_hide))
-            else -> return
+            is EditText, is AutoCompleteTextView, is TextInputEditText -> Timber.d(context.getString(R.string.keyboard_service_hide))
+            else                                                       -> return
         }
 
         val borderView = Rect()

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".alert.AlertFragment">
 
+    <!-- TODO make textview when are empty list -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_alerts"
             android:layout_width="0dp"

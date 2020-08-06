@@ -25,8 +25,7 @@ class LocationTrack() : Service() {
         private const val MIN_DISTANCE: Float = 10f         // meters
     }
 
-    private val manager: LocationManager =
-        getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private val manager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     private val bestProvider: String?
         get() = manager.getBestProvider()
@@ -68,7 +67,7 @@ class LocationTrack() : Service() {
             return location
         }
 
-//        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
+        //        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
         manager.requestSingleUpdate(bestProvider!!, listener, null)
         location = manager.getLastKnownLocation(bestProvider!!)
         Timber.i("lat: ${location?.latitude}, lon: ${location?.longitude}")
@@ -76,5 +75,6 @@ class LocationTrack() : Service() {
         return location
     }
 
-    override fun onBind(intent: Intent?): IBinder? = null
+    override fun onBind(intent: Intent?): IBinder? =
+            null
 }

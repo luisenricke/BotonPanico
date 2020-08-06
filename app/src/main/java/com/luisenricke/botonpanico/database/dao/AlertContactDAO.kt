@@ -13,8 +13,7 @@ import com.luisenricke.room.dao.Update
 
 @Suppress("unused")
 @Dao
-abstract class AlertContactDAO : Base<AlertContact>, Update<AlertContact>, Delete<AlertContact>,
-    PrimaryKey<AlertContact> {
+abstract class AlertContactDAO : Base<AlertContact>, Update<AlertContact>, Delete<AlertContact>, PrimaryKey<AlertContact> {
 
     @Query("SELECT COUNT(*) FROM ${SCHEMA.TABLE}")
     abstract override fun count(): Long
@@ -38,7 +37,7 @@ abstract class AlertContactDAO : Base<AlertContact>, Update<AlertContact>, Delet
     abstract override fun deletes(ids: LongArray): Int
 
     @Query(
-        """
+            """
             SELECT * FROM ${Alert.SCHEMA.TABLE} AS LEFT_ 
             INNER JOIN ${SCHEMA.TABLE} AS RIGHT_ 
             ON LEFT_.${Alert.SCHEMA.ID} = RIGHT_.${SCHEMA.ALERT_ID} 
@@ -48,7 +47,7 @@ abstract class AlertContactDAO : Base<AlertContact>, Update<AlertContact>, Delet
     abstract fun getAlerts(idContact: Long): List<Alert>
 
     @Query(
-        """
+            """
             SELECT * FROM ${Contact.SCHEMA.TABLE} AS RIGHT_
             INNER JOIN ${SCHEMA.TABLE} AS LEFT_
             ON RIGHT_.${Contact.SCHEMA.ID} = LEFT_.${SCHEMA.CONTACT_ID}

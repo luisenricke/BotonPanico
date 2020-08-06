@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import com.luisenricke.androidext.toastLong
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.R
-import com.luisenricke.botonpanico.contacts.ContactDetailFragmentArgs
 import com.luisenricke.botonpanico.databinding.FragmentAlertDetailBinding
-
 
 class AlertDetailFragment : BaseFragment() {
 

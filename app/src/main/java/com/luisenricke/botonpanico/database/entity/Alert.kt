@@ -13,18 +13,13 @@ import java.util.Date
 
 @Entity(tableName = TABLE)
 data class Alert(
-    @ColumnInfo(name = LATITUDE)
-    var latitude: Double = 0.0,
-    @ColumnInfo(name = LONGITUDE)
-    var longitude: Double = 0.0,
-    @ColumnInfo(name = TYPE)
-    var type: String = "",
-    @ColumnInfo(name = TIMESTAMP)
-    var timestamp: Date = Date(System.currentTimeMillis()),
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = ID)
-    val id: Long = 0
+    @ColumnInfo(name = LATITUDE) var latitude: Double = 0.0,
+    @ColumnInfo(name = LONGITUDE) var longitude: Double = 0.0,
+    @ColumnInfo(name = TYPE) var type: String = "",
+    @ColumnInfo(name = TIMESTAMP) var timestamp: Date = Date(System.currentTimeMillis()),
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = ID) val id: Long = 0
 ) {
+
     object SCHEMA {
         const val TABLE = "Alert"
         const val ID = "id"
@@ -35,12 +30,12 @@ data class Alert(
     }
 
     override fun toString(): String {
-        return """ ${System.lineSeparator()}
-            id:         $id
-            latitude:   $latitude
-            longitude:  $longitude
-            type:       $type
-            timestamp:  $timestamp
-        ${System.lineSeparator()} """.trimIndent()
+        return """/* ${System.lineSeparator()}
+            |id:         $id
+            |latitude:   $latitude
+            |longitude:  $longitude
+            |type:       $type
+            |timestamp:  ${timestamp.toString()}
+        ${System.lineSeparator()} */""".trimMargin()
     }
 }

@@ -22,8 +22,7 @@ class LastLocation private constructor(private val context: Context) {
     }
 
     //    private lateinit var context: Context
-    private val manager: LocationManager = context
-        .getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private val manager: LocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
     private val bestProvider: String?
         get() = manager.getBestProvider()
@@ -52,7 +51,7 @@ class LastLocation private constructor(private val context: Context) {
             return location
         }
 
-//        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
+        //        manager.requestLocationUpdates(bestProvider, MIN_TIME, MIN_DISTANCE, listener)
         manager.requestSingleUpdate(bestProvider!!, listener, null)
         location = manager.getLastKnownLocation(bestProvider!!)
 

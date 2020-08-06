@@ -17,13 +17,13 @@ class DeliverySMSReceiver : BroadcastReceiver() {
     @SuppressLint("LogNotTimber")
     override fun onReceive(context: Context?, intent: Intent?) {
         when (resultCode) {
-            Activity.RESULT_OK -> {
+            Activity.RESULT_OK       -> {
                 Log.i(TAG, "DeliverySMSReceiver -> RESULT_OK")
             }
             Activity.RESULT_CANCELED -> {
                 Log.e(TAG, "DeliverySMSReceiver -> RESULT_CANCELED")
             }
-            else -> {
+            else                     -> {
                 Log.e(TAG, "DeliverySMSReceiver -> WTF")
             }
         }

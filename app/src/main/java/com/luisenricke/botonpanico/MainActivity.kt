@@ -9,7 +9,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.navigateUp
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.luisenricke.botonpanico.databinding.ActivityMainBinding
 import com.luisenricke.botonpanico.service.Keyboard
 
@@ -21,17 +20,8 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
-    private val appBarConfiguration: AppBarConfiguration by lazy {
-        AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_alert, R.id.nav_profile))
-    }
-
-    private val navController: NavController by lazy {
-//        fragment
-        findNavController(R.id.fragment_host)
-//        FragmentContainerView
-//        (supportFragmentManager.findFragmentById(binding.fragmentHost.id) as NavHostFragment)
-//            .navController
-    }
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +29,16 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             setContentView(root)
+
+            // TODO: modify when solve the issue with FragmentContainerView
+            // fragment
+            navController = findNavController(R.id.fragment_host)
+            // FragmentContainerView
+            //        (supportFragmentManager.findFragmentById(binding.fragmentHost.id) as NavHostFragment)
+            //            .navController
+
+            appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home, R.id.nav_alert, R.id.nav_profile))
+
             bottom.setupWithNavController(navController)
         }
 
