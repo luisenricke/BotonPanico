@@ -1,44 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/graph_main"
-    app:startDestination="@id/nav_home">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/graph_main"
+        app:startDestination="@id/nav_home">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.luisenricke.botonpanico.presentation.HomeFragment"
-        android:label="@string/home"
-        tools:layout="@layout/fragment_home" />
+            android:id="@+id/nav_home"
+            android:name="com.luisenricke.botonpanico.presentation.HomeFragment"
+            android:label="@string/home"
+            tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_alert"
-        android:name="com.luisenricke.botonpanico.presentation.AlertFragment"
-        android:label="@string/alert"
-        tools:layout="@layout/fragment_alert" />
+            android:id="@+id/nav_alert"
+            android:name="com.luisenricke.botonpanico.presentation.AlertFragment"
+            android:label="@string/alert"
+            tools:layout="@layout/fragment_alert" />
 
     <!-- region Contact -->
     <fragment
-        android:id="@+id/nav_contact"
-        android:name="com.luisenricke.botonpanico.contacts.ContactFragment"
-        android:label="@string/contact"
-        tools:layout="@layout/fragment_contact">
+            android:id="@+id/nav_contact"
+            android:name="com.luisenricke.botonpanico.contacts.ContactFragment"
+            android:label="@string/contact"
+            tools:layout="@layout/fragment_contact">
         <action
-            android:id="@+id/action_contact_to_contact_add"
-            app:destination="@id/contactAddFragment" />
+                android:id="@+id/action_contact_to_contact_add"
+                app:destination="@id/contactAddFragment" />
+
+        <action
+                android:id="@+id/action_contact_to_contact_detail"
+                app:destination="@id/contactDetailFragment">
+
+            <argument
+                    android:name="idContact"
+                    android:defaultValue="0L"
+                    app:argType="long" />
+        </action>
     </fragment>
 
     <fragment
-        android:id="@+id/contactAddFragment"
-        android:name="com.luisenricke.botonpanico.contacts.ContactAddFragment"
-        android:label="@string/contact_add"
-        tools:layout="@layout/fragment_contact_add" />
+            android:id="@+id/contactAddFragment"
+            android:name="com.luisenricke.botonpanico.contacts.ContactAddFragment"
+            android:label="@string/contact_add"
+            tools:layout="@layout/fragment_contact_add" />
+
+    <fragment
+            android:id="@+id/contactDetailFragment"
+            android:name="com.luisenricke.botonpanico.contacts.ContactDetailFragment"
+            android:label="fragment_contact_detail"
+            tools:layout="@layout/fragment_contact_detail">
+
+        <argument
+                android:name="idContact"
+                android:defaultValue="0L"
+                app:argType="long" />
+
+        <action
+                android:id="@+id/action_contact_detail_to_contact_edit"
+                app:destination="@id/contactEditFragment">
+
+            <argument
+                    android:name="idContact"
+                    android:defaultValue="0L"
+                    app:argType="long" />
+        </action>
+    </fragment>
+
+    <fragment
+            android:id="@+id/contactEditFragment"
+            android:name="com.luisenricke.botonpanico.contacts.ContactEditFragment"
+            android:label="fragment_contact_edit"
+            tools:layout="@layout/fragment_contact_edit">
+
+        <argument
+                android:name="idContact"
+                android:defaultValue="0L"
+                app:argType="long" />
+    </fragment>
     <!-- endregion -->
 
     <fragment
-        android:id="@+id/nav_profile"
-        android:name="com.luisenricke.botonpanico.presentation.ProfileFragment"
-        android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" />
-
+            android:id="@+id/nav_profile"
+            android:name="com.luisenricke.botonpanico.presentation.ProfileFragment"
+            android:label="@string/profile"
+            tools:layout="@layout/fragment_profile" />
 </navigation>

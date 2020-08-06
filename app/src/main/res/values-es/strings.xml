@@ -69,6 +69,11 @@
     <string name="contact_add">Agregar contacto</string>
     <string name="contact_add_import">Importar contacto</string>
 
+    <string name="contact_detail">Detalles de contacto</string>
+    <string name="contact_detail_edit">Editar contacto</string>
+
+    <string name="contact_edit">Editar contacto</string>
+
     <string-array name="contact_relationship_list">
         <item>Pareja</item>
         <item>Familiar</item>
