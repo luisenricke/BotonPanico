@@ -1,13 +1,13 @@
 package com.luisenricke.botonpanico.contacts
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.luisenricke.botonpanico.BaseFragment
-import com.luisenricke.botonpanico.R
-import com.luisenricke.botonpanico.database.dao.ContactDAO
+import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.databinding.FragmentContactBinding
 import timber.log.Timber
 
@@ -16,23 +16,17 @@ class ContactFragment : BaseFragment() {
     private var _binding: FragmentContactBinding? = null
     private val binding get() = _binding!!
 
-    private val dao: ContactDAO
-        get() = database.contactDAO()
-
     private lateinit var contactAdapter: ContactAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentContactBinding.inflate(inflater, container, false)
 
-        contactAdapter = ContactAdapter(binding.root.context, { item ->
-//            Timber.i("Clicked from Fragment ${item.name}")
-        }, { item ->
-//            Timber.i("LongClicked from Fragment ${item.name}")
-        })
+        contactAdapter = setContactAdapter(binding.root.context)
 
         binding.apply {
             btnAddContact.setOnClickListener {
-                navController.navigate(R.id.action_contact_to_contact_add)
+                val action = ContactFragmentDirections.actionContactToContactAdd()
+                navController.navigate(action)
             }
 
             recyclerContacts.apply {
@@ -65,5 +59,19 @@ class ContactFragment : BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setContactAdapter(context: Context): ContactAdapter {
+        val clickListener: (Contact) -> Unit = { item ->
+            val action = ContactFragmentDirections.actionContactToContactDetail()
+            action.idContact = item.id
+            navController.navigate(action)
+        }
+
+        val longClickListener: (Contact) -> Unit = { item ->
+            Timber.i("longClicked")
+        }
+
+        return ContactAdapter(context, clickListener, longClickListener)
     }
 }

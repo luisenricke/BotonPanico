@@ -83,7 +83,7 @@ class ContactAddFragment : BaseFragment() {
             // Buttons
             btnCancel.setOnClickListener {
                 imgProfile.setImageResource(R.drawable.ic_baseline_person_24)
-                utils.clearStack(navController)
+                navController.popBackStack()
             }
 
             btnAccept.setOnClickListener {
@@ -114,7 +114,7 @@ class ContactAddFragment : BaseFragment() {
                     Timber.i(contact.toString())
                     database.contactDAO().insert(contact)
                     toastShort(context.getString(R.string.contact_added_successfully))
-                    utils.clearStack(navController)
+                    navController.popBackStack()
                 }
             }
         }
@@ -157,7 +157,7 @@ class ContactAddFragment : BaseFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home        -> {
-                utils.clearStack(navController)
+                navController.popBackStack()
                 true
             }
             R.id.menu_contact_import -> {
