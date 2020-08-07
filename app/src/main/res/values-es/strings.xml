@@ -103,6 +103,7 @@
 
     <!-- region Alerts -->
     <string name="alert">Alerta</string>
+    <string name="alert_message_default">Me siento en peligro, por favor búscame.</string>
 
     <string name="alert_detail">Detalles de la alerta</string>
     <!-- endregion -->

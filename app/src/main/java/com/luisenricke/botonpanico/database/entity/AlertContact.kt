@@ -26,9 +26,9 @@ import com.luisenricke.botonpanico.database.entity.AlertContact.SCHEMA.MESSAGE_S
         ]
 )
 data class AlertContact(
-    @ColumnInfo(name = ALERT_ID, index = true) val alertId: Long,
-    @ColumnInfo(name = CONTACT_ID, index = true) val contactId: Long,
-    @ColumnInfo(name = MESSAGE_SENT) val messageSent: String = "",
+    @ColumnInfo(name = ALERT_ID, index = true) var alertId: Long,
+    @ColumnInfo(name = CONTACT_ID, index = true) var contactId: Long,
+    @ColumnInfo(name = MESSAGE_SENT) var messageSent: String = "",
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = ID) val id: Long = 0)
 {
 

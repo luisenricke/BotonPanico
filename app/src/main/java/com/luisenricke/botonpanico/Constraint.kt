@@ -11,4 +11,6 @@ object Constraint {
     const val PERMISSIONS_ALERT_SERVICE = 104
 
     const val PROFILE_PHOTO = "ProfilePhoto"
+
+    const val ALERT_MESSAGE = "AlertMessage"
 }

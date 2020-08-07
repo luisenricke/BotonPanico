@@ -103,6 +103,7 @@
 
     <!-- region Alerts -->
     <string name="alert">Alert</string>
+    <string name="alert_message_default">I feel in danger, please search for me.</string>
 
     <string name="alert_detail">Alert details</string>
     <!-- endregion -->

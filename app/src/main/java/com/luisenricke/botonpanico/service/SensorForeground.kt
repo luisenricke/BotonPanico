@@ -14,8 +14,8 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.luisenricke.androidext.checkPermission
-import com.luisenricke.androidext.preferenceGet
 import com.luisenricke.botonpanico.MainActivity
+import com.luisenricke.botonpanico.alert.AlertFacade
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -142,18 +142,7 @@ class SensorForeground : Service(), SensorEventListener {
             }
 
             if (count > CYCLE_ACTIVATION_LIMIT) {
-                // Phone
-                val phone = applicationContext.preferenceGet("phone", String::class)
-
-                // Vibration
-                Vibration.getInstance(this@SensorForeground).vibrate()
-
-                // Location
-                val location = LastLocation.getInstance(this@SensorForeground).getLocation()
-                //                Timber.i("${location?.latitude}, ${location?.longitude}")
-
-                // SMS
-                if (phone != null && location != null) SendSMS.getInstance(this@SensorForeground).locationMessage(phone, location)
+                AlertFacade().sentMessage(this@SensorForeground)
             }
 
             isCycleTriggered = false
