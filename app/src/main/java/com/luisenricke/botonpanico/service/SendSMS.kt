@@ -15,10 +15,12 @@ import com.luisenricke.kotlinext.roundDecimals
 // TODO: Fix this with broadcast receiver [SentSMSReceiver, DeliverySMSReceiver]
 // TODO: check if it is possible to send messages
 // TODO: view sent messages in the default message app
+// TODO: refactor GOOGLE_MAPS and add OpenStreetMap to Location
 @Suppress("unused")
 class SendSMS private constructor(private val context: Context) {
 
     companion object : SingletonHolder<SendSMS, Context>(::SendSMS) {
+        // http://m.osmtools.de/?lon=-96.725657339734&lat=17.061023528696&zoom=19&mlon=-96.725715007227&mlat=17.061099171771&icon=4&iframe=1
         const val GOOGLE_MAPS = "http://maps.google.com/?q=" // latitude , longitude
 
         @JvmStatic
