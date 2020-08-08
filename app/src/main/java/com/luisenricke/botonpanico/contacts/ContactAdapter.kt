@@ -19,7 +19,7 @@ class ContactAdapter(val context: Context, val clickListener: (Contact) -> Unit,
     private val dao: ContactDAO = AppDatabase.getInstance(context).contactDAO()
 
     init {
-        updateList()
+        update()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -69,16 +69,19 @@ class ContactAdapter(val context: Context, val clickListener: (Contact) -> Unit,
         }
     }
 
-    fun updateList() {
+    fun update() {
         contacts = dao.get().sortedBy { it.name }.sortedByDescending { it.isHighlighted }
         notifyDataSetChanged()
     }
 
-    fun checkItem(contact: Contact, card: MaterialCardView) {
+    fun isEmpty(): Boolean =
+            dao.count() == 0L
+
+    private fun checkItem(contact: Contact, card: MaterialCardView) {
         val check = !contact.isHighlighted
         contact.isHighlighted = check
         card.isChecked = check
         dao.update(contact)
-        updateList()
+        update()
     }
 }

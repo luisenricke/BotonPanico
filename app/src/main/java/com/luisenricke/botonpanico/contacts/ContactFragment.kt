@@ -24,7 +24,13 @@ class ContactFragment : BaseFragment() {
         contactAdapter = setContactAdapter(binding.root.context)
 
         binding.apply {
+
             btnAddContact.setOnClickListener {
+                val action = ContactFragmentDirections.actionContactToContactAdd()
+                navController.navigate(action)
+            }
+
+            btnAddContactEmpty.setOnClickListener {
                 val action = ContactFragmentDirections.actionContactToContactAdd()
                 navController.navigate(action)
             }
@@ -53,7 +59,7 @@ class ContactFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        contactAdapter.updateList()
+        displayViews()
     }
 
     override fun onDestroyView() {
@@ -73,5 +79,25 @@ class ContactFragment : BaseFragment() {
         }
 
         return ContactAdapter(context, clickListener, longClickListener)
+    }
+
+    private fun displayViews() {
+        val isEmptyContacts = contactAdapter.isEmpty()
+
+        if (isEmptyContacts) {
+            binding.apply {
+                recyclerContacts.visibility = View.GONE
+                btnAddContact.visibility = View.GONE
+                layoutEmpty.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                recyclerContacts.visibility = View.VISIBLE
+                btnAddContact.visibility = View.VISIBLE
+                layoutEmpty.visibility = View.GONE
+            }
+
+            contactAdapter.update()
+        }
     }
 }
