@@ -13,6 +13,8 @@ import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.SingletonHolder
 import timber.log.Timber
 
+// https://nominatim.openstreetmap.org/reverse?format=xml&lat=17.0734041&lon=-96.7215872&zoom=18&addressdetails=1
+// https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=17.0734041&lon=-96.7215872
 @Suppress("unused")
 class LastLocation private constructor(private val context: Context) {
 
