@@ -8,10 +8,10 @@
 
     <string name="safety_contact">Safety contact</string>
 
-    <!-- region Profile -->
-    <string name="profile">Profile</string>
-
-    <string name="profile_photo_description">Profile image</string>
+    <!-- region Base Fragment -->
+    <string name="on_request_permissions_result_grant_results">The permission confirmations are empty</string>
+    <string name="on_request_permissions_result_doesnt_find_permission">The permission confirmations doesn\'t find</string>
+    <string name="on_request_permissions_result_denied_permissions">Permissions were not granted for the functionality of</string>
     <!-- endregion -->
 
     <!-- region Photo Options AlertDialog -->
@@ -31,12 +31,6 @@
         <item>@string/photo_options_delete</item>
         <item>@string/photo_options_cancel</item>
     </string-array>
-    <!-- endregion -->
-
-    <!-- region Base Fragment -->
-    <string name="on_request_permissions_result_grant_results">The permission confirmations are empty</string>
-    <string name="on_request_permissions_result_doesnt_find_permission">The permission confirmations doesn\'t find</string>
-    <string name="on_request_permissions_result_denied_permissions">Permissions were not granted for the functionality of</string>
     <!-- endregion -->
 
     <!-- region Permissions -->
@@ -62,18 +56,17 @@
     <string name="keyboard_service_hide">Keyboard hides from</string>
     <!-- endregion -->
 
+    <!-- region Alerts -->
+    <string name="alert">Alert</string>
+    <string name="alert_message_default">I feel in danger, please search for me.</string>
+
+    <string name="alert_detail">Alert details</string>
+    <!-- endregion -->
+
     <!-- region Contacts -->
     <string name="contact">Contacts</string>
 
-    <string name="contact_add">Add contact</string>
-    <string name="contact_add_import">Import contact</string>
-
-    <string name="contact_detail">Contact details</string>
-    <string name="contact_detail_edit">Edit contact</string>
-    <string name="contact_detail_delete">Delete contact</string>
-
-    <string name="contact_edit">Edit contact</string>
-
+    <!-- region ContactForm -->
     <string-array name="contact_relationship_list">
         <item>Couple</item>
         <item>Family</item>
@@ -94,17 +87,48 @@
     <string name="contact_phone_empty_error">You need to put the phone</string>
     <string name="contact_phone_invalid_error">Invalid phone</string>
     <string name="contact_relationship_empty_error">It is necessary to choose one of the options</string>
-    <string name="contact_empty_error_default">Es necesario poner el campo</string>
+    <string name="contact_empty_error_default">It is necessary fill the field</string>
+    <!-- endregion ContactForm -->
 
-    <string name="contact_added_successfully">Contact was successfully added</string>
+    <!-- region ContactList -->
+    <string name="contact_empty_list">Add your contacts to send them alerts</string>
+    <string name="contact_empty_list_img_decorator">Decoration image when the list is empty</string>
 
     <string name="contact_limit_highlighted">Exceeded the limit of contacts to send the message, disable one to activate another</string>
-    <!-- endregion -->
+    <!-- endregion ContactList -->
 
-    <!-- region Alerts -->
-    <string name="alert">Alert</string>
-    <string name="alert_message_default">I feel in danger, please search for me.</string>
+    <!-- region ContactAdd -->
+    <string name="contact_add">Add contact</string>
+    <string name="contact_add_import">Import contact</string>
 
-    <string name="alert_detail">Alert details</string>
+    <string name="contact_added_successfully">Contact was successfully added</string>
+    <!-- endregion ContactAdd -->
+
+    <!-- region ContactDetail -->
+    <string name="contact_detail">Contact details</string>
+    <string name="contact_detail_edit">Edit contact</string>
+    <string name="contact_detail_delete">Delete contact</string>
+
+    <string name="contact_default_message">Default message</string>
+    <string name="contact_highlighted_true">Alert contact</string>
+    <string name="contact_highlighted_false">Backup contact</string>
+
+    <string name="contact_detail_img_image">Profile image</string>
+    <string name="contact_detail_img_phone">Phone field</string>
+    <string name="contact_detail_img_relationship">Relationship field</string>
+    <string name="contact_detail_img_message">Message field</string>
+    <string name="contact_detail_img_highlighted">Check active contact field</string>
+    <!-- endregion ContactDetail -->
+
+    <!-- region ContactEdit -->
+    <string name="contact_edit">Edit contact</string>
+    <!-- endregion ContactEdit -->
+
+    <!-- endregion Contacts -->
+
+    <!-- region Profile -->
+    <string name="profile">Profile</string>
+
+    <string name="profile_photo_description">Profile image</string>
     <!-- endregion -->
 </resources>

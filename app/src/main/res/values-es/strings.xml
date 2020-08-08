@@ -8,10 +8,10 @@
 
     <string name="safety_contact">Contacto de seguridad</string>
 
-    <!-- region Profile -->
-    <string name="profile">Perfil</string>
-
-    <string name="profile_photo_description">Imagen de perfil</string>
+    <!-- region Base Fragment -->
+    <string name="on_request_permissions_result_grant_results">Las confirmaciones de los permisos están vacíos</string>
+    <string name="on_request_permissions_result_doesnt_find_permission">El permiso solicitado no se encuentra</string>
+    <string name="on_request_permissions_result_denied_permissions">Los permisos no fueron condedidos para la funcionalidad de</string>
     <!-- endregion -->
 
     <!-- region Photo Options AlertDialog -->
@@ -31,12 +31,6 @@
         <item>@string/photo_options_delete</item>
         <item>@string/photo_options_cancel</item>
     </string-array>
-    <!-- endregion -->
-
-    <!-- region Base Fragment -->
-    <string name="on_request_permissions_result_grant_results">Las confirmaciones de los permisos están vacíos</string>
-    <string name="on_request_permissions_result_doesnt_find_permission">El permiso solicitado no se encuentra</string>
-    <string name="on_request_permissions_result_denied_permissions">Los permisos no fueron condedidos para la funcionalidad de</string>
     <!-- endregion -->
 
     <!-- region Permissions -->
@@ -62,18 +56,17 @@
     <string name="keyboard_service_hide">El teclado se esconde del</string>
     <!-- endregion -->
 
+    <!-- region Alerts -->
+    <string name="alert">Alerta</string>
+    <string name="alert_message_default">Me siento en peligro, por favor búscame.</string>
+
+    <string name="alert_detail">Detalles de la alerta</string>
+    <!-- endregion -->
+
     <!-- region Contacts -->
     <string name="contact">Contactos</string>
 
-    <string name="contact_add">Agregar contacto</string>
-    <string name="contact_add_import">Importar contacto</string>
-
-    <string name="contact_detail">Detalles de contacto</string>
-    <string name="contact_detail_edit">Editar contacto</string>
-    <string name="contact_detail_delete">Eliminar contacto</string>
-
-    <string name="contact_edit">Editar contacto</string>
-
+    <!-- region ContactForm -->
     <string-array name="contact_relationship_list">
         <item>Pareja</item>
         <item>Familiar</item>
@@ -95,16 +88,47 @@
     <string name="contact_phone_invalid_error">Numero invalido</string>
     <string name="contact_relationship_empty_error">Es necesario escoger alguna de las opciones</string>
     <string name="contact_empty_error_default">Es necesario poner el campo</string>
+    <!-- endregion ContactForm -->
 
-    <string name="contact_added_successfully">Se agrego satisfactoriamente el contacto</string>
+    <!-- region ContactList -->
+    <string name="contact_empty_list">Añada tus contactos para enviarles las alertas</string>
+    <string name="contact_empty_list_img_decorator">Imagen de decoración cuando la lista esta vacía</string>
 
     <string name="contact_limit_highlighted">Se escedio el limite de contactos para enviar el mensaje, desahibilita uno para activar otro</string>
-    <!-- endregion -->
+    <!-- endregion ContactList -->
 
-    <!-- region Alerts -->
-    <string name="alert">Alerta</string>
-    <string name="alert_message_default">Me siento en peligro, por favor búscame.</string>
+    <!-- region ContactAdd -->
+    <string name="contact_add">Agregar contacto</string>
+    <string name="contact_add_import">Importar contacto</string>
 
-    <string name="alert_detail">Detalles de la alerta</string>
+    <string name="contact_added_successfully">Se agrego satisfactoriamente el contacto</string>
+    <!-- endregion ContactAdd -->
+
+    <!-- region ContactDetail -->
+    <string name="contact_detail">Detalles de contacto</string>
+    <string name="contact_detail_edit">Editar contacto</string>
+    <string name="contact_detail_delete">Eliminar contacto</string>
+
+    <string name="contact_highlighted_true">Contacto de alerta</string>
+    <string name="contact_highlighted_false">Contacto de reserva</string>
+    <string name="contact_default_message">Mensaje por defecto</string>
+
+    <string name="contact_detail_img_image">Imagen de pefil</string>
+    <string name="contact_detail_img_phone">Campo del teléfono</string>
+    <string name="contact_detail_img_relationship">Campo de relación</string>
+    <string name="contact_detail_img_message">Campo del mensaje</string>
+    <string name="contact_detail_img_highlighted">Campo para comprobar si esta activo el contacto</string>
+    <!-- endregion ContactDetail -->
+
+    <!-- region ContactEdit -->
+    <string name="contact_edit">Editar contacto</string>
+    <!-- endregion ContactEdit -->
+
+    <!-- endregion Contacts -->
+
+    <!-- region Profile -->
+    <string name="profile">Perfil</string>
+
+    <string name="profile_photo_description">Imagen de perfil</string>
     <!-- endregion -->
 </resources>
