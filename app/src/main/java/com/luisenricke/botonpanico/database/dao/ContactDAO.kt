@@ -39,4 +39,7 @@ abstract class ContactDAO : Base<Contact>, Update<Contact>, Delete<Contact>, Pri
 
     @Query("SELECT * FROM ${SCHEMA.TABLE} WHERE isHighlighted = 1")
     abstract fun getHighlighted(): List<Contact>
+
+    @Query("SELECT COUNT(*) FROM ${SCHEMA.TABLE} WHERE phone = :phone")
+    abstract fun countByPhone(phone: String): Long
 }

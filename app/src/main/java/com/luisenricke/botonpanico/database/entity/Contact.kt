@@ -2,6 +2,7 @@ package com.luisenricke.botonpanico.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.luisenricke.botonpanico.database.entity.Contact.SCHEMA.PHONE
 import com.luisenricke.botonpanico.database.entity.Contact.SCHEMA.ID
@@ -12,7 +13,7 @@ import com.luisenricke.botonpanico.database.entity.Contact.SCHEMA.NAME
 import com.luisenricke.botonpanico.database.entity.Contact.SCHEMA.RELATIONSHIP
 import com.luisenricke.botonpanico.database.entity.Contact.SCHEMA.TABLE
 
-@Entity(tableName = TABLE)
+@Entity(tableName = TABLE, indices = [Index(value = [PHONE], unique = true)])
 data class Contact(
     @ColumnInfo(name = NAME) var name: String = "",
     @ColumnInfo(name = PHONE) var phone: String = "",
@@ -20,7 +21,7 @@ data class Contact(
     @ColumnInfo(name = MESSAGE) var message: String = "",
     @ColumnInfo(name = IMAGE) var image: String = "",
     @ColumnInfo(name = IS_HIGHLIGHTED) var isHighlighted: Boolean = false,
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = ID) val id: Long = 0)
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = ID) var id: Long = 0)
 {
 
     object SCHEMA {

@@ -9,13 +9,13 @@ import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.text.Editable
 import androidx.core.database.getStringOrNull
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import com.google.android.material.textfield.TextInputLayout
 import com.luisenricke.androidext.checkPermission
 import com.luisenricke.androidext.intentSelectContact
 import com.luisenricke.androidext.requestPermission
 import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
+import com.luisenricke.botonpanico.database.dao.ContactDAO
 import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.kotlinext.removeWhiteSpaces
 
@@ -33,11 +33,6 @@ object ContactUtils {
                     true
             )
         }
-    }
-
-    fun clearStack(navController: NavController) {
-        navController.popBackStack(R.id.nav_contact, true)
-        navController.navigate(R.id.nav_contact)
     }
 
     fun getContact(context: Context, data: Intent?): Contact {
@@ -81,7 +76,7 @@ object ContactUtils {
         return image == context.getDrawable(R.drawable.ic_baseline_person_24)
     }
 
-    fun isValidPhone(phone: String): Boolean {
+    private fun isValidPhone(phone: String): Boolean {
         val trimPhone = phone.removeWhiteSpaces()
         return if (trimPhone.length < 10 || trimPhone.length > 14) false
         else android.util.Patterns.PHONE.matcher(phone).matches()
@@ -119,6 +114,25 @@ object ContactUtils {
         if (!isValidPhone(editable.toString())) {
             layout.isErrorEnabled = true
             layout.error = context.getString(R.string.contact_phone_invalid_error)
+            return true
+        }
+
+        return false
+    }
+
+    fun hasPhoneAlreadyExist(context: Context, dao: ContactDAO, layout: TextInputLayout, editable: Editable) : Boolean {
+        val isNotEmpty = editable.toString().isNotEmpty()
+        val countContactsByPhone = dao.countByPhone(editable.toString().removeWhiteSpaces())
+
+        if (countContactsByPhone == 0L && isNotEmpty) {
+            layout.isErrorEnabled = false
+            layout.error = ""
+            return false
+        }
+
+        if (countContactsByPhone != 0L) {
+            layout.isErrorEnabled = true
+            layout.error = context.getString(R.string.contact_phone_already_exist_error)
             return true
         }
 

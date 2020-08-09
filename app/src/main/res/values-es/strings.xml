@@ -66,6 +66,8 @@
     <!-- region Contacts -->
     <string name="contact">Contactos</string>
 
+    <string name="contact_empty">Ocurrió algún error con el contacto</string>
+
     <!-- region ContactForm -->
     <string-array name="contact_relationship_list">
         <item>Pareja</item>
@@ -79,13 +81,12 @@
     <string name="contact_relationship">Relación</string>
     <string name="contact_message">Mensaje de alerta</string>
     <string name="contact_message_helper">Si deja el campo de entrada vacío, se aplicará el mensaje de alerta predeterminado</string>
-    <string name="contact_is_highlighted">¿Se enviará a este contacto el mensaje de alerta?</string>
-    <string name="contact_accept">Aceptar</string>
-    <string name="contact_cancel">Cancelar</string>
+    <string name="contact_is_highlighted">¿Se enviará a este contacto los mensajes de alerta?</string>
 
     <string name="contact_name_empty_error">Es necesario poner el nombre</string>
     <string name="contact_phone_empty_error">Es necesario poner el telefono</string>
     <string name="contact_phone_invalid_error">Numero invalido</string>
+    <string name="contact_phone_already_exist_error">El telefono ya existe, por favor ingresar otro</string>
     <string name="contact_relationship_empty_error">Es necesario escoger alguna de las opciones</string>
     <string name="contact_empty_error_default">Es necesario poner el campo</string>
     <!-- endregion ContactForm -->
@@ -100,6 +101,9 @@
     <!-- region ContactAdd -->
     <string name="contact_add">Agregar contacto</string>
     <string name="contact_add_import">Importar contacto</string>
+
+    <string name="contact_add_positive">Aceptar</string>
+    <string name="contact_add_negative">Cancelar</string>
 
     <string name="contact_added_successfully">Se agrego satisfactoriamente el contacto</string>
     <!-- endregion ContactAdd -->
@@ -123,6 +127,15 @@
     <!-- region ContactEdit -->
     <string name="contact_edit">Editar contacto</string>
     <!-- endregion ContactEdit -->
+
+    <!-- region ContactDelete -->
+    <string name="contact_delete_title">Confirmación de eliminación</string>
+    <string name="contact_delete_message">será eliminado con sus alertas, ¿estas segur@?</string>
+    <string name="contact_delete_positive">Eliminar</string>
+    <string name="contact_delete_negative">Cancelar</string>
+
+    <string name="contact_deleted_successfully">ha sido eliminado</string>
+    <!-- endregion ContactDelete -->
 
     <!-- endregion Contacts -->
 

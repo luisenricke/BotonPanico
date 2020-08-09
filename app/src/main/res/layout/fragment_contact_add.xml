@@ -152,7 +152,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="@string/contact_cancel" />
+            android:text="@string/contact_add_negative" />
 
         <View
             android:layout_width="150dp"
@@ -166,7 +166,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="@string/contact_accept" />
+            android:text="@string/contact_add_positive" />
     </LinearLayout>
 
     <View

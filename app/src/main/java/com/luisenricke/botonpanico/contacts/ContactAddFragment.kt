@@ -42,7 +42,7 @@ class ContactAddFragment : BaseFragment() {
 
             // Image
             imgProfile.setOnClickListener {
-                imageOptionsSimple(root.context, imgProfile, image)
+                imageOptionsSimple(context, imgProfile, image)
                 isSetImage = utils.checkDefaultImage(context, imgProfile.drawable)
                 if (!isSetImage) image = null
             }
@@ -91,28 +91,31 @@ class ContactAddFragment : BaseFragment() {
                 val isEmptyPhone = utils.hasEmptyField(context, txtLayoutPhone, txtPhone.text!!)
                 val isEmptyRelationShip = utils.hasEmptyField(context, txtLayoutRelationship, txtRelationship.text!!)
                 val isPhoneValid = utils.hasValidPhoneField(context, txtLayoutPhone, txtPhone.text!!)
+                val isPhoneAlreadyExist = utils.hasPhoneAlreadyExist(context, database.contactDAO(), txtLayoutPhone, txtPhone.text!!)
 
-                if (!isEmptyName && !isEmptyPhone && !isEmptyRelationShip && !isPhoneValid) {
+                if (!isEmptyName && !isEmptyPhone && !isEmptyRelationShip && !isPhoneValid && !isPhoneAlreadyExist) {
                     val formatPhone = txtPhone.text.toString().removeWhiteSpaces().formatPhone("")
                     val name = txtName.text.toString()
-
-                    var imageSrc = ""
-                    if (isSetImage) {
-                        imageSrc = "${formatPhone}_${name.removeWhiteSpaces()}"
-                        val isSavedImage = binding.root.context.saveImageInternalStorage(image, imageSrc)
-                        if (!isSavedImage) imageSrc = ""
-                    }
 
                     val contact = Contact(
                             name = name,
                             phone = formatPhone,
                             isHighlighted = swtHighlighted.isChecked,
                             relationship = txtRelationship.text.toString(),
-                            message = txtMessage.text.toString(),
-                            image = imageSrc
+                            message = txtMessage.text.toString()
                     )
-                    Timber.i(contact.toString())
-                    database.contactDAO().insert(contact)
+
+                    val insertedId = database.contactDAO().insert(contact)
+
+                    if (isSetImage) {
+                        contact.id = insertedId
+                        val imageSrc = "${insertedId}_${formatPhone}_image"
+                        val isSavedImage = context.saveImageInternalStorage(image, imageSrc)
+                        contact.image = if (isSavedImage) imageSrc else ""
+                        database.contactDAO().update(contact)
+                    }
+
+                    Timber.v("Contact: ${contact}")
                     toastShort(context.getString(R.string.contact_added_successfully))
                     navController.popBackStack()
                 }
@@ -130,7 +133,7 @@ class ContactAddFragment : BaseFragment() {
         when (requestCode) {
             Constraint.INTENT_READ_CONTACTS_CODE -> {
                 val contact = utils.getContact(binding.root.context, data)
-                Timber.d("Imported contact: \n $contact")
+                Timber.v("Imported contact: \n $contact")
 
                 binding.txtName.setText(contact.name)
                 utils.hasEmptyField(binding.root.context, binding.txtLayoutName, binding.txtName.text!!)
@@ -141,7 +144,7 @@ class ContactAddFragment : BaseFragment() {
             }
             Constraint.INTENT_IMAGE_FROM_GALLERY -> {
                 image = getImage(binding.root.context, data) ?: return
-                Timber.d("The image was set with ${image?.width}x${image?.height}")
+                Timber.v("The image was set with ${image?.width}x${image?.height}")
 
                 isSetImage = true
                 binding.imgProfile.setImageBitmap(image)
