@@ -1,13 +1,17 @@
 package com.luisenricke.botonpanico.contacts
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.luisenricke.androidext.deleteImageInternalStorage
 import com.luisenricke.androidext.loadImageInternalStorage
 import com.luisenricke.androidext.toastLong
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.databinding.FragmentContactDetailBinding
 import com.luisenricke.kotlinext.formatPhone
+import timber.log.Timber
 
 class ContactDetailFragment : BaseFragment() {
 
@@ -40,7 +44,7 @@ class ContactDetailFragment : BaseFragment() {
             val contact = database.contactDAO().get(idContact)
 
             if (idContact == 0L || contact == null) {
-                toastLong("Something happen with the contact")
+                toastLong(context.getString(R.string.contact_empty))
                 navController.popBackStack()
             }
 
@@ -93,6 +97,7 @@ class ContactDetailFragment : BaseFragment() {
                 true
             }
             R.id.menu_contact_delete -> {
+                deleteContact(this.getActivityContext())
                 true
             }
             else                     -> super.onOptionsItemSelected(item)
@@ -107,5 +112,30 @@ class ContactDetailFragment : BaseFragment() {
     override fun onDestroy() {
         super.onDestroy()
         getActivityContext().setBottomNavigationViewVisibility(true)
+    }
+
+    private fun deleteContact(context: Context) {
+        val contact = database.contactDAO().get(idContact)
+        Timber.v("Contact: ${contact.toString()}")
+
+        MaterialAlertDialogBuilder(context).setTitle(context.getString(R.string.contact_delete_title))
+                .setMessage("${contact?.name} ${context.getString(R.string.contact_delete_message)}")
+                .setPositiveButton(context.getString(R.string.contact_delete_positive)) { _, _ ->
+                    contact?.let {
+                        if (contact.image.isNotEmpty()) {
+                            val isImageDeleted = context.deleteImageInternalStorage(contact.image)
+                            Timber.v("Is deleted image? $isImageDeleted")
+                        }
+
+                        val isContactDeleted = database.contactDAO().delete(idContact)
+                        Timber.v("Contact with $isContactDeleted has been deleted")
+                        toastLong("${contact.name} ${context.getString(R.string.contact_deleted_successfully)}")
+                        navController.popBackStack()
+                    }
+                }
+                .setNegativeButton(context.getString(R.string.contact_delete_negative)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
     }
 }
