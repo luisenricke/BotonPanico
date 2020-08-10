@@ -102,7 +102,7 @@
     <string name="contact_add">Agregar contacto</string>
     <string name="contact_add_import">Importar contacto</string>
 
-    <string name="contact_add_positive">Aceptar</string>
+    <string name="contact_add_positive">Guardar</string>
     <string name="contact_add_negative">Cancelar</string>
 
     <string name="contact_added_successfully">Se agrego satisfactoriamente el contacto</string>
@@ -126,6 +126,13 @@
 
     <!-- region ContactEdit -->
     <string name="contact_edit">Editar contacto</string>
+
+    <string name="contact_edit_positive">Editar</string>
+    <string name="contact_edit_negative">Cancelar</string>
+
+    <string name="contact_edit_image_cannot_be_updated">La imagen no se puede actualizar</string>
+
+    <string name="contact_edit_successfully">Se actualizo satisfactoriamente el contacto</string>
     <!-- endregion ContactEdit -->
 
     <!-- region ContactDelete -->

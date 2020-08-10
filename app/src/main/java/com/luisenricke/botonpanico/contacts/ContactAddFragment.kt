@@ -27,7 +27,6 @@ class ContactAddFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private var image: Bitmap? = null
-    private var isSetImage: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         getActivityContext().setBottomNavigationViewVisibility(false)
@@ -36,15 +35,15 @@ class ContactAddFragment : BaseFragment() {
         binding.apply {
             val context = root.context
 
-            // Toolbar
+            // region Toolbar
             getActivityContext().setSupportActionBar(toolbar)
             setupActionBar(getActivityContext().supportActionBar, getString(R.string.contact_add))
+            // endregion Toolbar
 
+            // region BindViews
             // Image
             imgProfile.setOnClickListener {
-                imageOptionsSimple(context, imgProfile, image)
-                isSetImage = utils.checkDefaultImage(context, imgProfile.drawable)
-                if (!isSetImage) image = null
+                imageOptionsSimple(context, imgProfile)
             }
 
             //Name
@@ -82,7 +81,6 @@ class ContactAddFragment : BaseFragment() {
 
             // Buttons
             btnCancel.setOnClickListener {
-                imgProfile.setImageResource(R.drawable.ic_baseline_person_24)
                 navController.popBackStack()
             }
 
@@ -91,13 +89,13 @@ class ContactAddFragment : BaseFragment() {
                 val isEmptyPhone = utils.hasEmptyField(context, txtLayoutPhone, txtPhone.text!!)
                 val isEmptyRelationShip = utils.hasEmptyField(context, txtLayoutRelationship, txtRelationship.text!!)
                 val isPhoneValid = utils.hasValidPhoneField(context, txtLayoutPhone, txtPhone.text!!)
-                val isPhoneAlreadyExist = utils.hasPhoneAlreadyExist(context, database.contactDAO(), txtLayoutPhone, txtPhone.text!!)
+                val isPhoneAlreadyExist = utils.hasPhoneAlreadyExist(context, database.contactDAO(), null, txtLayoutPhone, txtPhone.text!!)
 
                 if (!isEmptyName && !isEmptyPhone && !isEmptyRelationShip && !isPhoneValid && !isPhoneAlreadyExist) {
                     val formatPhone = txtPhone.text.toString().removeWhiteSpaces().formatPhone("")
                     val name = txtName.text.toString()
 
-                    val contact = Contact(
+                    val insertContact = Contact(
                             name = name,
                             phone = formatPhone,
                             isHighlighted = swtHighlighted.isChecked,
@@ -105,21 +103,22 @@ class ContactAddFragment : BaseFragment() {
                             message = txtMessage.text.toString()
                     )
 
-                    val insertedId = database.contactDAO().insert(contact)
+                    val insertedId = database.contactDAO().insert(insertContact)
 
-                    if (isSetImage) {
-                        contact.id = insertedId
+                    if (imgProfile.tag == context.getString(R.string.photo_image_tag_custom)) {
+                        insertContact.id = insertedId
                         val imageSrc = "${insertedId}_${formatPhone}_image"
                         val isSavedImage = context.saveImageInternalStorage(image, imageSrc)
-                        contact.image = if (isSavedImage) imageSrc else ""
-                        database.contactDAO().update(contact)
+                        insertContact.image = if (isSavedImage) imageSrc else ""
+                        database.contactDAO().update(insertContact)
                     }
 
-                    Timber.v("Contact: ${contact}")
+                    Timber.v("Contact: ${database.contactDAO().get(insertedId)}")
                     toastShort(context.getString(R.string.contact_added_successfully))
                     navController.popBackStack()
                 }
             }
+            // endregion BindViews
         }
 
         return binding.root
@@ -146,8 +145,8 @@ class ContactAddFragment : BaseFragment() {
                 image = getImage(binding.root.context, data) ?: return
                 Timber.v("The image was set with ${image?.width}x${image?.height}")
 
-                isSetImage = true
                 binding.imgProfile.setImageBitmap(image)
+                binding.imgProfile.tag = binding.root.context.getString(R.string.photo_image_tag_custom)
             }
         }
     }

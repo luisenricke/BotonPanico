@@ -11,6 +11,7 @@ import com.luisenricke.androidext.loadImageInternalStorage
 import com.luisenricke.androidext.saveImageInternalStorage
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.Constraint
+import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.databinding.FragmentProfileBinding
 import timber.log.Timber
 
@@ -30,7 +31,7 @@ class ProfileFragment : BaseFragment() {
             if (imageStorage != null) imgProfile.setImageBitmap(imageStorage)
 
             imgProfile.setOnClickListener {
-                imageOptionsWipe(root.context, imgProfile, imageStorage, Constraint.PROFILE_PHOTO)
+                imageOptionsWipe(root.context, imgProfile, Constraint.PROFILE_PHOTO)
             }
 
         }
@@ -49,6 +50,7 @@ class ProfileFragment : BaseFragment() {
             Constraint.INTENT_IMAGE_FROM_GALLERY -> {
                 imageStorage = getImage(binding.root.context, data) ?: return
                 binding.imgProfile.setImageBitmap(imageStorage)
+                binding.imgProfile.tag = binding.root.context.getString(R.string.photo_image_tag_custom)
                 val isSaved = binding.root.context.saveImageInternalStorage(imageStorage, Constraint.PROFILE_PHOTO)
                 Timber.i("Photo saved: $isSaved")
             }

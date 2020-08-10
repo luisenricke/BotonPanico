@@ -8,6 +8,10 @@
 
     <string name="safety_contact">Safety contact</string>
 
+    <string name="photo_image_tag_default" translatable="false">Default Image</string>
+    <string name="photo_image_tag_custom" translatable="false">Custom Image</string>
+    <string name="photo_image_tag_object" translatable="false">Object Image</string>
+
     <!-- region Base Fragment -->
     <string name="on_request_permissions_result_grant_results">The permission confirmations are empty</string>
     <string name="on_request_permissions_result_doesnt_find_permission">The permission confirmations doesn\'t find</string>
@@ -102,7 +106,7 @@
     <string name="contact_add">Add contact</string>
     <string name="contact_add_import">Import contact</string>
 
-    <string name="contact_add_positive">Accept</string>
+    <string name="contact_add_positive">Save</string>
     <string name="contact_add_negative">Cancel</string>
 
     <string name="contact_added_successfully">Contact was successfully added</string>
@@ -126,6 +130,13 @@
 
     <!-- region ContactEdit -->
     <string name="contact_edit">Edit contact</string>
+
+    <string name="contact_edit_positive">Edit</string>
+    <string name="contact_edit_negative">Cancel</string>
+
+    <string name="contact_edit_image_cannot_be_updated">The image cannot be updated</string>
+
+    <string name="contact_edit_successfully">Contact was successfully edited</string>
     <!-- endregion ContactEdit -->
 
     <!-- region ContactDelete -->

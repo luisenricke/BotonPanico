@@ -3,7 +3,6 @@ package com.luisenricke.botonpanico.contacts
 import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.provider.ContactsContract
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.text.Editable
@@ -72,10 +71,6 @@ object ContactUtils {
         return contact
     }
 
-    fun checkDefaultImage(context: Context, image: Drawable): Boolean {
-        return image == context.getDrawable(R.drawable.ic_baseline_person_24)
-    }
-
     private fun isValidPhone(phone: String): Boolean {
         val trimPhone = phone.removeWhiteSpaces()
         return if (trimPhone.length < 10 || trimPhone.length > 14) false
@@ -120,11 +115,12 @@ object ContactUtils {
         return false
     }
 
-    fun hasPhoneAlreadyExist(context: Context, dao: ContactDAO, layout: TextInputLayout, editable: Editable) : Boolean {
-        val isNotEmpty = editable.toString().isNotEmpty()
-        val countContactsByPhone = dao.countByPhone(editable.toString().removeWhiteSpaces())
+    fun hasPhoneAlreadyExist(context: Context, dao: ContactDAO, exceptPhone: String?, layout: TextInputLayout, editable: Editable): Boolean {
+        val phone = editable.toString().removeWhiteSpaces()
+        val isNotEmpty = phone.isNotEmpty()
+        val countContactsByPhone = dao.countByPhone(phone)
 
-        if (countContactsByPhone == 0L && isNotEmpty) {
+        if ((countContactsByPhone == 0L || (exceptPhone == phone)) && isNotEmpty) {
             layout.isErrorEnabled = false
             layout.error = ""
             return false

@@ -29,6 +29,9 @@ abstract class BaseFragment : Fragment() {
     val database: AppDatabase
         get() = AppDatabase.getInstance(getActivityContext())
 
+    fun getActivityContext(): MainActivity =
+            (activity as MainActivity)
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
@@ -73,41 +76,44 @@ abstract class BaseFragment : Fragment() {
     }
 
     // TODO make manager for ImageOptions
-    fun imageOptionsSimple(context: Context, view: ImageView, image: Bitmap?) {
+    fun imageOptionsSimple(context: Context, view: ImageView) {
 
         val resource = context.resources
-        val options: Array<out String> = if (image == null) resource.getStringArray(R.array.photo_options_empty)
+        val options: Array<out String> = if (view.tag == context.getString(R.string.photo_image_tag_default)) resource.getStringArray(R.array.photo_options_empty)
         else resource.getStringArray(R.array.photo_options_filled)
 
         MaterialAlertDialogBuilder(context).setTitle(resource.getString(R.string.photo_options_title)).setItems(options) { dialog, which ->
             when (options[which]) {
                 context.getString(R.string.photo_options_gallery) -> intentSelectImageFromGallery(Constraint.INTENT_IMAGE_FROM_GALLERY)
-                context.getString(R.string.photo_options_delete)  -> view.setImageResource(R.drawable.ic_baseline_person_24)
-                context.getString(R.string.photo_options_cancel)  -> dialog.dismiss()
-            }
-        }.show()
-    }
-
-    fun imageOptionsWipe(context: Context, view: ImageView, image: Bitmap?, file: String) {
-
-        val resource = context.resources
-        val options: Array<out String> = if (image == null) resource.getStringArray(R.array.photo_options_empty)
-        else resource.getStringArray(R.array.photo_options_filled)
-
-        MaterialAlertDialogBuilder(context).setTitle(resource.getString(R.string.photo_options_title)).setItems(options) { dialog, which ->
-            when (options[which]) {
-                context.getString(R.string.photo_options_gallery) -> intentSelectImageFromGallery(Constraint.INTENT_IMAGE_FROM_GALLERY)
-                context.getString(R.string.photo_options_delete)  -> {
-                    view.setImageResource(R.drawable.ic_baseline_person_24)
-                    context.deleteImageInternalStorage(file)
+                context.getString(R.string.photo_options_delete)  -> view.apply {
+                    setImageResource(R.drawable.ic_baseline_person_24)
+                    tag = context.getString(R.string.photo_image_tag_default)
                 }
                 context.getString(R.string.photo_options_cancel)  -> dialog.dismiss()
             }
         }.show()
     }
 
-    fun getActivityContext(): MainActivity =
-            (activity as MainActivity)
+    fun imageOptionsWipe(context: Context, view: ImageView, file: String) {
+
+        val resource = context.resources
+        val options: Array<out String> = if (view.tag == context.getString(R.string.photo_image_tag_default)) resource.getStringArray(R.array.photo_options_empty)
+        else resource.getStringArray(R.array.photo_options_filled)
+
+        MaterialAlertDialogBuilder(context).setTitle(resource.getString(R.string.photo_options_title)).setItems(options) { dialog, which ->
+            when (options[which]) {
+                context.getString(R.string.photo_options_gallery) -> intentSelectImageFromGallery(Constraint.INTENT_IMAGE_FROM_GALLERY)
+                context.getString(R.string.photo_options_delete)  -> {
+                    view.apply {
+                        setImageResource(R.drawable.ic_baseline_person_24)
+                        tag = context.getString(R.string.photo_image_tag_default)
+                    }
+                    context.deleteImageInternalStorage(file)
+                }
+                context.getString(R.string.photo_options_cancel)  -> dialog.dismiss()
+            }
+        }.show()
+    }
 
     // TODO test this
     fun getImage(context: Context, data: Intent?): Bitmap? {
