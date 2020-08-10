@@ -1,13 +1,15 @@
 package com.luisenricke.botonpanico.alert
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.luisenricke.androidext.deleteImageInternalStorage
 import com.luisenricke.androidext.toastLong
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.databinding.FragmentAlertDetailBinding
+import timber.log.Timber
 
 class AlertDetailFragment : BaseFragment() {
 
@@ -18,6 +20,7 @@ class AlertDetailFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         arguments?.let {
             val args = AlertDetailFragmentArgs.fromBundle(it)
             idAlert = args.idAlert
@@ -36,12 +39,35 @@ class AlertDetailFragment : BaseFragment() {
             getActivityContext().setSupportActionBar(toolbar)
             setupActionBar(getActivityContext().supportActionBar, getString(R.string.alert_detail))
 
-            if (idAlert != 0L) {
-                toastLong("YESSS $idAlert")
+            // Alert
+            val alert = database.alertDAO().get(idAlert)
+
+            if (idAlert == 0L || alert == null) {
+                toastLong(context.getString(R.string.alert_empty))
+                navController.popBackStack()
             }
         }
 
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_alert_detail, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home        -> {
+                navController.popBackStack()
+                true
+            }
+            R.id.menu_alert_delete -> {
+                deleteAlert(this.getActivityContext())
+                true
+            }
+            else                     -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {
@@ -52,5 +78,26 @@ class AlertDetailFragment : BaseFragment() {
     override fun onDestroy() {
         super.onDestroy()
         getActivityContext().setBottomNavigationViewVisibility(true)
+    }
+
+    private fun deleteAlert(context: Context) {
+        val alert = database.alertDAO().get(idAlert)
+        Timber.v("Contact: ${alert.toString()}")
+
+        MaterialAlertDialogBuilder(context).setTitle(context.getString(R.string.alert_delete_title))
+                .setIcon(R.drawable.ic_baseline_report_problem_24)
+                .setMessage(context.getString(R.string.alert_delete_message))
+                .setPositiveButton(context.getString(R.string.alert_delete_positive)) { _, _ ->
+                    alert?.let {
+                        val isContactDeleted = database.alertDAO().delete(idAlert)
+                        Timber.v("Alert with $isContactDeleted has been deleted with our child rows")
+                        toastLong(context.getString(R.string.alert_deleted_successfully))
+                        navController.popBackStack()
+                    }
+                }
+                .setNegativeButton(context.getString(R.string.alert_delete_negative)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
     }
 }
