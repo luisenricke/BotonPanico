@@ -8,10 +8,6 @@
 
     <string name="safety_contact">Safety contact</string>
 
-    <string name="photo_image_tag_default" translatable="false">Default Image</string>
-    <string name="photo_image_tag_custom" translatable="false">Custom Image</string>
-    <string name="photo_image_tag_object" translatable="false">Object Image</string>
-
     <!-- region Base Fragment -->
     <string name="on_request_permissions_result_grant_results">The permission confirmations are empty</string>
     <string name="on_request_permissions_result_doesnt_find_permission">The permission confirmations doesn\'t find</string>
@@ -24,6 +20,10 @@
     <string name="photo_options_gallery">Open the gallery</string>
     <string name="photo_options_delete">Delete image</string>
     <string name="photo_options_cancel">Cancel</string>
+
+    <string name="photo_image_tag_default" translatable="false">Default Image</string>
+    <string name="photo_image_tag_custom" translatable="false">Custom Image</string>
+    <string name="photo_image_tag_object" translatable="false">Object Image</string>
 
     <string-array name="photo_options_empty">
         <item>@string/photo_options_gallery</item>
@@ -62,10 +62,28 @@
 
     <!-- region Alerts -->
     <string name="alert">Alert</string>
+    <string name="alert_empty">Some error happen with the alert</string>
     <string name="alert_message_default">I feel in danger, please search for me.</string>
 
+    <!-- region AlertList -->
+    <string name="alert_empty_list">No alert has been made yet</string>
+    <string name="alert_empty_list_img_decorator">Decoration image when the list is empty</string>
+    <!-- endregion AlertList -->
+
+    <!-- region AlertDetail -->
     <string name="alert_detail">Alert details</string>
-    <!-- endregion -->
+    <!-- endregion AlertDetail -->
+
+    <!-- region AlertDelete -->
+    <string name="alert_delete_title">Delete confirmation</string>
+    <string name="alert_delete_message">Are you sure you want to remove the alert? It will delete the record of who you sent it and the message.</string>
+    <string name="alert_delete_positive">Delete</string>
+    <string name="alert_delete_negative">Cancel</string>
+
+    <string name="alert_deleted_successfully">The alert has been deleted</string>
+    <!-- endregion AlertDelete -->
+
+    <!-- endregion Alerts -->
 
     <!-- region Contacts -->
     <string name="contact">Contacts</string>

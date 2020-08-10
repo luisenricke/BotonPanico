@@ -58,10 +58,28 @@
 
     <!-- region Alerts -->
     <string name="alert">Alerta</string>
+    <string name="alert_empty">Ocurrió algún error con la alerta</string>
     <string name="alert_message_default">Me siento en peligro, por favor búscame.</string>
 
+    <!-- region AlertList -->
+    <string name="alert_empty_list">Aun no se ha hecho ninguna alerta</string>
+    <string name="alert_empty_list_img_decorator">Imagen de decoración cuando la lista esta vacía</string>
+    <!-- endregion AlertList -->
+
+    <!-- region AlertDetail -->
     <string name="alert_detail">Detalles de la alerta</string>
-    <!-- endregion -->
+    <!-- endregion AlertrDetail -->
+
+    <!-- region AlertDelete -->
+    <string name="alert_delete_title">Confirmación de eliminación</string>
+    <string name="alert_delete_message">¿Estas segur@ de eliminar la alerta? Será eliminado el registro a quienes lo enviaste y el mensaje</string>
+    <string name="alert_delete_positive">Eliminar</string>
+    <string name="alert_delete_negative">Cancelar</string>
+
+    <string name="alert_deleted_successfully">La alerta ha sido eliminada</string>
+    <!-- endregion AlertDelete -->
+
+    <!-- endregion Alerts -->
 
     <!-- region Contacts -->
     <string name="contact">Contactos</string>

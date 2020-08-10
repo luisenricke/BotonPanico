@@ -47,7 +47,7 @@ class AlertFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        alertAdapter.updateList()
+        displayViews()
     }
 
     override fun onDestroyView() {
@@ -68,5 +68,23 @@ class AlertFragment : BaseFragment() {
         }
 
         return AlertAdapter(context, clickListener, longClickListener)
+    }
+
+    private fun displayViews() {
+        val isAlertsEmpty = alertAdapter.isEmpty()
+
+        if (isAlertsEmpty) {
+            binding.apply {
+                recyclerAlerts.visibility = View.GONE
+                layoutEmpty.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                recyclerAlerts.visibility = View.VISIBLE
+                layoutEmpty.visibility = View.GONE
+            }
+
+            alertAdapter.update()
+        }
     }
 }
