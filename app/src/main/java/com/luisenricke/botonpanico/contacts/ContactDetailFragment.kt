@@ -119,6 +119,7 @@ class ContactDetailFragment : BaseFragment() {
         Timber.v("Contact: ${contact.toString()}")
 
         MaterialAlertDialogBuilder(context).setTitle(context.getString(R.string.contact_delete_title))
+                .setIcon(R.drawable.ic_baseline_report_problem_24)
                 .setMessage("${contact?.name} ${context.getString(R.string.contact_delete_message)}")
                 .setPositiveButton(context.getString(R.string.contact_delete_positive)) { _, _ ->
                     contact?.let {
