@@ -36,6 +36,9 @@ abstract class AlertContactDAO : Base<AlertContact>, Update<AlertContact>, Delet
     @Query("DELETE FROM ${SCHEMA.TABLE} WHERE id IN(:ids)")
     abstract override fun deletes(ids: LongArray): Int
 
+    @Query("SELECT * FROM ${SCHEMA.TABLE} WHERE alert_id = :idAlert")
+    abstract fun getByAlert(idAlert: Long): List<AlertContact>
+
     @Query(
             """
             SELECT * FROM ${Alert.SCHEMA.TABLE} AS LEFT_ 

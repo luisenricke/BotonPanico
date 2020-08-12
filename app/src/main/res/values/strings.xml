@@ -72,6 +72,12 @@
 
     <!-- region AlertDetail -->
     <string name="alert_detail">Alert details</string>
+
+    <string name="alert_detail_img_location">Location image</string>
+    <string name="alert_detail_img_date">Date image</string>
+    <string name="alert_detail_img_type">Type image</string>
+
+    <string name="alert_detail_recycler_title">sent messages</string>
     <!-- endregion AlertDetail -->
 
     <!-- region AlertDelete -->

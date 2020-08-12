@@ -3,12 +3,15 @@ package com.luisenricke.botonpanico.alert
 import android.content.Context
 import android.os.Bundle
 import android.view.*
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.luisenricke.androidext.deleteImageInternalStorage
 import com.luisenricke.androidext.toastLong
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.R
+import com.luisenricke.botonpanico.database.entity.Alert
+import com.luisenricke.botonpanico.database.entity.AlertContact
 import com.luisenricke.botonpanico.databinding.FragmentAlertDetailBinding
+import com.luisenricke.kotlinext.formatDateTimeExtended
 import timber.log.Timber
 
 class AlertDetailFragment : BaseFragment() {
@@ -17,6 +20,8 @@ class AlertDetailFragment : BaseFragment() {
     private val binding get() = _binding!!
 
     private var idAlert: Long = 0L
+
+    private lateinit var alertDetailAdapter: AlertDetailAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +37,8 @@ class AlertDetailFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentAlertDetailBinding.inflate(inflater, container, false)
 
+        alertDetailAdapter = setAlertDetailAdapter(binding.root.context)
+
         binding.apply {
             val context = root.context
 
@@ -46,9 +53,24 @@ class AlertDetailFragment : BaseFragment() {
                 toastLong(context.getString(R.string.alert_empty))
                 navController.popBackStack()
             }
-        }
 
-        return binding.root
+            // region BindingViews
+            lblDate.text = alert!!.timestamp.time.formatDateTimeExtended()
+            lblLocation.text = "${alert.latitude}, ${alert.longitude}"
+
+            // RecyclerView
+            recyclerAlertContact.apply {
+                setHasFixedSize(true)
+
+                adapter = alertDetailAdapter
+            }
+            //  endregion BindingViews
+
+
+
+
+            return binding.root
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -58,7 +80,7 @@ class AlertDetailFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home        -> {
+            android.R.id.home      -> {
                 navController.popBackStack()
                 true
             }
@@ -66,7 +88,7 @@ class AlertDetailFragment : BaseFragment() {
                 deleteAlert(this.getActivityContext())
                 true
             }
-            else                     -> super.onOptionsItemSelected(item)
+            else                   -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -82,7 +104,7 @@ class AlertDetailFragment : BaseFragment() {
 
     private fun deleteAlert(context: Context) {
         val alert = database.alertDAO().get(idAlert)
-        Timber.v("Contact: ${alert.toString()}")
+        Timber.v("Alert: ${alert.toString()}")
 
         MaterialAlertDialogBuilder(context).setTitle(context.getString(R.string.alert_delete_title))
                 .setIcon(R.drawable.ic_baseline_report_problem_24)
@@ -100,4 +122,17 @@ class AlertDetailFragment : BaseFragment() {
                 }
                 .show()
     }
+
+    private fun setAlertDetailAdapter(context: Context): AlertDetailAdapter {
+        val clickListener: (AlertContact) -> Unit = { item ->
+            Timber.v("clickListener")
+        }
+
+        val longClickListener: (AlertContact) -> Unit = { item ->
+            Timber.v("longClickListener")
+        }
+
+        return AlertDetailAdapter(context, idAlert, clickListener, longClickListener)
+    }
 }
+
