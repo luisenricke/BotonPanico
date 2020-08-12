@@ -34,7 +34,11 @@ class AlertDetailFragment : BaseFragment() {
         getActivityContext().setBottomNavigationViewVisibility(false)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         _binding = FragmentAlertDetailBinding.inflate(inflater, container, false)
 
         alertDetailAdapter = setAlertDetailAdapter(binding.root.context)
@@ -66,9 +70,6 @@ class AlertDetailFragment : BaseFragment() {
             }
             //  endregion BindingViews
 
-
-
-
             return binding.root
         }
     }
@@ -80,7 +81,7 @@ class AlertDetailFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home      -> {
+            android.R.id.home -> {
                 navController.popBackStack()
                 true
             }
@@ -88,8 +89,13 @@ class AlertDetailFragment : BaseFragment() {
                 deleteAlert(this.getActivityContext())
                 true
             }
-            else                   -> super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        displayViews()
     }
 
     override fun onDestroyView() {
@@ -107,20 +113,20 @@ class AlertDetailFragment : BaseFragment() {
         Timber.v("Alert: ${alert.toString()}")
 
         MaterialAlertDialogBuilder(context).setTitle(context.getString(R.string.alert_delete_title))
-                .setIcon(R.drawable.ic_baseline_report_problem_24)
-                .setMessage(context.getString(R.string.alert_delete_message))
-                .setPositiveButton(context.getString(R.string.alert_delete_positive)) { _, _ ->
-                    alert?.let {
-                        val isContactDeleted = database.alertDAO().delete(idAlert)
-                        Timber.v("Alert with $isContactDeleted has been deleted with our child rows")
-                        toastLong(context.getString(R.string.alert_deleted_successfully))
-                        navController.popBackStack()
-                    }
+            .setIcon(R.drawable.ic_baseline_report_problem_24)
+            .setMessage(context.getString(R.string.alert_delete_message))
+            .setPositiveButton(context.getString(R.string.alert_delete_positive)) { _, _ ->
+                alert?.let {
+                    val isContactDeleted = database.alertDAO().delete(idAlert)
+                    Timber.v("Alert with $isContactDeleted has been deleted with our child rows")
+                    toastLong(context.getString(R.string.alert_deleted_successfully))
+                    navController.popBackStack()
                 }
-                .setNegativeButton(context.getString(R.string.alert_delete_negative)) { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
+            }
+            .setNegativeButton(context.getString(R.string.alert_delete_negative)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun setAlertDetailAdapter(context: Context): AlertDetailAdapter {
@@ -133,6 +139,26 @@ class AlertDetailFragment : BaseFragment() {
         }
 
         return AlertDetailAdapter(context, idAlert, clickListener, longClickListener)
+    }
+
+    private fun displayViews() {
+        val isAlertsEmpty = alertDetailAdapter.isEmpty()
+
+        if (isAlertsEmpty) {
+            binding.apply {
+                recyclerAlertContact.visibility = View.GONE
+                lblAlertContactsTitle.visibility = View.GONE
+                layoutEmpty.visibility = View.VISIBLE
+            }
+        } else {
+            binding.apply {
+                recyclerAlertContact.visibility = View.VISIBLE
+                lblAlertContactsTitle.visibility = View.VISIBLE
+                layoutEmpty.visibility = View.GONE
+            }
+
+            alertDetailAdapter.update()
+        }
     }
 }
 

@@ -78,6 +78,9 @@
     <string name="alert_detail_img_type">Type image</string>
 
     <string name="alert_detail_recycler_title">sent messages</string>
+
+    <string name="alert_detail_alert_contact_empty_list">All contacts associated with this alert have been deleted</string>
+    <string name="alert_detail_alert_Contact_empty_list_img_decorator">Decoration image when the list is empty</string>
     <!-- endregion AlertDetail -->
 
     <!-- region AlertDelete -->
