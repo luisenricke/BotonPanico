@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="permission_granted">Permiso ya concedido</string>
     <string name="permission_denied">La funcionalidad de la aplicación puede ser restringida sin el permiso</string>
-
-    <string name="permissions_granted">Permisos ya concedidos</string>
+    
     <string name="permissions_denied">La funcionalidad de la aplicación puede ser restringida sin los permisos</string>
 
     <string name="permission_message">El permiso es necesario para el correcto funcionamiento de la aplicación, por favor activalo</string>
