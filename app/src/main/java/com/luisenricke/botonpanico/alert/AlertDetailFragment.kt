@@ -3,12 +3,10 @@ package com.luisenricke.botonpanico.alert
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.luisenricke.androidext.toastLong
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.R
-import com.luisenricke.botonpanico.database.entity.Alert
 import com.luisenricke.botonpanico.database.entity.AlertContact
 import com.luisenricke.botonpanico.databinding.FragmentAlertDetailBinding
 import com.luisenricke.kotlinext.formatDateTimeExtended
@@ -34,11 +32,7 @@ class AlertDetailFragment : BaseFragment() {
         getActivityContext().setBottomNavigationViewVisibility(false)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentAlertDetailBinding.inflate(inflater, container, false)
 
         alertDetailAdapter = setAlertDetailAdapter(binding.root.context)
@@ -60,7 +54,11 @@ class AlertDetailFragment : BaseFragment() {
 
             // region BindingViews
             lblDate.text = alert!!.timestamp.time.formatDateTimeExtended()
-            lblLocation.text = "${alert.latitude}, ${alert.longitude}"
+            lblLocation.text = if (alert.latitude != 0.0 && alert.longitude != 0.0) {
+                "${alert.latitude}, ${alert.longitude}"
+            } else {
+                context.getString(R.string.alert_detail_location_not_available)
+            }
 
             // RecyclerView
             recyclerAlertContact.apply {
@@ -68,6 +66,7 @@ class AlertDetailFragment : BaseFragment() {
 
                 adapter = alertDetailAdapter
             }
+
             //  endregion BindingViews
 
             return binding.root
@@ -81,7 +80,7 @@ class AlertDetailFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> {
+            android.R.id.home      -> {
                 navController.popBackStack()
                 true
             }
@@ -89,7 +88,7 @@ class AlertDetailFragment : BaseFragment() {
                 deleteAlert(this.getActivityContext())
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else                   -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -113,20 +112,20 @@ class AlertDetailFragment : BaseFragment() {
         Timber.v("Alert: ${alert.toString()}")
 
         MaterialAlertDialogBuilder(context).setTitle(context.getString(R.string.alert_delete_title))
-            .setIcon(R.drawable.ic_baseline_report_problem_24)
-            .setMessage(context.getString(R.string.alert_delete_message))
-            .setPositiveButton(context.getString(R.string.alert_delete_positive)) { _, _ ->
-                alert?.let {
-                    val isContactDeleted = database.alertDAO().delete(idAlert)
-                    Timber.v("Alert with $isContactDeleted has been deleted with our child rows")
-                    toastLong(context.getString(R.string.alert_deleted_successfully))
-                    navController.popBackStack()
+                .setIcon(R.drawable.ic_baseline_report_problem_24)
+                .setMessage(context.getString(R.string.alert_delete_message))
+                .setPositiveButton(context.getString(R.string.alert_delete_positive)) { _, _ ->
+                    alert?.let {
+                        val isContactDeleted = database.alertDAO().delete(idAlert)
+                        Timber.v("Alert with $isContactDeleted has been deleted with our child rows")
+                        toastLong(context.getString(R.string.alert_deleted_successfully))
+                        navController.popBackStack()
+                    }
                 }
-            }
-            .setNegativeButton(context.getString(R.string.alert_delete_negative)) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+                .setNegativeButton(context.getString(R.string.alert_delete_negative)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
     }
 
     private fun setAlertDetailAdapter(context: Context): AlertDetailAdapter {

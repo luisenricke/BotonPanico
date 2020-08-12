@@ -84,7 +84,8 @@
                 tools:text="12.123456, -12.123456" />
         </LinearLayout>
 
-        <!-- TODO uncomment when knows the state of message sent
+        <!-- TODO uncomment when knows the state of sent message
+
                 <LinearLayout
                         android:id="@+id/layout_type"
                         android:layout_width="match_parent"
@@ -94,7 +95,7 @@
                         tools:ignore="UseCompoundDrawables">
 
                     <ImageView
-                            android:id="@+id/img_type"
+                            android:id="@+id/img_state"
                             android:layout_width="@dimen/contact_detail_icon_size"
                             android:layout_height="@dimen/contact_detail_icon_size"
                             android:layout_marginEnd="@dimen/contact_detail_icon_margin_end"
@@ -103,7 +104,7 @@
                             android:tint="@color/colorPrimary" />
 
                     <TextView
-                            android:id="@+id/lbl_type"
+                            android:id="@+id/lbl_state"
                             style="@style/TextAppearance.MaterialComponents.Body1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

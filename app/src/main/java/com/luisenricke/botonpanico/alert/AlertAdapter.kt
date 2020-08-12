@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.AppDatabase
 import com.luisenricke.botonpanico.database.dao.AlertDAO
 import com.luisenricke.botonpanico.database.entity.Alert
@@ -34,9 +35,12 @@ class AlertAdapter(val context: Context, val clickListener: (Alert) -> Unit, val
             with(binding) {
                 lblId.text = alert.id.toString()
                 lblDate.text = alert.timestamp.time.formatDateTimeExtended()
-                // TODO uncomment when knows the state of message sent
-                //                lblType.text = alert.type
-                lblLocation.text = "${alert.latitude}, ${alert.longitude}"
+
+                lblLocation.text = if (alert.latitude != 0.0 && alert.longitude != 0.0) {
+                    "${alert.latitude}, ${alert.longitude}"
+                } else {
+                    context.getString(R.string.alert_detail_location_not_available)
+                }
 
                 cardContact.setOnClickListener {
                     clickListener(alert)

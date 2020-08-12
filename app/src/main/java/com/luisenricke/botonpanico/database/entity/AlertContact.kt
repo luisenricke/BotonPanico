@@ -8,6 +8,7 @@ import com.luisenricke.botonpanico.database.entity.AlertContact.SCHEMA.ALERT_ID
 import com.luisenricke.botonpanico.database.entity.AlertContact.SCHEMA.CONTACT_ID
 import com.luisenricke.botonpanico.database.entity.AlertContact.SCHEMA.ID
 import com.luisenricke.botonpanico.database.entity.AlertContact.SCHEMA.MESSAGE_SENT
+import com.luisenricke.botonpanico.database.entity.AlertContact.SCHEMA.STATE
 
 @Entity(
         tableName = AlertContact.SCHEMA.TABLE, foreignKeys = [
@@ -29,7 +30,8 @@ data class AlertContact(
     @ColumnInfo(name = ALERT_ID, index = true) var alertId: Long,
     @ColumnInfo(name = CONTACT_ID, index = true) var contactId: Long,
     @ColumnInfo(name = MESSAGE_SENT) var messageSent: String = "",
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = ID) val id: Long = 0)
+    @ColumnInfo(name = STATE) var state: String = "",
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = ID) var id: Long = 0)
 {
 
     object SCHEMA {
@@ -38,6 +40,7 @@ data class AlertContact(
         const val ALERT_ID = "alert_id"
         const val CONTACT_ID = "contact_id"
         const val MESSAGE_SENT = "message_sent"
+        const val STATE = "status"
     }
 
     override fun toString(): String {
@@ -46,6 +49,7 @@ data class AlertContact(
             |alertId:       $alertId
             |contactId:     $contactId
             |messageSent:   $messageSent
+            |status:        $state
         ${System.lineSeparator()} */""".trimMargin()
     }
 }
