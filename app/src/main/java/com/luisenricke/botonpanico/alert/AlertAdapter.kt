@@ -8,6 +8,7 @@ import com.luisenricke.botonpanico.database.AppDatabase
 import com.luisenricke.botonpanico.database.dao.AlertDAO
 import com.luisenricke.botonpanico.database.entity.Alert
 import com.luisenricke.botonpanico.databinding.ItemAlertBinding
+import com.luisenricke.kotlinext.formatDateTimeExtended
 
 class AlertAdapter(val context: Context, val clickListener: (Alert) -> Unit, val longClickListener: (Alert) -> Unit) : RecyclerView.Adapter<AlertAdapter.ViewHolder>() {
 
@@ -15,7 +16,7 @@ class AlertAdapter(val context: Context, val clickListener: (Alert) -> Unit, val
     private val dao: AlertDAO = AppDatabase.getInstance(context).alertDAO()
 
     init {
-        updateList()
+        update()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -32,8 +33,9 @@ class AlertAdapter(val context: Context, val clickListener: (Alert) -> Unit, val
         fun bind(alert: Alert) {
             with(binding) {
                 lblId.text = alert.id.toString()
-                lblDate.text = alert.timestamp.toString()
-                lblType.text = alert.type
+                lblDate.text = alert.timestamp.time.formatDateTimeExtended()
+                // TODO uncomment when knows the state of message sent
+                //                lblType.text = alert.type
                 lblLocation.text = "${alert.latitude}, ${alert.longitude}"
 
                 cardContact.setOnClickListener {
@@ -49,8 +51,11 @@ class AlertAdapter(val context: Context, val clickListener: (Alert) -> Unit, val
         }
     }
 
-    fun updateList() {
+    fun update() {
         alerts = dao.get().sortedByDescending { it.timestamp }
         notifyDataSetChanged()
     }
+
+    fun isEmpty(): Boolean =
+            dao.count() == 0L
 }
