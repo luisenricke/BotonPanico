@@ -27,12 +27,16 @@
 - From the notification created you can stop the alert
 - Put a counter when alert was triggered
 - If the alert was triggered in the notifications you can cancel it
+- When the alert is triggered vibrate and send messages to all contacts highlighted(personal/location)
 
 ### Alerts
 
 - If no alert has been triggered yet, put a message centered on the screen
-- When the alert is triggered vibrate and send messages(personal/location)
-- List all alert triggered [date, time, sending status]
+- If there is no contact in the alert, put a message centered on the screen
+- Show alert list
+- See alert detail[date, time, location]
+- Show alert contact list[contact name, message sent, status]
+- Delete alert
 - Check if the message was sent or not [status]
 
 ### Contacts
@@ -49,12 +53,6 @@
 - Enable / disable as a trusted contact
 - Edit the default message of the message that is to be sent in the specific contact
 
-### Profile
-
-- See personal data
-- Edit personal data [Name, safe places, photo]
-- Clean up the data of the whole application
-
 ### Settings
 
 - Select the sensibility of the alert service
@@ -63,6 +61,7 @@
 - Check out the policies of the application
 - Check out the application information
 - Check out the application help 
+- Clean up the data of the whole application
 
 ### Upcoming
 
@@ -72,6 +71,7 @@
 - Put all contacts of the police
 - Record for a period of time audio/video
 - Call the emergency services immediately
+
 <!-- Onboarding -->
 - Create an illustrated sequence of how the application works if it was entered for the first time (gifs/video)
 - Create guided user instructions if you enter for the first time
