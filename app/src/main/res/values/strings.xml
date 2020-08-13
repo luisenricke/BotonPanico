@@ -183,5 +183,10 @@
     <string name="profile">Profile</string>
 
     <string name="profile_photo_description">Profile image</string>
-    <!-- endregion -->
+    <!-- endregion Profile -->
+
+    <!-- region Settings -->
+    <string name="settings">Settings</string>
+    <!-- endregion Settings -->
+
 </resources>

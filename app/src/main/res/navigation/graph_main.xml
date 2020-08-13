@@ -9,7 +9,11 @@
             android:id="@+id/nav_home"
             android:name="com.luisenricke.botonpanico.presentation.HomeFragment"
             android:label="@string/home"
-            tools:layout="@layout/fragment_home" />
+            tools:layout="@layout/fragment_home">
+        <action
+                android:id="@+id/action_nav_home_to_settingsFragment"
+                app:destination="@id/settingsFragment" />
+    </fragment>
 
     <!-- region Contact -->
     <fragment
@@ -105,9 +109,20 @@
     <!-- endregion -->
 
     <fragment
+            android:id="@+id/nav_settings"
+            android:name="com.luisenricke.botonpanico.presentation.SettingsFragment"
+            android:label="fragment_settings"
+            tools:layout="@layout/fragment_settings" />
+
+    <fragment
             android:id="@+id/nav_profile"
             android:name="com.luisenricke.botonpanico.presentation.ProfileFragment"
             android:label="@string/profile"
             tools:layout="@layout/fragment_profile" />
+
+    <fragment
+            android:id="@+id/settingsFragment"
+            android:name="com.luisenricke.botonpanico.presentation.SettingsPreferenceFragment"
+            android:label="SettingsFragment" />
 
 </navigation>

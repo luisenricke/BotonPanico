@@ -175,9 +175,14 @@
 
     <!-- endregion Contacts -->
 
+    <!-- region Settings -->
+    <string name="settings">Configuraciones</string>
+    <!-- endregion Settings -->
+
     <!-- region Profile -->
     <string name="profile">Perfil</string>
 
     <string name="profile_photo_description">Imagen de perfil</string>
     <!-- endregion -->
+
 </resources>
