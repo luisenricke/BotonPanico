@@ -218,9 +218,11 @@
 
     <string name="settings_category_about">Acerca de</string>
 
+    <string name="settings_privacy_policy">Políticas de privacidad</string>
     <string name="settings_category_about_privacy_policy">Políticas de privacidad</string>
     <string name="settings_category_about_privacy_policy_image">Imagen de políticas de privacidad</string>
 
+    <string name="settings_terms_conditions">Terminos y condiciones</string>
     <string name="settings_category_about_terms_conditions">Terminos y condiciones</string>
     <string name="settings_category_about_terms_conditions_image">Imagen de terminos y condiciones</string>
 

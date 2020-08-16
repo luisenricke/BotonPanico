@@ -54,6 +54,17 @@ class SettingsFragment : BaseFragment() {
             bindLocation(this)
             bindMap(this)
             bindDefaultMessage(this)
+
+            layoutPrivacyPolicy.setOnClickListener {
+                val action = SettingsFragmentDirections.actionSettingsToPrivacyPolicy()
+                navController.navigate(action)
+            }
+
+            layoutTermsConditions.setOnClickListener {
+                val action = SettingsFragmentDirections.actionSettingsToTermsConditions()
+                navController.navigate(action)
+            }
+
         }
 
         return binding.root
