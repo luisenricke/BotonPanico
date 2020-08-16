@@ -177,6 +177,55 @@
 
     <!-- region Settings -->
     <string name="settings">Configuraciones</string>
+
+    <string name="settings_category_alert">Alerta</string>
+
+    <string name="settings_category_alert_sensitivity">Sensibilidad del sensor</string>
+    <string name="settings_category_alert_sensitivity_image">Imagen de la sensibilidad del sensor</string>
+
+    <string-array name="settings_category_alert_sensitivity_list">
+        <item>Bajo</item>
+        <item>Mediano</item>
+        <item>Alto</item>
+    </string-array>
+
+    <string name="settings_category_alert_location">Locación</string>
+    <string name="settings_category_alert_location_summary">Permitir enviar la locación en un mensaje</string>
+    <string name="settings_category_alert_location_image">Imagen de la locación</string>
+
+    <string name="settings_category_alert_map">Mapa</string>
+    <string name="settings_category_alert_map_image">Imagen de mapa</string>
+
+    <string name="settings_category_alert_vibration">Vibración</string>
+    <string name="settings_category_alert_vibration_summary">Permitir la vibración cuando se active la alerta</string>
+    <string name="settings_category_alert_vibration_image">Imagen de vibración</string>
+
+    <string name="settings_category_general">General</string>
+
+    <string name="settings_category_general_default_message">Mensaje por defecto</string>
+    <string name="settings_category_general_default_message_image">Imagen de mensaje por defecto</string>
+
+    <string name="settings_category_general_default_message_positive_button">Guardar</string>
+    <string name="settings_category_general_default_message_negative_button">Cancelar</string>
+
+    <string name="settings_category_general_default_message_text">Mensaje por defecto, no se puede dejar vacio</string>
+    <string name="settings_category_general_default_message_text_successfully">Se actualizo satisfactoriamente</string>
+    <string name="settings_category_general_default_message_text_declining">No se pudo actualizar</string>
+
+    <string name="settings_category_general_clean">Limpiar información</string>
+    <string name="settings_category_general_clean_summary">Eliminar toda la información de la aplicación</string>
+    <string name="settings_category_general_clean_image">Imagen de limpiar información</string>
+
+    <string name="settings_category_about">Acerca de</string>
+
+    <string name="settings_category_about_privacy_policy">Políticas de privacidad</string>
+    <string name="settings_category_about_privacy_policy_image">Imagen de políticas de privacidad</string>
+
+    <string name="settings_category_about_terms_conditions">Terminos y condiciones</string>
+    <string name="settings_category_about_terms_conditions_image">Imagen de terminos y condiciones</string>
+
+    <string name="settings_category_about_information">Información de la aplicación</string>
+    <string name="settings_category_about_information_image">Imagen de la información de la aplicación</string>
     <!-- endregion Settings -->
 
     <!-- region Profile -->

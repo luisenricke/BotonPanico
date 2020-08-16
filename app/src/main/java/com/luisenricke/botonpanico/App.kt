@@ -4,8 +4,6 @@ import android.app.Application
 import com.luisenricke.androidext.preferenceGet
 import com.luisenricke.androidext.preferenceSet
 import com.luisenricke.botonpanico.database.AppDatabase
-import com.luisenricke.botonpanico.database.entity.Alert
-import com.luisenricke.botonpanico.database.entity.Contact
 import timber.log.Timber
 
 class App : Application() {
@@ -18,14 +16,35 @@ class App : Application() {
         super.onCreate()
 
         initTimber()
-        initRoom()
         initDefaultValues()
     }
 
     private fun initDefaultValues() {
-        val alertMessage = preferenceGet(Constraint.ALERT_MESSAGE, String::class)
-        if (alertMessage == null || alertMessage.isEmpty()) {
-            preferenceSet(Constraint.ALERT_MESSAGE, getString(R.string.alert_message_default))
+        val alertMessage = preferenceGet(Constraint.ALERT_DEFAULT_MESSAGE, String::class)
+        if (alertMessage == null) {
+            preferenceSet(Constraint.ALERT_DEFAULT_MESSAGE, getString(R.string.alert_message_default))
+        }
+
+        val alertSensitivity = preferenceGet(Constraint.ALERT_SENSITIVITY, String::class)
+        if (alertSensitivity == null) {
+            val item = this.resources.getStringArray(R.array.settings_category_alert_sensitivity_list)[1]
+            preferenceSet(Constraint.ALERT_SENSITIVITY, item)
+        }
+
+        val alertVibration = preferenceGet(Constraint.ALERT_VIBRATION, Boolean::class)
+        if (alertVibration == null) {
+            preferenceSet(Constraint.ALERT_VIBRATION, true)
+        }
+
+        val alertLocation = preferenceGet(Constraint.ALERT_LOCATION, Boolean::class)
+        if (alertLocation == null) {
+            preferenceSet(Constraint.ALERT_LOCATION, true)
+        }
+
+        val alertMaps = preferenceGet(Constraint.ALERT_MAPS, String::class)
+        if (alertMaps == null) {
+            val item = this.resources.getStringArray(R.array.settings_category_alert_map_list)[0]
+            preferenceSet(Constraint.ALERT_MAPS, item)
         }
     }
 
@@ -36,10 +55,4 @@ class App : Application() {
         }
 
     }
-
-    private fun initRoom() {
-
-
-    }
-
 }
