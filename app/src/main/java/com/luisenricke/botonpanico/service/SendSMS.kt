@@ -69,14 +69,14 @@ class SendSMS private constructor(private val context: Context) {
     }
 
     private fun setGoogleMaps(latitude: Double, longitude: Double): String {
-        val latitudeFormat: Float = latitude.roundDecimals(LIMIT_DIGITS).toFloat()
-        val longitudeFormat: Float = longitude.roundDecimals(LIMIT_DIGITS).toFloat()
+        val latitudeFormat: Double = latitude.roundDecimals(LIMIT_DIGITS).toDouble()
+        val longitudeFormat: Double = longitude.roundDecimals(LIMIT_DIGITS).toDouble()
         return "http://maps.google.com/?q=$latitudeFormat,$longitudeFormat"
     }
 
     private fun setOpenStreetMap(latitude: Double, longitude: Double): String {
-        val latitudeFormat: Float = latitude.roundDecimals(LIMIT_DIGITS).toFloat()
-        val longitudeFormat: Float = longitude.roundDecimals(LIMIT_DIGITS).toFloat()
+        val latitudeFormat: Double = latitude.roundDecimals(LIMIT_DIGITS).toDouble()
+        val longitudeFormat: Double = longitude.roundDecimals(LIMIT_DIGITS).toDouble()
         return "http://m.osmtools.de/?mlat=${latitudeFormat}&mlon=${longitudeFormat}&icon=4&zoom=19&iframe=1"
     }
 }

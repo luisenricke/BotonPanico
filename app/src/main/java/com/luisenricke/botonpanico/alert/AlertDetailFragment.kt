@@ -10,6 +10,7 @@ import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.entity.AlertContact
 import com.luisenricke.botonpanico.databinding.FragmentAlertDetailBinding
 import com.luisenricke.kotlinext.formatDateTimeExtended
+import com.luisenricke.kotlinext.roundDecimals
 import timber.log.Timber
 
 class AlertDetailFragment : BaseFragment() {
@@ -54,8 +55,12 @@ class AlertDetailFragment : BaseFragment() {
 
             // region BindingViews
             lblDate.text = alert!!.timestamp.time.formatDateTimeExtended()
-            lblLocation.text = if (alert.latitude != 0.0 && alert.longitude != 0.0) {
-                "${alert.latitude}, ${alert.longitude}"
+
+            val latitude: Double = alert.latitude.roundDecimals(10).toDouble()
+            val longitude: Double = alert.longitude.roundDecimals(10).toDouble()
+
+            lblLocation.text = if (latitude != 0.0 && longitude != 0.0) {
+                "$latitude, $longitude"
             } else {
                 context.getString(R.string.alert_detail_location_not_available)
             }

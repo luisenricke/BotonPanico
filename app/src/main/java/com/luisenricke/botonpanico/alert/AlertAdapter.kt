@@ -10,6 +10,7 @@ import com.luisenricke.botonpanico.database.dao.AlertDAO
 import com.luisenricke.botonpanico.database.entity.Alert
 import com.luisenricke.botonpanico.databinding.ItemAlertBinding
 import com.luisenricke.kotlinext.formatDateTimeExtended
+import com.luisenricke.kotlinext.roundDecimals
 
 class AlertAdapter(val context: Context, val clickListener: (Alert) -> Unit, val longClickListener: (Alert) -> Unit) : RecyclerView.Adapter<AlertAdapter.ViewHolder>() {
 
@@ -36,8 +37,11 @@ class AlertAdapter(val context: Context, val clickListener: (Alert) -> Unit, val
                 lblId.text = alert.id.toString()
                 lblDate.text = alert.timestamp.time.formatDateTimeExtended()
 
-                lblLocation.text = if (alert.latitude != 0.0 && alert.longitude != 0.0) {
-                    "${alert.latitude}, ${alert.longitude}"
+                val latitude: Double = alert.latitude.roundDecimals(10).toDouble()
+                val longitude: Double = alert.longitude.roundDecimals(10).toDouble()
+
+                lblLocation.text = if (latitude != 0.0 && longitude != 0.0) {
+                    "$latitude, $longitude"
                 } else {
                     context.getString(R.string.alert_detail_location_not_available)
                 }
