@@ -134,4 +134,16 @@ object ContactUtils {
 
         return false
     }
+
+    fun hasMessageExceeded(context: Context, maxLength: Int, layout: TextInputLayout, editable: Editable): Boolean {
+        val message = editable.toString()
+
+        if (message.length > maxLength) {
+            layout.isErrorEnabled = true
+            return true
+        }else {
+            layout.isErrorEnabled = false
+            return false
+        }
+    }
 }

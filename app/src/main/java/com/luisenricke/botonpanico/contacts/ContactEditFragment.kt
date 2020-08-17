@@ -18,6 +18,7 @@ import com.luisenricke.botonpanico.service.SendSMS
 import com.luisenricke.kotlinext.formatPhone
 import com.luisenricke.kotlinext.removeWhiteSpaces
 import timber.log.Timber
+import com.luisenricke.botonpanico.contacts.ContactUtils as utils
 
 class ContactEditFragment : BaseFragment() {
 
@@ -85,15 +86,15 @@ class ContactEditFragment : BaseFragment() {
 
             //Name
             txtName.setOnFocusChangeListener { _, hasFocus ->
-                if (!hasFocus) ContactUtils.hasEmptyField(context, txtLayoutName, txtName.text!!)
+                if (!hasFocus) utils.hasEmptyField(context, txtLayoutName, txtName.text!!)
             }
 
             // Phone
             txtPhone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
             txtPhone.setOnFocusChangeListener { _, hasFocus ->
                 if (!hasFocus) {
-                    ContactUtils.hasEmptyField(context, txtLayoutPhone, txtPhone.text!!)
-                    ContactUtils.hasValidPhoneField(context, txtLayoutPhone, txtPhone.text!!)
+                    utils.hasEmptyField(context, txtLayoutPhone, txtPhone.text!!)
+                    utils.hasValidPhoneField(context, txtLayoutPhone, txtPhone.text!!)
                 }
             }
 
@@ -104,11 +105,12 @@ class ContactEditFragment : BaseFragment() {
 
             txtRelationship.setOnFocusChangeListener { v, hasFocus ->
                 if (hasFocus) getActivityContext().keyboard.hide(v)
-                else ContactUtils.hasEmptyField(context, txtLayoutRelationship, txtRelationship.text!!)
+                else utils.hasEmptyField(context, txtLayoutRelationship, txtRelationship.text!!)
             }
 
             // Message
-            txtLayoutMessage.counterMaxLength = SendSMS.getInstance(context).getMaxLength()
+            val smsMaxLength = SendSMS.getInstance(context).getMaxLength()
+            txtLayoutMessage.counterMaxLength = smsMaxLength
 
             // Switch
             val highlightedList = dao.countHighlighted()
@@ -122,13 +124,14 @@ class ContactEditFragment : BaseFragment() {
             }
 
             btnAccept.setOnClickListener {
-                val isNameEmpty = ContactUtils.hasEmptyField(context, txtLayoutName, txtName.text!!)
-                val isPhoneEmpty = ContactUtils.hasEmptyField(context, txtLayoutPhone, txtPhone.text!!)
-                val isRelationshipEmpty = ContactUtils.hasEmptyField(context, txtLayoutRelationship, txtRelationship.text!!)
-                val isPhoneValid = ContactUtils.hasValidPhoneField(context, txtLayoutPhone, txtPhone.text!!)
-                val isPhoneAlreadyExist = ContactUtils.hasPhoneAlreadyExist(context, dao, contact?.phone!!, txtLayoutPhone, txtPhone.text!!)
+                val isNameEmpty = utils.hasEmptyField(context, txtLayoutName, txtName.text!!)
+                val isPhoneEmpty = utils.hasEmptyField(context, txtLayoutPhone, txtPhone.text!!)
+                val isRelationshipEmpty = utils.hasEmptyField(context, txtLayoutRelationship, txtRelationship.text!!)
+                val isPhoneValid = utils.hasValidPhoneField(context, txtLayoutPhone, txtPhone.text!!)
+                val isPhoneAlreadyExist = utils.hasPhoneAlreadyExist(context, dao, contact?.phone!!, txtLayoutPhone, txtPhone.text!!)
+                val isMessageExceeded = utils.hasMessageExceeded(context, smsMaxLength, txtLayoutMessage, txtMessage.text!!)
 
-                if (!isNameEmpty && !isPhoneEmpty && !isRelationshipEmpty && !isPhoneValid && !isPhoneAlreadyExist) {
+                if (!isNameEmpty && !isPhoneEmpty && !isRelationshipEmpty && !isPhoneValid && !isPhoneAlreadyExist && !isMessageExceeded) {
                     val formatPhone = txtPhone.text.toString().removeWhiteSpaces().formatPhone("")
                     val name = txtName.text.toString()
 

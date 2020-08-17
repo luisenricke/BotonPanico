@@ -71,7 +71,8 @@ class ContactAddFragment : BaseFragment() {
             }
 
             // Message
-            txtLayoutMessage.counterMaxLength = SendSMS.getInstance(context).getMaxLength()
+            val smsMaxLength = SendSMS.getInstance(context).getMaxLength()
+            txtLayoutMessage.counterMaxLength = smsMaxLength
 
             // Switch
             val highlightedList = database.contactDAO().countHighlighted()
@@ -90,8 +91,9 @@ class ContactAddFragment : BaseFragment() {
                 val isEmptyRelationShip = utils.hasEmptyField(context, txtLayoutRelationship, txtRelationship.text!!)
                 val isPhoneValid = utils.hasValidPhoneField(context, txtLayoutPhone, txtPhone.text!!)
                 val isPhoneAlreadyExist = utils.hasPhoneAlreadyExist(context, database.contactDAO(), null, txtLayoutPhone, txtPhone.text!!)
+                val isMessageExceeded = utils.hasMessageExceeded(context, smsMaxLength, txtLayoutMessage, txtMessage.text!!)
 
-                if (!isEmptyName && !isEmptyPhone && !isEmptyRelationShip && !isPhoneValid && !isPhoneAlreadyExist) {
+                if (!isEmptyName && !isEmptyPhone && !isEmptyRelationShip && !isPhoneValid && !isPhoneAlreadyExist && !isMessageExceeded) {
                     val formatPhone = txtPhone.text.toString().removeWhiteSpaces().formatPhone("")
                     val name = txtName.text.toString()
 
