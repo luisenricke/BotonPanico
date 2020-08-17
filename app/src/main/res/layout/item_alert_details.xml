@@ -63,6 +63,34 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     tools:text="@string/alert_message_default" />
+
+            <!-- TODO uncomment when knows the state of sent message
+
+                <LinearLayout
+                        android:id="@+id/layout_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                            android:id="@+id/img_state"
+                            android:layout_width="@dimen/contact_detail_icon_size"
+                            android:layout_height="@dimen/contact_detail_icon_size"
+                            android:layout_marginEnd="@dimen/contact_detail_icon_margin_end"
+                            android:contentDescription="@string/contact_detail_img_type"
+                            android:src="@drawable/ic_baseline_send_24"
+                            android:tint="@color/colorPrimary" />
+
+                    <TextView
+                            android:id="@+id/lbl_state"
+                            style="@style/TextAppearance.MaterialComponents.Body1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="Enviado" />
+                </LinearLayout>
+        -->
         </LinearLayout>
 
         <TextView

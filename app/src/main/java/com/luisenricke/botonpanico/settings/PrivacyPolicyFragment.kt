@@ -23,9 +23,7 @@ class PrivacyPolicyFragment : BaseFragment() {
 
         // Toolbar
         getActivityContext().setSupportActionBar(binding.toolbar)
-        setupActionBar(
-                getActivityContext().supportActionBar, getString(R.string.settings_privacy_policy)
-        )
+        setupActionBar(getActivityContext().supportActionBar, getString(R.string.settings_privacy_policy))
 
         binding.webview.apply {
             val language = Locale.getDefault().language
