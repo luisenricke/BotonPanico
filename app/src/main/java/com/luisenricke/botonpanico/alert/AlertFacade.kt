@@ -2,35 +2,43 @@ package com.luisenricke.botonpanico.alert
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.location.Location
 import android.os.Looper
 import android.util.Log
 import com.luisenricke.androidext.preferenceGet
 import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.AppDatabase
+import com.luisenricke.botonpanico.database.dao.AlertContactDAO
+import com.luisenricke.botonpanico.database.dao.AlertDAO
+import com.luisenricke.botonpanico.database.dao.ContactDAO
 import com.luisenricke.botonpanico.database.entity.Alert
 import com.luisenricke.botonpanico.database.entity.AlertContact
+import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.service.LastLocation
+import com.luisenricke.botonpanico.service.SendSMS
 import com.luisenricke.botonpanico.service.Vibration
 
+@SuppressLint("LogNotTimber")
+@Suppress("unused")
 class AlertFacade {
 
     companion object {
         val TAG = AlertFacade::class.simpleName
     }
 
-    @SuppressLint("LogNotTimber")
-    fun sentMessage(context: Context) {
-        // TODO Join with coroutine of called
+    private lateinit var contactDao: ContactDAO
+    private lateinit var alertDAO: AlertDAO
+    private lateinit var alertContactDAO: AlertContactDAO
+
+    private var isLocationMessageEnable: Boolean = false
+    private var isVibrationEnable: Boolean = true
+
+    fun alertTriggeredBackgroundThreat(context: Context) { // TODO Join with coroutine of called
         Looper.prepare()
         val looper = Looper.myLooper()
 
-        val database = AppDatabase.getInstance(context)
-        val contactDao = database.contactDAO()
-        val alertDAO = database.alertDAO()
-        val alertContactDAO = database.alertContactDAO()
-
-        // Contacts
+        initDatabase(context)
         val contacts = contactDao.getHighlighted()
 
         if (contacts.isEmpty()) {
@@ -39,40 +47,75 @@ class AlertFacade {
             return
         }
 
-        val defaultMessage = context.preferenceGet(Constraint.ALERT_MESSAGE, String::class)
+        vibrate(context)
+        buildMessages(context, contacts, LastLocation.getInstance(context).getLocation())
+
+        looper?.quit()
+    }
+
+    fun alertTriggeredMainThreat(context: Context) {
+        initDatabase(context)
+        val contacts = contactDao.getHighlighted()
+
+        if (contacts.isEmpty()) {
+            Log.e(TAG, "Empty contacts")
+            return
+        }
+
+        vibrate(context)
+        buildMessages(context, contacts, LastLocation.getInstance(context).getLocation())
+    }
+
+    private fun initDatabase(context: Context) {
+        val database = AppDatabase.getInstance(context)
+        contactDao = database.contactDAO()
+        alertDAO = database.alertDAO()
+        alertContactDAO = database.alertContactDAO()
+    }
+
+    private fun vibrate(context: Context) {
+        isVibrationEnable = context.preferenceGet(Constraint.ALERT_VIBRATION, Boolean::class) ?: true
+        if (isVibrationEnable) {
+            Vibration.getInstance(context).vibrate()
+        }
+    }
+
+    private fun buildMessages(context: Context, contacts: List<Contact>, location: Location?) {
+        // configurations
+        isLocationMessageEnable = context.preferenceGet(Constraint.ALERT_LOCATION, Boolean::class) ?: false
+        val defaultMessage = context.preferenceGet(Constraint.ALERT_DEFAULT_MESSAGE, String::class)
                              ?: context.getString(R.string.alert_message_default)
 
-        // Vibration
-        Vibration.getInstance(context).vibrate()
-
-        // Location
-        val location = LastLocation.getInstance(context).getLocation()
-
-        // Build message to send
-        val alert = Alert(
-                latitude = location?.latitude ?: 0.0,
-                longitude = location?.longitude ?: 0.0,
-                type = "Sent"
-        )
-
+        // Save Alert
+        val alert = Alert(latitude = location?.latitude ?: 0.0, longitude = location?.longitude ?: 0.0)
         val idAlert = alertDAO.insert(alert)
+
+        // Save AlertContacts
         val alertContacts = arrayListOf<AlertContact>()
 
         for (contact in contacts) {
             val alertContact = AlertContact(alertId = idAlert, contactId = contact.id)
-            alertContact.messageSent = if (contact.message.isEmpty()) defaultMessage else contact.message
+
+            alertContact.messageSent = if (contact.message.isEmpty()) {
+                defaultMessage
+            } else {
+                contact.message
+            }
+
             alertContacts.add(alertContact)
         }
 
         alertContactDAO.inserts(alertContacts)
 
-        // Send message
+        // Send
         for (alertContact in alertContacts) {
             val contact = contactDao.get(alertContact.contactId)
-            //                SendSMS.getInstance(context).simpleMessage(contact!!.phone, alertContact.messageSent)
-            //                SendSMS.getInstance(context).locationMessage(contact!!.phone, location)
-        }
+            SendSMS.getInstance(context).simpleMessage(contact!!.phone, alertContact.messageSent)
 
-        looper?.quit()
+            if (isLocationMessageEnable) {
+                SendSMS.getInstance(context).locationMessage(contact.phone, location)
+            }
+        }
     }
+
 }

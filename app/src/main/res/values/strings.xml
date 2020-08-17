@@ -52,6 +52,8 @@
     <!-- endregion -->
 
     <!-- region Services -->
+    <string name="sms_service_location_null">The location was requested but could not be sent properly</string>
+
     <string name="location_service_provider_null">Doesn\'t match with any location provider</string>
     <string name="location_service_permission_denied">The permission of location is disable</string>
 

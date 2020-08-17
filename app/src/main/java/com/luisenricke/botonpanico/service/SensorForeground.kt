@@ -1,6 +1,5 @@
 package com.luisenricke.botonpanico.service
 
-import android.Manifest
 import android.app.*
 import android.app.NotificationManager.IMPORTANCE_HIGH
 import android.content.Context
@@ -13,8 +12,10 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import com.luisenricke.androidext.checkPermission
+import com.luisenricke.androidext.preferenceGet
+import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.MainActivity
+import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.alert.AlertFacade
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,8 +40,9 @@ class SensorForeground : Service(), SensorEventListener {
         private var isCycleTriggered = false
         private const val CYCLE_TIME_DURATION = 1000 * 5 // milliseconds * seconds
         private const val CYCLE_TIME_PAUSE = 200L // milliseconds
-        private const val CYCLE_ACTIVATION_LIMIT = 8
-        private const val X_AXIS_TRIGGER = 15f
+        private const val CYCLE_ACTIVATION_LIMIT = 5
+
+        private var sensitivity: Float = 15f
 
         @JvmStatic
         fun startService(context: Context) {
@@ -58,18 +60,21 @@ class SensorForeground : Service(), SensorEventListener {
     private var manager: SensorManager? = null
     private var accelerometer: Sensor? = null
 
-    private val isPermissionLocationEnable: Boolean
-        get() = checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-
-    private val isPermissionSendSMSEnable: Boolean
-        get() = checkPermission(Manifest.permission.SEND_SMS)
-
-    // region service
+    // region Service
     override fun onCreate() {
         super.onCreate()
         manager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = manager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         manager?.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+
+        val sensitivityPreference = preferenceGet(Constraint.ALERT_SENSITIVITY, String::class)
+        val sensitivities = resources.getStringArray(R.array.settings_category_alert_sensitivity_list)
+        sensitivity = when (sensitivityPreference) {
+            sensitivities[0] -> 13f
+            sensitivities[1] -> 15f
+            sensitivities[2] -> 17f
+            else             -> 14f
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -102,9 +107,9 @@ class SensorForeground : Service(), SensorEventListener {
                 //            .setContentText(input)
                 .setSmallIcon(NOTIFICATION_ICON).setContentIntent(pendingIntent).build()
     }
-    // endregion
+    // endregion Service
 
-    // region sensor
+    // region Sensor
     override fun onSensorChanged(event: SensorEvent?) {
         val gravity = floatArrayOf(0.0f, 0.0f, 0.0f)
         val acceleration = floatArrayOf(0.0f, 0.0f, 0.0f)
@@ -115,10 +120,9 @@ class SensorForeground : Service(), SensorEventListener {
                 val alpha = 0.8f
                 gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0]
                 acceleration[0] = event.values[0] - gravity[0]
-                // Timber.d("x: ${acceleration[1]}")
                 x = abs(acceleration[0])
 
-                if (x >= X_AXIS_TRIGGER && !isCycleTriggered) sensorCycleCheck(x)
+                if (x >= sensitivity && !isCycleTriggered) sensorCycleCheck(x)
             }
         }
     }
@@ -136,18 +140,18 @@ class SensorForeground : Service(), SensorEventListener {
             var totalElapsed = 0L
             while (totalElapsed < CYCLE_TIME_DURATION) {
                 totalElapsed = System.currentTimeMillis() - startTime
-                count = if (xAxis >= X_AXIS_TRIGGER) count + 1 else count
-                //                Timber.d("total: $totalElapsed, xAxis: $xAxis, count: $count")
+                count = if (xAxis >= sensitivity) count + 1 else count
+                // Timber.d("total: $totalElapsed, xAxis: $xAxis, count: $count")
                 delay(CYCLE_TIME_PAUSE)
             }
 
             if (count > CYCLE_ACTIVATION_LIMIT) {
-                AlertFacade().sentMessage(this@SensorForeground)
+                AlertFacade().alertTriggeredBackgroundThreat(this@SensorForeground)
             }
 
             isCycleTriggered = false
         }
 
     }
-    // endregion
+    // endregion Sensor
 }

@@ -48,6 +48,8 @@
     <!-- endregion -->
 
     <!-- region Services -->
+    <string name="sms_service_location_null">Se solicito la ubicación pero no se pudo enviar correctamente</string>
+
     <string name="location_service_provider_null">No coincide con ningún proveedor de localización</string>
     <string name="location_service_permission_denied">el permiso de la ubicación está deshabilitado</string>
 
