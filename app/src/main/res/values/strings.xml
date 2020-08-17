@@ -237,6 +237,12 @@
 
     <string name="settings_category_about_information">Info of the app</string>
     <string name="settings_category_about_information_image">Image of the info of the application</string>
+
+    <string name="settings_info">Info of the app</string>
+    <string name="settings_info_description_title">Description</string>
+    <string name="settings_info_description_content">The project objectives are to provide people with tools that allow them not only to report their situation in order to find help, but also to prevent acts of violence. </string>
+
+    <string name="settings_info_version_title">Version</string>
     <!-- endregion Settings -->
 
     <!-- region Profile -->

@@ -226,8 +226,15 @@
     <string name="settings_category_about_terms_conditions">Terminos y condiciones</string>
     <string name="settings_category_about_terms_conditions_image">Imagen de terminos y condiciones</string>
 
+
     <string name="settings_category_about_information">Información de la aplicación</string>
     <string name="settings_category_about_information_image">Imagen de la información de la aplicación</string>
+
+    <string name="settings_info">Información de la aplicación</string>
+    <string name="settings_info_description_title">Descripción</string>
+    <string name="settings_info_description_content">El proyecto tiene por objetivo dotar a las personas de herramientas que les permitan no sólo reportar su situación para recibir ayuda, sino también para prevenir hechos de violencia. </string>
+
+    <string name="settings_info_version_title">Versión</string>
     <!-- endregion Settings -->
 
     <!-- region Profile -->

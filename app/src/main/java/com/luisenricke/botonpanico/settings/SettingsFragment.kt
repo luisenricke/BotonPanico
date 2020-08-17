@@ -65,6 +65,11 @@ class SettingsFragment : BaseFragment() {
                 navController.navigate(action)
             }
 
+            layoutInformation.setOnClickListener {
+                val action = SettingsFragmentDirections.actionSettingsToInfo()
+                navController.navigate(action)
+            }
+
         }
 
         return binding.root

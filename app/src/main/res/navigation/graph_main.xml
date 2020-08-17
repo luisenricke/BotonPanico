@@ -114,9 +114,14 @@
         <action
                 android:id="@+id/action_settings_to_privacy_policy"
                 app:destination="@id/privacyPolicyFragment" />
+
         <action
             android:id="@+id/action_settings_to_terms_conditions"
             app:destination="@id/termsConditionsFragment" />
+
+        <action
+                android:id="@+id/action_settings_to_info"
+                app:destination="@id/infoFragment" />
     </fragment>
 
     <fragment
@@ -131,6 +136,11 @@
         android:label="@string/settings_terms_conditions"
         tools:layout="@layout/fragment_terms_conditions" />
 
+    <fragment
+            android:id="@+id/infoFragment"
+            android:name="com.luisenricke.botonpanico.settings.InfoFragment"
+            android:label="@string/settings_info"
+            tools:layout="@layout/fragment_info" />
     <!-- endregion Settings -->
 
     <fragment
@@ -138,6 +148,5 @@
             android:name="com.luisenricke.botonpanico.presentation.ProfileFragment"
             android:label="@string/profile"
             tools:layout="@layout/fragment_profile" />
-
 
 </navigation>
