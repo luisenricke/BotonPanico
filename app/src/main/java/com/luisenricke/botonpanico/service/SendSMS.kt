@@ -44,11 +44,11 @@ class SendSMS private constructor(private val context: Context) {
     fun locationMessage(phone: String, location: Location?) {
         if (location == null) return
 
-        val maps = context.resources.getStringArray(R.array.settings_category_alert_map_list)
-        val mapSelected = context.preferenceGet(Constraint.ALERT_MAPS, String::class) ?: maps[1]
-
         val latitude = location.latitude
         val longitude = location.longitude
+
+        val maps = context.resources.getStringArray(R.array.settings_category_alert_map_list)
+        val mapSelected = context.preferenceGet(Constraint.ALERT_MAPS, String::class) ?: maps[0]
 
         val message = when (mapSelected) {
             maps[0] -> "$pin: ${setOpenStreetMap(latitude, longitude)}"

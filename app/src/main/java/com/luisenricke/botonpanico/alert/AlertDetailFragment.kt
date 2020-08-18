@@ -5,12 +5,16 @@ import android.content.Context
 import android.os.Bundle
 import android.view.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.luisenricke.androidext.intentBrowser
+import com.luisenricke.androidext.preferenceGet
 import com.luisenricke.androidext.toastLong
 import com.luisenricke.botonpanico.BaseFragment
+import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.entity.AlertContact
 import com.luisenricke.botonpanico.databinding.FragmentAlertDetailBinding
 import com.luisenricke.botonpanico.service.Connectivity
+import com.luisenricke.botonpanico.service.SendSMS
 import com.luisenricke.kotlinext.formatDateTimeExtended
 import com.luisenricke.kotlinext.roundDecimals
 import kotlinx.coroutines.CoroutineScope
@@ -72,6 +76,20 @@ class AlertDetailFragment : BaseFragment() {
                 context.getString(R.string.alert_detail_location_not_available)
             }
 
+            lblLocation.setOnClickListener {
+                val maps = context.resources.getStringArray(R.array.settings_category_alert_map_list)
+
+                val url = when (context.preferenceGet(Constraint.ALERT_MAPS, String::class) ?: maps[0]) {
+                    maps[0] -> setOpenStreetMap(latitude, longitude)
+                    maps[1] -> setGoogleMaps(latitude, longitude)
+                    else    -> ""
+                }
+
+                if (url.isNotEmpty()) {
+                    binding.root.context.intentBrowser(url)
+                }
+            }
+
             // WebView
             CoroutineScope(Dispatchers.IO).launch {
                 val isConnect = Connectivity.getInstance(root.context).isNetworkAvailableSocket()
@@ -95,7 +113,12 @@ class AlertDetailFragment : BaseFragment() {
                 isVerticalScrollBarEnabled = false
                 isHorizontalScrollBarEnabled = false
 
-                loadUrl(openStreetMap(latitude, longitude))
+                if (latitude != 0.0 && longitude != 0.0) {
+                    visibility = View.VISIBLE
+                    loadUrl(setMap(latitude, longitude))
+                } else {
+                    visibility = View.GONE
+                }
             }
 
             // RecyclerView
@@ -198,10 +221,22 @@ class AlertDetailFragment : BaseFragment() {
         }
     }
 
-    private fun openStreetMap(latitude: Double, longitude: Double): String {
+    private fun setMap(latitude: Double, longitude: Double): String {
         val latitudeFormat: Double = latitude.roundDecimals(10).toDouble()
         val longitudeFormat: Double = longitude.roundDecimals(10).toDouble()
         return "http://m.osmtools.de/?mlat=${latitudeFormat}&mlon=${longitudeFormat}&icon=4&zoom=15&iframe=1"
+    }
+
+    private fun setGoogleMaps(latitude: Double, longitude: Double): String {
+        val latitudeFormat: Double = latitude.roundDecimals(SendSMS.LIMIT_DIGITS).toDouble()
+        val longitudeFormat: Double = longitude.roundDecimals(SendSMS.LIMIT_DIGITS).toDouble()
+        return "http://maps.google.com/?q=$latitudeFormat,$longitudeFormat"
+    }
+
+    private fun setOpenStreetMap(latitude: Double, longitude: Double): String {
+        val latitudeFormat: Double = latitude.roundDecimals(SendSMS.LIMIT_DIGITS).toDouble()
+        val longitudeFormat: Double = longitude.roundDecimals(SendSMS.LIMIT_DIGITS).toDouble()
+        return "http://m.osmtools.de/?mlat=${latitudeFormat}&mlon=${longitudeFormat}&icon=4&zoom=19&iframe=1"
     }
 }
 
