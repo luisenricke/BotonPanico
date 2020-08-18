@@ -73,4 +73,11 @@ fun Context.intentSettings() {
 fun Context.intentEnableLocation() {
     this.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
 }
+
+@Suppress("unused")
+fun Context.intentBrowser(url: String) {
+    val uri = Uri.parse(url)
+    val intent = Intent(Intent.ACTION_VIEW, uri)
+    this.startActivity(intent)
+}
 // endregion
