@@ -14,6 +14,7 @@ object Constraint {
 
     const val VERSION = "0.3.2"
 
+    const val ALERT_SERVICE = "AlertService"
     const val ALERT_DEFAULT_MESSAGE = "AlertDefaultMessage"
     const val ALERT_SENSITIVITY = "AlertSensitivity"
     const val ALERT_VIBRATION = "AlertVibration"

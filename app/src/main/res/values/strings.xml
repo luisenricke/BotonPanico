@@ -60,11 +60,13 @@
     <string name="vibrator_service_doesnt_available">Vibrator doesn\'t available</string>
 
     <string name="keyboard_service_hide">Keyboard hides from</string>
+
+    <string name="alert_service_active">Alert service active</string>
+    <string name="alert_service_deactivate">Alert service deactivate</string>
     <!-- endregion -->
 
     <!-- region Home -->
     <string name="home_gps_request">To get the location when the alert is activated it is necessary to have the GPS active, without it only the help message can be sent</string>
-
     <!-- endregion Home -->
 
     <!-- region Alerts -->

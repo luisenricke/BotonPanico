@@ -46,6 +46,11 @@ class App : Application() {
             val item = this.resources.getStringArray(R.array.settings_category_alert_map_list)[0]
             preferenceSet(Constraint.ALERT_MAPS, item)
         }
+
+        val alertService = preferenceGet(Constraint.ALERT_SERVICE, Boolean::class)
+        if (alertService == null) {
+            preferenceSet(Constraint.ALERT_SERVICE, false)
+        }
     }
 
     private fun initTimber() {

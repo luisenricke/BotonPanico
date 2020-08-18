@@ -61,6 +61,9 @@
     <string name="vibrator_service_doesnt_available">El vibrador no está disponible</string>
 
     <string name="keyboard_service_hide">El teclado se esconde del</string>
+
+    <string name="alert_service_active">Servicio de alerta activo</string>
+    <string name="alert_service_deactivate">Servicio de alerta desactivado</string>
     <!-- endregion -->
 
     <!-- region Alerts -->
