@@ -9,6 +9,7 @@ import android.location.LocationManager
 import android.os.Bundle
 import com.luisenricke.androidext.getBestProvider
 import com.luisenricke.androidext.checkPermission
+import com.luisenricke.androidext.isGpsEnable
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.SingletonHolder
 import timber.log.Timber
@@ -31,6 +32,9 @@ class LastLocation private constructor(private val context: Context) {
 
     private val isPermissionEnable: Boolean
         get() = context.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+
+    val isGpsEnable: Boolean
+        get() = manager.isGpsEnable()
 
     private val listener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location?) {}

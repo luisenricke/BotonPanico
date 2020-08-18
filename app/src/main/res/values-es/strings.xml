@@ -47,6 +47,11 @@
     <string name="permission_message_read_contacts_denied">Sin el permiso no se puedrá podrá exportar los contactos</string>
     <!-- endregion -->
 
+    <!-- region Home -->
+    <string name="home_gps_request">Para obtener la ubicación cuando se active la alerta es necesario tener activo el GPS, sin este solo se podrá enviar el mensaje</string>
+
+    <!-- endregion Home -->
+
     <!-- region Services -->
     <string name="sms_service_location_null">Se solicito la ubicación pero no se pudo enviar correctamente</string>
 
