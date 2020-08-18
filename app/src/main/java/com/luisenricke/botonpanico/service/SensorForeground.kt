@@ -13,6 +13,7 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.luisenricke.androidext.preferenceGet
+import com.luisenricke.androidext.preferenceSet
 import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.MainActivity
 import com.luisenricke.botonpanico.R
@@ -21,6 +22,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import java.lang.Exception
 import kotlin.math.abs
 
 // https://expertise.jetruby.com/how-to-implement-motion-sensor-in-a-kotlin-app-b70db1b5b8e5
@@ -146,7 +149,11 @@ class SensorForeground : Service(), SensorEventListener {
             }
 
             if (count > CYCLE_ACTIVATION_LIMIT) {
-                AlertFacade().alertTriggeredBackgroundThreat(this@SensorForeground)
+                try {
+                    AlertFacade().alertTriggeredBackgroundThreat(this@SensorForeground)
+                } catch (e: Exception) { // TODO Check who is the correct exception
+                    Timber.e("Exceeded request")
+                }
             }
 
             isCycleTriggered = false
