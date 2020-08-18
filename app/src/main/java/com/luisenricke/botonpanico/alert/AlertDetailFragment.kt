@@ -1,5 +1,6 @@
 package com.luisenricke.botonpanico.alert
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.*
@@ -9,8 +10,13 @@ import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.R
 import com.luisenricke.botonpanico.database.entity.AlertContact
 import com.luisenricke.botonpanico.databinding.FragmentAlertDetailBinding
+import com.luisenricke.botonpanico.service.Connectivity
 import com.luisenricke.kotlinext.formatDateTimeExtended
 import com.luisenricke.kotlinext.roundDecimals
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class AlertDetailFragment : BaseFragment() {
@@ -33,6 +39,7 @@ class AlertDetailFragment : BaseFragment() {
         getActivityContext().setBottomNavigationViewVisibility(false)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentAlertDetailBinding.inflate(inflater, container, false)
 
@@ -65,6 +72,32 @@ class AlertDetailFragment : BaseFragment() {
                 context.getString(R.string.alert_detail_location_not_available)
             }
 
+            // WebView
+            CoroutineScope(Dispatchers.IO).launch {
+                val isConnect = Connectivity.getInstance(root.context).isNetworkAvailableSocket()
+
+                withContext(Dispatchers.Main) {
+                    webview.visibility = if (isConnect) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+                }
+            }
+
+            webview.apply {
+                val settings = settings
+                // settings.setSupportZoom(true)
+                settings.builtInZoomControls = true
+                settings.displayZoomControls = false
+                settings.javaScriptEnabled = true
+
+                isVerticalScrollBarEnabled = false
+                isHorizontalScrollBarEnabled = false
+
+                loadUrl(openStreetMap(latitude, longitude))
+            }
+
             // RecyclerView
             recyclerAlertContact.apply {
                 setHasFixedSize(true)
@@ -85,7 +118,7 @@ class AlertDetailFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home      -> {
+            android.R.id.home -> {
                 navController.popBackStack()
                 true
             }
@@ -163,6 +196,12 @@ class AlertDetailFragment : BaseFragment() {
 
             alertDetailAdapter.update()
         }
+    }
+
+    private fun openStreetMap(latitude: Double, longitude: Double): String {
+        val latitudeFormat: Double = latitude.roundDecimals(10).toDouble()
+        val longitudeFormat: Double = longitude.roundDecimals(10).toDouble()
+        return "http://m.osmtools.de/?mlat=${latitudeFormat}&mlon=${longitudeFormat}&icon=4&zoom=15&iframe=1"
     }
 }
 
