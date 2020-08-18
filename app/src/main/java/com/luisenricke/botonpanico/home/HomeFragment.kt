@@ -68,7 +68,7 @@ class HomeFragment : BaseFragment() {
                     SensorForeground.startService(getActivityContext())
 
                     if (!LastLocation.getInstance(getActivityContext()).isGpsEnable) {
-                         toastLong(getString(R.string.home_gps_request))
+                        toastLong(getString(R.string.home_gps_request))
                     }
                 } else {
                     Timber.e("${getString(R.string.on_request_permissions_result_denied_permissions)} ALERT")
@@ -86,6 +86,11 @@ class HomeFragment : BaseFragment() {
         alertStateView(isAlertServiceEnable!!, bind.btnAlert)
 
         bind.btnAlert.setOnClickListener {
+            if (database.contactDAO().countHighlighted() <= 0) {
+                toastLong(getString(R.string.home_contacts_highlighted_empty))
+                return@setOnClickListener
+            }
+
             val reverse = !isAlertServiceEnable!!
             isAlertServiceEnable = reverse
             alertStateView(reverse, bind.btnAlert)
