@@ -51,6 +51,12 @@
     <string name="home_gps_request">Para obtener la ubicación cuando se active la alerta es necesario tener activo el GPS, sin este solo se podrá enviar el mensaje</string>
 
     <string name="home_contacts_highlighted_empty">Es necesario como mínimo un contacto marcado para poder enviar la alerta</string>
+
+    <string name="home_quick_alert_button_active">Cancelar</string>
+    <string name="home_quick_alert_button_deactivate">Alerta</string>
+
+    <string name="home_quick_alert_content_active">¿Deseas cancelar la alerta?</string>
+    <string name="home_quick_alert_content_deactivate">¿Te sientes en peligro? Presiona el boton</string>
     <!-- endregion Home -->
 
     <!-- region Services -->

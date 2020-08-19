@@ -6,25 +6,32 @@
         android:layout_height="match_parent"
         tools:context=".home.HomeFragment">
 
+    <TextView
+            android:id="@+id/lbl_alert_message"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal"
+            android:text="¿Te sientes en peligro? Presiona el boton "
+            app:layout_constraintBottom_toTopOf="@id/btn_quick"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"
+            app:layout_constraintStart_toStartOf="@id/guideline_left" />
 
-    <Button
-            android:id="@+id/btn_start"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/btn_quick"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start service"
+            android:text="Alerta"
+            android:textColor="#fff"
+            app:backgroundTint="#FFB74D"
+            app:icon="@drawable/ic_baseline_report_problem_24"
+            app:iconTint="#fff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-            android:id="@+id/btn_stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stop service"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_start" />
 
     <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_alert"

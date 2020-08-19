@@ -69,6 +69,12 @@
     <string name="home_gps_request">To get the location when the alert is activated it is necessary to have the GPS active, without it only the help message can be sent</string>
 
     <string name="home_contacts_highlighted_empty">At least one highlighted contact is required to send the alert</string>
+
+    <string name="home_quick_alert_button_active">Cancel</string>
+    <string name="home_quick_alert_button_deactivate">Alert</string>
+
+    <string name="home_quick_alert_content_active">Do you want to cancel the alert?</string>
+    <string name="home_quick_alert_content_deactivate">Do you feel in danger? Press the button</string>
     <!-- endregion Home -->
 
     <!-- region Alerts -->

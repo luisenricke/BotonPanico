@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.luisenricke.androidext.*
 import com.luisenricke.botonpanico.BaseFragment
 import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
+import com.luisenricke.botonpanico.alert.AlertFacade
 import com.luisenricke.botonpanico.databinding.FragmentHomeBinding
 import com.luisenricke.botonpanico.service.LastLocation
 import com.luisenricke.botonpanico.service.SensorForeground
@@ -28,17 +30,45 @@ class HomeFragment : BaseFragment() {
         get() = preferenceGet(Constraint.ALERT_SERVICE, Boolean::class)
         set(value) = preferenceSet(Constraint.ALERT_SERVICE, value!!)
 
+    private var isQuickAlertActivated = false
+    private var isQuickAlertSent = false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        val timer = object : CountDownTimer(5000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                binding.lblAlertMessage.text = "${binding.root.context.getString(R.string.home_quick_alert_content_active)} \n ${millisUntilFinished / 1000}"
+            }
+
+            override fun onFinish() {
+                binding.btnQuick.icon = binding.root.context.getDrawable(R.drawable.ic_baseline_report_problem_24)
+                binding.btnQuick.text = binding.root.context.getString(R.string.home_quick_alert_button_deactivate)
+                binding.lblAlertMessage.text = binding.root.context.getString(R.string.home_quick_alert_content_deactivate)
+                isQuickAlertActivated = false
+
+                if (isQuickAlertSent) {
+                    requestAlertService2(binding.root.context)
+                    isQuickAlertSent = false
+                }
+            }
+        }
+
         binding.apply {
 
-            Timber.i("isAlertService: $isAlertServiceEnable")
-
-            btnStart.setOnClickListener {
-
-                //                val alertFacade = AlertFacade()
-                //                alertFacade.alertTriggeredMainThreat(getActivityContext())
+            btnQuick.setOnClickListener {
+                if (!isQuickAlertActivated) {
+                    isQuickAlertActivated = true
+                    isQuickAlertSent = true
+                    timer.start()
+                    btnQuick.icon = root.context.getDrawable(R.drawable.ic_baseline_close_24)
+                    btnQuick.text = root.context.getString(R.string.home_quick_alert_button_active)
+                } else {
+                    Timber.i("End")
+                    isQuickAlertSent = false
+                    timer.onFinish()
+                    timer.cancel()
+                }
             }
 
             bindAlert(this)
@@ -111,6 +141,37 @@ class HomeFragment : BaseFragment() {
 
         if (checkPermissions(permissions)) {
             SensorForeground.startService(getActivityContext())
+
+            if (!LastLocation.getInstance(context).isGpsEnable) {
+                toastLong(getString(R.string.home_gps_request))
+            }
+
+        } else {
+            requestCriticalPermissions(permissions, Constraint.PERMISSIONS_ALERT_SERVICE, message)
+        }
+    }
+
+    private fun requestAlertService2(context: Context) {
+
+        if (database.contactDAO().countHighlighted() <= 0) {
+            toastLong(getString(R.string.home_contacts_highlighted_empty))
+            return
+        }
+
+        val permissions = arrayListOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS)
+
+        val message = PermissionMessage(
+                context = getActivityContext(),
+                title = getString(R.string.permission_message_alert_title),
+                message = getString(R.string.permission_message_alert_message),
+                positiveButton = getString(R.string.permission_message_alert_positive_button),
+                negativeButton = getString(R.string.permission_message_alert_negative_button),
+                denied = getString(R.string.permission_message_alert_denied)
+        )
+
+        if (checkPermissions(permissions)) {
+            val alertFacade = AlertFacade()
+            alertFacade.alertTriggeredMainThreat(context)
 
             if (!LastLocation.getInstance(context).isGpsEnable) {
                 toastLong(getString(R.string.home_gps_request))
