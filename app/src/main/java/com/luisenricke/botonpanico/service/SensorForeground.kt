@@ -35,10 +35,11 @@ class SensorForeground : Service(), SensorEventListener {
     companion object {
         private const val SERVICE_ID = 1010
 
-        private const val CHANNEL_ID = "SensorForegroundChannelID"
-        private const val CHANNEL_NAME = "SensorForeground Notification Channel"
-        private const val NOTIFICATION_TITLE = "SensorForeground"
-        private const val NOTIFICATION_ICON = android.R.drawable.ic_menu_compass
+        private const val CHANNEL_ID = "SensorAlertChannelID"
+        private const val CHANNEL_NAME = "SensorAlert Notification Channel"
+        private const val NOTIFICATION_TITLE = R.string.alert_service_notification_title
+        private const val NOTIFICATION_CONTENT = R.string.alert_service_notification_content
+        private const val NOTIFICATION_ICON = R.drawable.ic_siren
 
         private var isCycleTriggered = false
         private const val CYCLE_TIME_DURATION = 1000 * 5 // milliseconds * seconds
@@ -106,9 +107,13 @@ class SensorForeground : Service(), SensorEventListener {
         val intent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
 
-        return NotificationCompat.Builder(this, CHANNEL_ID).setContentTitle(NOTIFICATION_TITLE)
-                //            .setContentText(input)
-                .setSmallIcon(NOTIFICATION_ICON).setContentIntent(pendingIntent).build()
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(getString(NOTIFICATION_TITLE))
+                .setContentText(getString(NOTIFICATION_CONTENT))
+                .setSmallIcon(NOTIFICATION_ICON)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build()
     }
     // endregion Service
 

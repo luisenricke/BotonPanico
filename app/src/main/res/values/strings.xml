@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Boton Panico</string>
+    <string name="app_name">Botón de pánico</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -63,6 +63,9 @@
 
     <string name="alert_service_active">Alert service active</string>
     <string name="alert_service_deactivate">Alert service deactivate</string>
+
+    <string name="alert_service_notification_title">Alert Service</string>
+    <string name="alert_service_notification_content">Shake your phone horizontally</string>
     <!-- endregion -->
 
     <!-- region Home -->

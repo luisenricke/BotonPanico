@@ -71,6 +71,9 @@
 
     <string name="alert_service_active">Servicio de alerta activo</string>
     <string name="alert_service_deactivate">Servicio de alerta desactivado</string>
+
+    <string name="alert_service_notification_title">Servicio de alerta</string>
+    <string name="alert_service_notification_content">Agita el celular horizontalmente</string>
     <!-- endregion -->
 
     <!-- region Alerts -->
