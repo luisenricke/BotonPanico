@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.pm.PackageManager.PERMISSION_GRANTED
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.requestPermissions
@@ -21,7 +20,7 @@ fun AppCompatActivity.requestPermission(permission: String, requestCode: Int, de
     val shouldAskPermission = shouldAskPermission(this, permission, requestCode)
 
     when {
-        checkPermission(permission) -> Log.v(TAG, "${getString(R.string.permission_granted)} $requestCode")
+        checkPermission(permission) -> Unit // Log.v(TAG, "${getString(R.string.permission_granted)} $requestCode")
         shouldAskPermission         -> requestPermissions(this, arrayOf(permission), requestCode)
         else                        -> if (displayMessage) toastLong(deniedMessage)
     }
@@ -32,7 +31,7 @@ fun AppCompatActivity.requestCriticalPermission(permission: String, requestCode:
     val shouldAskPermission = shouldAskPermission(this, permission, requestCode)
 
     when {
-        checkPermission(permission) -> Log.v(TAG, "${getString(R.string.permission_granted)} $requestCode")
+        checkPermission(permission) -> Unit //Log.v(TAG, "${getString(R.string.permission_granted)} $requestCode")
         shouldAskPermission         -> requestPermissions(this, arrayOf(permission), requestCode)
         else                        -> alertDialog(this, permissionMessage)
     }
@@ -43,7 +42,7 @@ fun AppCompatActivity.requestPermissions(permissions: MutableList<String>, reque
     val shouldAskPermissions = shouldAskPermissions(this, permissions, requestCode)
 
     when {
-        checkPermissions(permissions) -> Log.v(TAG, "${getString(R.string.permissions_granted)} $requestCode")
+        checkPermissions(permissions) -> Unit //Log.v(TAG, "${getString(R.string.permissions_granted)} $requestCode")
         shouldAskPermissions          -> requestPermissions(this, permissions.toTypedArray(), requestCode)
         else                          -> if (displayMessage) toastLong(deniedMessage)
     }
@@ -54,7 +53,7 @@ fun AppCompatActivity.requestCriticalPermissions(permissions: MutableList<String
     val shouldAskPermissions = shouldAskPermissions(this, permissions, requestCode)
 
     when {
-        checkPermissions(permissions) -> Log.v(TAG, "${getString(R.string.permissions_granted)} $requestCode")
+        checkPermissions(permissions) -> Unit //Log.v(TAG, "${getString(R.string.permissions_granted)} $requestCode")
         shouldAskPermissions          -> requestPermissions(this, permissions.toTypedArray(), requestCode)
         else                          -> alertDialog(this, permissionMessage)
     }
@@ -72,11 +71,11 @@ fun AppCompatActivity.checkPermissions(permissions: MutableList<String>): Boolea
 // region fragment
 @Suppress("unused")
 fun Fragment.requestPermission(permission: String, requestCode: Int, deniedMessage: String, displayMessage: Boolean = false) {
-    val activity = this.activity!!
+    val activity = this.requireActivity()
     val shouldAskPermission = shouldAskPermission(activity, permission, requestCode)
 
     when {
-        checkPermission(permission) -> Log.v(TAG, "${getString(R.string.permission_granted)} $requestCode")
+        checkPermission(permission) -> Unit //Log.v(TAG, "${getString(R.string.permission_granted)} $requestCode")
         shouldAskPermission         -> requestPermissions(arrayOf(permission), requestCode)
         else                        -> if (displayMessage) toastLong(deniedMessage)
     }
@@ -84,11 +83,11 @@ fun Fragment.requestPermission(permission: String, requestCode: Int, deniedMessa
 
 @Suppress("unused")
 fun Fragment.requestCriticalPermission(permission: String, requestCode: Int, permissionMessage: PermissionMessage) {
-    val activity = this.activity!!
+    val activity = this.requireActivity()
     val shouldAskPermission = shouldAskPermission(activity, permission, requestCode)
 
     when {
-        checkPermission(permission) -> Log.v(TAG, "${getString(R.string.permission_granted)} $requestCode")
+        checkPermission(permission) -> Unit //Log.v(TAG, "${getString(R.string.permission_granted)} $requestCode")
         shouldAskPermission         -> requestPermissions(arrayOf(permission), requestCode)
         else                        -> alertDialog(this.requireContext(), permissionMessage)
     }
@@ -96,11 +95,11 @@ fun Fragment.requestCriticalPermission(permission: String, requestCode: Int, per
 
 @Suppress("unused")
 fun Fragment.requestPermissions(permissions: MutableList<String>, requestCode: Int, deniedMessage: String, displayMessage: Boolean = false) {
-    val activity = this.activity!!
+    val activity = this.requireActivity()
     val shouldAskPermissions = shouldAskPermissions(activity, permissions, requestCode)
 
     when {
-        checkPermissions(permissions) -> Log.v(TAG, "${getString(R.string.permissions_granted)} $requestCode")
+        checkPermissions(permissions) -> Unit //Log.v(TAG, "${getString(R.string.permissions_granted)} $requestCode")
         shouldAskPermissions          -> requestPermissions(permissions.toTypedArray(), requestCode)
         else                          -> if (displayMessage) toastLong(deniedMessage)
     }
@@ -108,11 +107,11 @@ fun Fragment.requestPermissions(permissions: MutableList<String>, requestCode: I
 
 @Suppress("unused")
 fun Fragment.requestCriticalPermissions(permissions: MutableList<String>, requestCode: Int, permissionMessage: PermissionMessage) {
-    val activity = this.activity!!
+    val activity = this.requireActivity()
     val shouldAskPermissions = shouldAskPermissions(activity, permissions, requestCode)
 
     when {
-        checkPermissions(permissions) -> Log.v(TAG, "${getString(R.string.permissions_granted)} $requestCode")
+        checkPermissions(permissions) -> Unit //Log.v(TAG, "${getString(R.string.permissions_granted)} $requestCode")
         shouldAskPermissions          -> requestPermissions(permissions.toTypedArray(), requestCode)
         else                          -> alertDialog(this.requireContext(), permissionMessage)
     }
@@ -120,11 +119,11 @@ fun Fragment.requestCriticalPermissions(permissions: MutableList<String>, reques
 
 @Suppress("unused")
 fun Fragment.checkPermission(permission: String): Boolean =
-        checkSelfPermission(this.context!!, permission) == PERMISSION_GRANTED
+        checkSelfPermission(this.requireContext(), permission) == PERMISSION_GRANTED
 
 @Suppress("unused")
 fun Fragment.checkPermissions(permissions: MutableList<String>): Boolean =
-        permissions.all { checkSelfPermission(this.context!!, it) == PERMISSION_GRANTED }
+        permissions.all { checkSelfPermission(this.requireContext(), it) == PERMISSION_GRANTED }
 // endregion
 
 // region context

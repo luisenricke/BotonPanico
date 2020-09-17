@@ -3,7 +3,6 @@ package com.luisenricke.botonpanico.service
 import android.content.Context
 import android.location.Location
 import android.telephony.SmsManager
-import android.util.Log
 import com.luisenricke.androidext.preferenceGet
 import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
@@ -22,8 +21,6 @@ import com.luisenricke.kotlinext.roundDecimals
 class SendSMS private constructor(private val context: Context) {
 
     companion object : SingletonHolder<SendSMS, Context>(::SendSMS) {
-        val TAG = SendSMS::class.simpleName
-
         @JvmStatic
         var pin = String(Character.toChars(0x1F4CD))
         const val LIMIT_DIGITS = 10
@@ -56,7 +53,7 @@ class SendSMS private constructor(private val context: Context) {
             else    -> context.getString(R.string.sms_service_location_null)
         }
 
-        // Log.i(TAG, "SMS message: $message")
+        // Timber.i("SMS message: $message")
         manager.sendTextMessage(phone, null, message, null, null)
     }
 

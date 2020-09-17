@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.os.Looper
-import android.util.Log
 import com.luisenricke.androidext.preferenceGet
 import com.luisenricke.botonpanico.Constraint
 import com.luisenricke.botonpanico.R
@@ -18,8 +17,8 @@ import com.luisenricke.botonpanico.database.entity.Contact
 import com.luisenricke.botonpanico.service.LastLocation
 import com.luisenricke.botonpanico.service.SendSMS
 import com.luisenricke.botonpanico.service.Vibration
+import timber.log.Timber
 
-@SuppressLint("LogNotTimber")
 @Suppress("unused")
 class AlertFacade {
 
@@ -42,7 +41,7 @@ class AlertFacade {
         val contacts = contactDao.getHighlighted()
 
         if (contacts.isEmpty()) {
-            Log.e(TAG, "Empty contacts")
+            Timber.e("Empty contacts")
             looper?.quit()
             return
         }
@@ -58,7 +57,7 @@ class AlertFacade {
         val contacts = contactDao.getHighlighted()
 
         if (contacts.isEmpty()) {
-            Log.e(TAG, "Empty contacts")
+            Timber.e("Empty contacts")
             return
         }
 

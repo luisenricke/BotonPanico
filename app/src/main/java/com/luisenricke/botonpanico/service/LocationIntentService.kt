@@ -49,7 +49,7 @@ class LocationIntentService : IntentService("LocationIntentService") {
 
     override fun onCreate() {
         super.onCreate()
-        manager.checkProviders(this)
+        // manager.checkProviders(this)
     }
 
     //    override fun onStart(intent: Intent?, startId: Int) {
