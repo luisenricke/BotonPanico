@@ -4,7 +4,7 @@ import org.gradle.api.JavaVersion
 object DefaultConfig {
 
     object Version {
-        const val kotlin = "1.3.72"
+        const val kotlin = "1.4.10"
         const val gradle = "4.0.0"
         const val navigationArgs = "2.3.0"
     }

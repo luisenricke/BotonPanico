@@ -3,14 +3,14 @@ object AndroidLib {
 
     object Version {
         const val appCompat = "1.1.0"
-        const val activity = "1.2.0-alpha06"
-        const val ktx = "1.3.0"
+        const val activity = "1.1.0"
+        const val ktx = "1.3.1"
         const val lifecycleExt = "2.2.0"
         const val fragment = "1.2.5"
         const val annotation = "1.1.0"
-        const val preference = "1.1.0"
+        const val preference = "1.1.1"
         const val legacy = "1.0.0"
-        const val navigation = "2.1.0"
+        const val navigation = "2.3.0"
     }
 
     const val appCompat = "androidx.appcompat:appcompat:${Version.appCompat}"
@@ -31,11 +31,11 @@ object AndroidLib {
 object ViewLib {
 
     object Version {
-        const val materialDesign = "1.2.0-rc01"
+        const val materialDesign = "1.2.1"
         const val recyclerView = "1.1.0"
         const val cardView = "1.0.0"
-        const val constraintLayout = "1.1.3"
-        const val circleImageView = "3.2.0"
+        const val constraintLayout = "2.0.1"
+        const val circleImageView = "4.2.0"
     }
 
     const val materialDesign = "com.google.android.material:material:${Version.materialDesign}"
@@ -50,7 +50,7 @@ object ToolLib {
 
     object Version {
         const val timber = "4.7.1"
-        const val picasso = "2.5.2"
+        const val picasso = "2.8"
         const val glide = "4.11.0"
     }
 
@@ -64,10 +64,10 @@ object TestLib {
 
     object Version {
         const val junit = "4.13"
-        const val junitExt = "1.1.1"
-        const val mockitoCore = "3.3.3"
-        const val testRunner = "1.2.0"
-        const val espressoCore = "3.2.0"
+        const val junitExt = "1.1.2"
+        const val mockitoCore = "3.5.10"
+        const val testRunner = "1.3.0"
+        const val espressoCore = "3.3.0"
         const val robolectric = "4.3"
     }
 
@@ -98,7 +98,7 @@ object NetworkLib {
 
     object Version {
         const val retrofit = "2.9.0"
-        const val okHttp3 = "4.7.2"
+        const val okHttp3 = "4.9.0"
         const val gson = "2.8.6"
     }
 
